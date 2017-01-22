@@ -1,0 +1,22 @@
+gcc  -Wall  -c -o afgen.o afgen.c
+gcc  -Wall  -c -o assim.o assim.c
+gcc  -Wall  -c -o astro.o astro.c
+gcc  -Wall  -c -o cropdata.o cropdata.c
+gcc  -Wall  -c -o develop.o develop.c
+gcc  -Wall  -c -o fillvar.o fillvar.c
+gcc  -Wall  -c -o lai.o lai.c
+gcc  -Wall  -c -o lai2.o lai2.c
+gcc  -Wall  -c -o leaves.o leaves.c
+gcc  -Wall  -c -o limit.o limit.c
+gcc  -Wall  -c -o max.o max.c
+gcc  -Wall  -c -o min.o min.c
+gcc  -Wall  -c -o meteodata.o meteodata.c
+gcc  -Wall  -c -o wofost.o wofost.c
+wofost.c: In function 'Growth':
+wofost.c:63:32: warning: unused variable 'DeathLeaves' [-Wunused-variable]
+  float DeathRoots, DeathStems, DeathLeaves;
+                                ^
+wofost.c:62:38: warning: unused variable 'LAIExp' [-Wunused-variable]
+         float shoots, FractionRoots, LAIExp;
+                                      ^
+gcc  -o wofost afgen.o assim.o astro.o cropdata.o develop.o fillvar.o lai.o lai2.o leaves.o limit.o max.o min.o meteodata.o wofost.o -lm

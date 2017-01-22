@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <in>afgen.c</in>
+      <in>assim.c</in>
+      <in>astro.c</in>
+      <in>cropdata.c</in>
+      <in>develop.c</in>
+      <in>fillvar.c</in>
+      <in>lai.c</in>
+      <in>lai2.c</in>
+      <in>leaves.c</in>
+      <in>limit.c</in>
+      <in>max.c</in>
+      <in>meteodata.c</in>
+      <in>min.c</in>
+      <in>wofost.c</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+      <itemPath>makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f makefile</buildCommand>
+          <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="afgen.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="assim.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="astro.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="cropdata.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="develop.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="fillvar.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="lai.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="lai2.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="leaves.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="limit.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="max.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="meteodata.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="min.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="wofost.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
