@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <math.h>
-
 #include "penman.h"
 #include "dynamic.h"
 #include "wofost.h"
@@ -73,8 +72,8 @@ Penman Penman()
 
 /*     Penman formula (1948)                */
 /*     Ensure reference evaporation >= 0.   */
-      Penman.EO  = max(0., (Delta*Rnw + Gamma*Ea)/(Delta + Gamma));
-      Penman.ESO = max(0., (Delta*Rns + Gamma*Ea)/(Delta + Gamma));
+      Penman.E0  = max(0., (Delta*Rnw + Gamma*Ea)/(Delta + Gamma));
+      Penman.ES0 = max(0., (Delta*Rns + Gamma*Ea)/(Delta + Gamma));
       Penman.ET0 = max(0., (Delta*Rnc + Gamma*Eac)/(Delta + Gamma));
 
       return 1

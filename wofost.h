@@ -1,6 +1,21 @@
 #define NUMBER_OF_VARIABLES	46
 #define NUMBER_OF_TABLES	15
 
+typedef struct RATES_WATBAL {
+        float Transpiration;
+        float EvaporationWater;
+        float EvaporationSoil;
+        float Rain;
+        float Infiltration;
+        float Percolation;
+        float Irrigation;
+        float IncreaseWaterRootGrowth;
+        float Loss;
+        float SurfaceStorage;
+        } Soil;
+
+Soil DeltaWatBal;
+        
 typedef struct GREEN {
 	float weight;
 	float age;
@@ -11,27 +26,31 @@ typedef struct GREEN {
 
 typedef struct PLANT {
 	     float roots;
+             float rootdepth;
 	     float stems;
              float leaves;
 	     float storage;
 	     float LAIExp;
 	     Green *LeaveProperties;
 	     } Plant;
-	    
 Plant Crop;
 
 typedef struct TABLE {
 	     float x;
 	     float y;
 	     struct TABLE *next;
-	     	     } AFGEN;
+	     } AFGEN;
 
-
+/* Tables for Crop */
 AFGEN *Roots, *Stems, *Leaves, *Storage;
 AFGEN *DeltaTempSum, *SpecificLeaveArea, *SpecificStemArea, *KDiffuseTb, *EFFTb;
 AFGEN *MaxAssimRate, *FactorAssimRateTemp, *FactorGrossAssimTemp; 
 AFGEN *FactorSenescence, *DeathRateStems, *DeathRateRoots;
      
+/* Tables for Soil */
+AFGEN VolumetricSoilMoisture;
+AFGEN HydraulicConducitiy; /* currently not used */
+
 /** Meteorological Variables  **/
 int Station, Year;
 float Longitude, Latitude, Altitude;
@@ -81,7 +100,7 @@ float MaxRelDeathRate;
 
 /** Water Use  **/
 float CorrectionTransp;
-float Depnr;
+float CropGroupNumber;
 float Airducts;
 
 /** Rooting **/
@@ -107,3 +126,30 @@ float KMAXVE;
 
 float YZERO;
 float NFIX;
+
+/** Soil **/
+float SoilMoistureFC;
+float SoilMoistureSAT;
+float SoilMoistureWP;
+float CriticalSoilAirC;
+
+float SoilMoisture;
+float DaysOxygenStress;
+    
+float RootZoneMaxPercolationR;
+float HydraulicConductivityC;
+float SubSoilMaxPercolationR;
+
+float ShadedWaterMaxEvap;
+float ShadedSoilMaxEvap;
+float InitWaterAv;
+float InitSurfaceStorage;
+float MaxSurfaceStorage;
+float MaxInitTopSoilMoistureC;
+
+float AvailableSoilM;
+float AvailRootZoneMoisture;
+float InitAvailMoisture;
+float InitSoilMoisture;
+float DaysSinceLastRain;
+float MoistureLOW;

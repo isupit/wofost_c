@@ -1,4 +1,4 @@
-char *Parameter[]={"SMW",
+char *SoilParam[]={"SMW",
                    "SMFCF",
 		   "SM0",
 		   "CRAIRC",
@@ -13,11 +13,11 @@ char *Parameter[]={"SMW",
 		   "NULL"
 		   };
 		   
-char *Parameter2[]={
+char *SoilParam2[]={
                     "SMTAB",
                     "CONTAB",
                     "NULL"
 		    };
 
-extern int FillVariables();
+extern int FillSoilVariables();
 extern int FillAfgenTables();

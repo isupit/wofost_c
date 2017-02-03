@@ -2,8 +2,9 @@
 #include "wofost.h"
 
 
-int FillVariables(float *Variable)
+int FillCropVariables(float *Variable)
 {
+    int i;
 TempBaseEmergence        = Variable[0];
 TempEffMax               = Variable[1];
 TSumEmergence            = Variable[2];                      	     
@@ -45,7 +46,7 @@ MaxRelDeathRate          = Variable[25];
 
 /** Water Use  **/
 CorrectionTransp         = Variable[26];
-Depnr                    = Variable[27];
+CropGroupNumber          = Variable[27];
 Airducts                 = Variable[28];
 
 /** Rooting **/
@@ -72,6 +73,30 @@ KMAXVE                   = Variable[43];
 YZERO                    = Variable[44];
 NFIX                     = Variable[45];                	     
 
+for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
+    Variable = 0.;
+}
+
  return 1;
 }
 
+int FillSoilVariables(float *Variable) {
+    int i;
+    
+    SoilMoistureWP       = Variable[0];
+    SoilMoistureFC       = Variable[1];
+    SoilMoistureSAT      = Variable[2];
+    CriticalSoilAirC     = Variable[3];
+
+    HydraulicConductivityC   = Variable[4];
+    RootZoneMaxPercolationR  = Variable[5];
+    SubSoilMaxPercolationR   = Variable[6];
+    
+    /* No workability parameters will be used in this version */
+    
+    for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
+        Variable = 0.;
+    }
+    
+    return 1;
+}

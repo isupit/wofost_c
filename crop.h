@@ -1,4 +1,4 @@
-char *Parameter[]={"TBASEM",
+char *CropParam[]={"TBASEM",
                    "TEFFMX",
 		   "TSUMEM",
 		   "IDSL",
@@ -47,7 +47,7 @@ char *Parameter[]={"TBASEM",
 		   "NULL"
 		   };
 		   
-char *Parameter2[]={
+char *CropParam2[]={
                     "DTSMTB",
                     "SLATB",
                     "SSATB",
@@ -66,5 +66,5 @@ char *Parameter2[]={
                     "NULL"
 		    };
 
-extern int FillVariables();
+extern int FillCropVariables();
 extern int FillAfgenTables();
