@@ -28,6 +28,7 @@ float Evtra() {
     float ReductionOxygenStress;
     float SoilMoistureAeration;
     float SoilWatDepletion;
+    float test;
 
     Lai = LeaveAreaIndex();
     
@@ -41,15 +42,15 @@ float Evtra() {
     
     SoilWatDepletion = sweaf(CropGroupNumber);
     CriticalSoilMoisture = (1. - SoilWatDepletion)*
-            (SoilMoistureFC-SoilMoistureWP) + SoilMoistureWP;
+            (WatBal.ct.MoistureFC-WatBal.ct.MoistureWP) + WatBal.ct.MoistureWP;
     
 /*   reduction in transpiration in case of water shortage */
-    ReductionMoisture = limit(0.,1.,(SM-SoilMoistureWP)/
-            (CriticalSoilMoisture-SoilMoistureWP));
+    ReductionMoisture = limit(0.,1.,(SM-WatBal.ct.MoistureWP)/
+            (CriticalSoilMoisture-WatBal.ct.MoistureWP));
     
     if (!Airducts) {
         /* critical soil moisture content for aeration */
-        SoilMoistureAeration = SoilMoistureSAT - CriticalSoilAirC;
+        SoilMoistureAeration = WatBal.ct.MoistureSAT - WatBal.ct.CriticalSoilAirC;
         
         /* count days since start oxygen shortage (up to 4 days)*/
         if (SoilMoisture >= SoilMoistureAeration) {
@@ -60,8 +61,8 @@ float Evtra() {
         }
         
         /* maximum reduction reached after 4 days */
-        MaxReductionOxygenStress = limit (0.,1.,(SoilMoistureSAT-SoilMoisture)/
-                (SoilMoistureSAT - SoilMoistureAeration));
+        MaxReductionOxygenStress = limit (0.,1.,(WatBal.ct.MoistureSAT-SoilMoisture)/
+                (WatBal.ct.MoistureSAT - SoilMoistureAeration));
         ReductionOxygenStress   = MaxReductionOxygenStress + 
                 (1.-DaysOxygenStress/4.)*(1.-MaxReductionOxygenStress);        
     }
@@ -69,7 +70,7 @@ float Evtra() {
         ReductionOxygenStress = 1.;
     }
      
-    Transpiration = ReductionMoisture * ReductionOxygenStress * MaxTranspiration;
+    WatBal.rt.Transpiration = ReductionMoisture * ReductionOxygenStress * MaxTranspiration;
 
     return 1;
 

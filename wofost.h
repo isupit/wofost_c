@@ -7,6 +7,7 @@ typedef struct CONSTANTS {
     float MoistureWP;
     float MoistureSAT;
     float CriticalSoilAirC;
+    float test;
 } Constants;
 
 typedef struct STATES {
