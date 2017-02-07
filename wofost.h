@@ -1,28 +1,48 @@
 #define NUMBER_OF_VARIABLES	46
 #define NUMBER_OF_TABLES	15
 
-typedef struct RATES_WATBAL {
+typedef struct CONSTANTS {
+    float MaxEvapWater;
+    float MoistureFC;
+    float MoistureWP;
+    float MoistureSAT;
+    float CriticalSoilAirC;
+    } Constants;
+
+typedef struct STATES {
+        float TotalInfiltration;
+        float TotalIrrigation;
+        float RootZoneMoisture;
+        float SurfaceStorage;
+        } States;
+
+typedef struct RATES {
         float Transpiration;
-        float EvaporationWater;
-        float EvaporationSoil;
+        float EvapWater;
+        float EvapSoil;
         float Rain;
         float Infiltration;
         float Percolation;
         float Irrigation;
-        float IncreaseWaterRootGrowth;
+        float WaterRootGrowth;
         float Loss;
         float SurfaceStorage;
-        } Soil;
+        } Rates;
+ 
+typedef struct SOIL {
+    Constants ct;
+    States st;
+    Rates rt;
+    } Soil;
+    
+    Soil WatBal;
 
-Soil DeltaWatBal;
-        
 typedef struct GREEN {
 	float weight;
 	float age;
 	float area;
 	struct GREEN *next;
 	} Green;
-
 
 typedef struct PLANT {
 	     float roots;

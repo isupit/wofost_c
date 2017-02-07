@@ -169,72 +169,6 @@ Plant RateCalculationCrop()
        return Delta;
 }
 
-
-Soil WatBalInitialize(int Emergence)
-{
-    /* Check initial soil moisture. It cannot be larger than the    */
-    /* soil moisture SoilMoistureSAT or smaller than SoilMoistureWP */
-    
-    if (InitSoilMoisture < SoilMoistureWP)  InitSoilMoisture = SoilMoistureWP;
-    if (InitSoilMoisture > SoilMoistureSAT) InitSoilMoisture = SoilMoistureSAT;
-    
-    if (Airducts == 1) InitSoilMoisture = SoilMoistureSAT; /* initial soil moisture for a rice crop */
-    SoilMoisture = limit(SoilMoistureWP, InitSoilMoisture, SoilMoistureWP +
-            AvailableSoilM/Crop.rootdepth);
-    
-    /* Initial moisture amount in rooted zone */
-    AvailRootZoneMoisture = SoilMoisture*Crop.rootdepth;
-    //InitAvailMoisture     = AvailRootZoneMoisture;
-    
-    /*  Soil evaporation, days since last rain */
-    DaysSinceLastRain = 1.;
-    if (SoilMoisture <= (SoilMoistureWP+0.5*(SoilMoistureFC-SoilMoistureWP))) 
-        DaysSinceLastRain=5.;
-    
-    
-    /* Moisture amount between rooted zone and max.rooting depth */
-    MoistureLOW  = limit (0., SoilMoistureSAT*(MaxRootingDepth-Crop.rootdepth), 
-            AvailableSoilM + MaxRootingDepth*SoilMoistureWP - 
-   
-    
-    /*  all summation variables of the water balance are set at zero. */
-    TRAT   = 0.;
-    EVST   = 0.;
-    EVWT   = 0.;
-    TSR    = 0.;
-    RAINT  = 0.;
-    WDRT   = 0.;
-    TOTINF = 0.;
-    TOTIRR = 0.;
-    SUMSM  = 0.;
-    PERCT  = 0.;
-    LOSST  = 0.;
-
-    return WatBal;
-}
-
-Soil  RateCalculationSoil()
-{
-    Soil DeltaWatBal;
-    
-    DeltaWatBal.Transpiration     = 0.;
-    DeltaWatBal.EvaporationWater  = 0.;
-    DeltaWatBal.EvaporationSoil   = 0.; 
-    DeltaWatBal.Transpiration     = 0.;     
-    DeltaWatBal.Rain              = 0.;
-    DeltaWatBal.Infiltration      = 0.;
-    DeltaWatBal.Percolation       = 0.;
-    DeltaWatBal.Irrigation        = 0.;
-    DeltaWatBal.IncreaseWaterRootGrowth = 0.;
-    DeltaWatBal.Loss              = 0.;
-    
-    /* if surface storage > 1 cm */
-    if (DeltaWatBal.SurfaceStorage > 1.) DeltaWatBal.EvaporationWater = EvaporationWaterMax;
-    
-    return DeltaWatBal;
-}
-
-
 int main(void)
 {
   int  Emergence, EndDay = 240;
@@ -245,11 +179,11 @@ int main(void)
 
   GetCropData(); 
   GetMeteoData();
-  GetSoildata()
+  GetSoilData();
 
   Day = 0;
   Crop     = Initialize(Emergence); 
-  WatBal   = WatBalInitialize(Emergence);
+  WatBal   = WatBalInitialize();
   
   while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) {
    

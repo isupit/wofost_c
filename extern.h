@@ -12,4 +12,6 @@ extern int FillAfgenTables();
 extern int GetAfgenTables();
 extern int GetCropData();
 extern int GetMeteoData();
+extern int GetSoilData();
 extern int Astro();
+Soil WatBalInitialize();
