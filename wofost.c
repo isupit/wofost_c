@@ -198,8 +198,9 @@ printf(" LAI: %7.2f", LAI);
 printf(" dvs: %7.2f", DevelopmentStage); 
 
     Delta            = RateCalculationCrop();
-    DeltaWatBal      = RateCalculationSoil();
+    WatBal           = WatBalRateCalulation();
     Crop             = EulerIntegration(Delta);
+    WatBal           = WatBalIntegration();
     LAI              = LeaveAreaIndex();
     DevelopmentStage = GetDevelopmentStage();
     Day++;

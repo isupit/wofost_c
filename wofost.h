@@ -7,27 +7,37 @@ typedef struct CONSTANTS {
     float MoistureWP;
     float MoistureSAT;
     float CriticalSoilAirC;
-    float test;
+    float MaxPercolRTZ;
+    float MaxPercolSubS;
+    float K0;
 } Constants;
 
 typedef struct STATES {
-        float TotalInfiltration;
-        float TotalIrrigation;
+        float EvapWater;
+        float EvapSoil;
+        float Infiltration;
+        float Irrigation;
+        float Loss;
+        float MoistureLOW;
+        float Percolation;
         float RootZoneMoisture;
         float SurfaceStorage;
+        float Transpiration;
+        float MoistureLOW;
         } States;
 
 typedef struct RATES {
-        float Transpiration;
         float EvapWater;
         float EvapSoil;
-        float Rain;
         float Infiltration;
-        float Percolation;
         float Irrigation;
-        float WaterRootGrowth;
-        float Loss;
+        float Loss; 
+        float MoistureLOW;
+        float Percolation;
+        float RootZoneMoisture;
         float SurfaceStorage;
+        float Transpiration;
+        float WaterRootGrowth;
         } Rates;
  
 typedef struct SOIL {
@@ -77,6 +87,9 @@ int Station, Year;
 float Longitude, Latitude, Altitude;
 float Tmin[366], Tmax[366], Radiation[366], Rain[366];
 float Windspeed[366], Vapour[366];
+
+/* Time step */
+float Delta;
 
 /** Static Variables  **/
 /**  Emergence  **/

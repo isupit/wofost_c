@@ -15,3 +15,5 @@ extern int GetMeteoData();
 extern int GetSoilData();
 extern int Astro();
 Soil WatBalInitialize();
+Soil WatBalRateCalulation();
+Soil WatBalIntegration();
