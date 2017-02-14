@@ -9,7 +9,7 @@
 #include "extern.h"
 
 
-Plant EulerIntegration(Plant Delta)	    
+void EulerIntegration(Plant Delta)	    
 {
        float PhysAgeing;
        Plant New;
@@ -17,29 +17,33 @@ Plant EulerIntegration(Plant Delta)
 
        previous = Crop.LeaveProperties;
        
-       New.roots    = Crop.roots   + Delta.roots;
-       New.stems    = Crop.stems   + Delta.stems;
-       New.leaves   = Crop.leaves  + Delta.leaves;
-       New.storage  = Crop.storage + Delta.storage;
-       New.LAIExp   = Crop.LAIExp  + Delta.LAIExp;
-       New.LeaveProperties = Crop.LeaveProperties;
+       Crop.roots    = Crop.roots   + Delta.roots;
+       Crop.stems    = Crop.stems   + Delta.stems;
+       Crop.leaves   = Crop.leaves  + Delta.leaves;
+       Crop.storage  = Crop.storage + Delta.storage;
+       Crop.LAIExp   = Crop.LAIExp  + Delta.LAIExp;
+       
+       Crop.RootDepth_prev = Crop.RootDepth;
+       Crop.RootDepth = Crop.RootDepth + Delta.RootDepth;
 
-       while (New.LeaveProperties->next) 
-              New.LeaveProperties = New.LeaveProperties->next;
+       /* go to the end of the list */
+       while (Crop.LeaveProperties->next) 
+              Crop.LeaveProperties = Crop.LeaveProperties->next;
     
-       New.LeaveProperties->next = Delta.LeaveProperties; 
-       New.LeaveProperties = previous;
+       Crop.LeaveProperties->next = Delta.LeaveProperties; 
+       Crop.LeaveProperties = previous;
        
        PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
        
-       while (New.LeaveProperties->next) {
-          New.LeaveProperties->age = New.LeaveProperties->age + PhysAgeing;
-	  New.LeaveProperties      = New.LeaveProperties->next;}
+       /* update the leave age for each age class */
+       while (Crop.LeaveProperties->next) {
+          Crop.LeaveProperties->age = Crop.LeaveProperties->age + PhysAgeing;
+	  Crop.LeaveProperties      = Crop.LeaveProperties->next;}
 	  
-       /* return to beginning linked list */
-       New.LeaveProperties = previous;	  
+       /* return to beginning of the linked list */
+       Crop.LeaveProperties = previous;	  
        
-       return New;
+       //free(Delta);
 }       	     
 
 float Conversion(float NetAssimilation)
@@ -77,6 +81,9 @@ Plant Growth(float NewPlantMaterial)
 	Delta.LeaveProperties = LeaveGrowth(Crop.LAIExp, Delta.leaves, &Delta.LAIExp);	
 	Delta.leaves          = Delta.leaves - DyingLeaves();
 	
+        Delta.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
+                MaxIncreaseRoot*Delta);
+        
 	return Delta;
 }	
 	
@@ -104,7 +111,8 @@ Plant Initialize(int Emergence)
        if (!Emergence)
     	{
 	while (TempSum < TSumEmergence) 
-	    {DeltaTempSum=limit(0, TempEffMax-TempBaseEmergence, Temp-TempBaseEmergence);
+	    {DeltaTempSum=limit(0, TempEffMax-TempBaseEmergence, 
+                    Temp-TempBaseEmergence);
 	     TempSum = TempSum + DeltaTempSum;
 	     Day++;
 	     }
@@ -117,10 +125,13 @@ Plant Initialize(int Emergence)
        InitialShootWeight = InitialDryWeight*FractionShoots;
        
        Crop.roots     = InitialDryWeight*FractionRoots;
-       Crop.rootdepth = InitRootingDepth;
+       Crop.RootDepth = InitRootingDepth;
        Crop.stems     = InitialShootWeight*Afgen(Stems, &DevelopmentStage);                   
        Crop.leaves    = InitialShootWeight*Afgen(Leaves, &DevelopmentStage);
        Crop.storage   = InitialShootWeight*Afgen(Storage, &DevelopmentStage);
+       
+       Crop.MaxRootingDepth = max(InitRootingDepth,min(MaxRootingDepth,
+            WatBal.SoilMaxRootingDepth));
 
        LAIEmergence  = Crop.leaves*Afgen(SpecificLeaveArea, &DevelopmentStage); 
        
@@ -173,7 +184,7 @@ int main(void)
 {
   int  Emergence, EndDay = 240;
   Plant Delta;
-  Soil  DeltaWatBal;
+  Soil  WatBal;
 
   Emergence = 1;
 

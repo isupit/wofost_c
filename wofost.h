@@ -9,6 +9,7 @@ typedef struct CONSTANTS {
     float CriticalSoilAirC;
     float MaxPercolRTZ;
     float MaxPercolSubS;
+    float MaxSurfaceStorge;
     float K0;
 } Constants;
 
@@ -18,12 +19,14 @@ typedef struct STATES {
         float Infiltration;
         float Irrigation;
         float Loss;
+        float Moisture;
         float MoistureLOW;
         float Percolation;
         float RootZoneMoisture;
+        float Runoff;
         float SurfaceStorage;
         float Transpiration;
-        float MoistureLOW;
+        float WaterRootExt;
         } States;
 
 typedef struct RATES {
@@ -35,12 +38,15 @@ typedef struct RATES {
         float MoistureLOW;
         float Percolation;
         float RootZoneMoisture;
+        float Runoff;
         float SurfaceStorage;
         float Transpiration;
-        float WaterRootGrowth;
+        float WaterRootExt;
         } Rates;
  
 typedef struct SOIL {
+    float DaysSinceLastRain;
+    float SoilMaxRootingDepth;
     Constants ct;
     States st;
     Rates rt;
@@ -57,7 +63,9 @@ typedef struct GREEN {
 
 typedef struct PLANT {
 	     float roots;
-             float rootdepth;
+             float RootDepth;
+             float RootDepth_prev;
+             float MaxRootingDepth;
 	     float stems;
              float leaves;
 	     float storage;
@@ -79,8 +87,11 @@ AFGEN *MaxAssimRate, *FactorAssimRateTemp, *FactorGrossAssimTemp;
 AFGEN *FactorSenescence, *DeathRateStems, *DeathRateRoots;
      
 /* Tables for Soil */
-AFGEN VolumetricSoilMoisture;
-AFGEN HydraulicConducitiy; /* currently not used */
+AFGEN *VolumetricSoilMoisture;
+AFGEN *HydraulicConducitiy; /* currently not used */
+
+/* Table for rainfall dependent infiltration */
+AFGEN *NotInfTB; 
 
 /** Meteorological Variables  **/
 int Station, Year;
@@ -89,7 +100,7 @@ float Tmin[366], Tmax[366], Radiation[366], Rain[366];
 float Windspeed[366], Vapour[366];
 
 /* Time step */
-float Delta;
+float Step;
 
 /** Static Variables  **/
 /**  Emergence  **/
