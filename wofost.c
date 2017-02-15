@@ -12,7 +12,6 @@
 void EulerIntegration(Plant Delta)	    
 {
        float PhysAgeing;
-       Plant New;
        Green *previous;
 
        previous = Crop.LeaveProperties;
@@ -63,8 +62,8 @@ float Conversion(float NetAssimilation)
 Plant Growth(float NewPlantMaterial)
 {
 	Plant Delta;
-        float shoots, FractionRoots, LAIExp;
-	float DeathRoots, DeathStems, DeathLeaves;
+        float shoots, FractionRoots;
+	float DeathRoots, DeathStems;
 		
 	FractionRoots = Afgen(Roots, &DevelopmentStage);
 	DeathRoots    = Crop.roots*Afgen(DeathRateRoots, &DevelopmentStage);
@@ -82,7 +81,7 @@ Plant Growth(float NewPlantMaterial)
 	Delta.leaves          = Delta.leaves - DyingLeaves();
 	
         Delta.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
-                MaxIncreaseRoot*Delta);
+                MaxIncreaseRoot*Step);
         
 	return Delta;
 }	
@@ -191,6 +190,7 @@ int main(void)
   GetCropData(); 
   GetMeteoData();
   GetSoilData();
+  GetSiteData();
 
   Day = 0;
   Crop     = Initialize(Emergence); 
@@ -209,11 +209,14 @@ printf(" LAI: %7.2f", LAI);
 printf(" dvs: %7.2f", DevelopmentStage); 
 
     Delta            = RateCalculationCrop();
-    WatBal           = WatBalRateCalulation();
-    Crop             = EulerIntegration(Delta);
+    WatBalRateCalulation();
+    
+    EulerIntegration(Delta);
     WatBal           = WatBalIntegration();
+    
     LAI              = LeaveAreaIndex();
     DevelopmentStage = GetDevelopmentStage();
+    
     Day++;
 
 }

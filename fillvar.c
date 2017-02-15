@@ -74,7 +74,7 @@ YZERO                    = Variable[44];
 NFIX                     = Variable[45];                	     
 
 for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
-    Variable = 0.;
+    Variable[i] = 0.;
 }
 
  return 1;
@@ -95,7 +95,30 @@ int FillSoilVariables(float *Variable) {
     /* No workability parameters will be used in this version */
     
     for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
-        Variable = 0.;
+        Variable[i]= 0.;
+    }
+    
+    return 1;
+}
+
+int FillSiteVariables(float *Variable) {
+    int i;
+    
+    SoilName            = Variable[0];
+    GroundWater         = Variable[1];
+    FlagFixInfiltration = Variable[2];
+    Drains              = Variable[3];
+    WatBal.ct.MaxSurfaceStorage      = Variable[4];
+    InitSoilMoisture     = Variable[5];
+
+    DepthGroundwater   = Variable[6];
+    RootZoneMaxPercolationR  = Variable[5];
+    SubSoilMaxPercolationR   = Variable[6];
+    
+    /* No workability parameters will be used in this version */
+    
+    for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
+        Variable[i]= 0.;
     }
     
     return 1;
