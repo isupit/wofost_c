@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "dynamic.h"
+#include "mmla.h"
 #include "penman.h"
 #include "wofost.h"
 
 
-Soil WatBalInitialize(MaxSurfaceStorage, InitSurfaceStorage, SoilMoisture)
+
+Soil WatBalInitialize()
 {
-    Soil WatBal;
-    float MaxSurfaceStorage;
-    float InitSurfaceStorage;
     float InitSoilMoisture;  /* initial (at emergence) amount of water in excess of wilting point, but not exceeding field capacity    cm */
     float SoilMoisture;
     
@@ -55,10 +55,10 @@ Soil WatBalInitialize(MaxSurfaceStorage, InitSurfaceStorage, SoilMoisture)
     /* initial soil moisture for a rice crop */
     if (Airducts) WatBal.st.Moisture = WatBal.ct.MoistureSAT; 
     SoilMoisture = limit(WatBal.ct.MoistureWP, WatBal.st.Moisture, 
-            WatBal.ct.MoistureWP + InitSoilMoisture/Crop.rootdepth);
+            WatBal.ct.MoistureWP + InitSoilMoisture/Crop.RootDepth);
     
     /* Initial moisture amount in rooted zone */
-    WatBal.st.RootZoneMoisture = SoilMoisture*Crop.rootdepth;
+    WatBal.st.RootZoneMoisture = SoilMoisture*Crop.RootDepth;
     
     /*  Soil evaporation, days since last rain */
     WatBal.DaysSinceLastRain = 1.;
@@ -68,13 +68,11 @@ Soil WatBalInitialize(MaxSurfaceStorage, InitSurfaceStorage, SoilMoisture)
     
     /* Moisture amount between rooted zone and max.rooting depth */
     WatBal.st.MoistureLOW  = limit (0., WatBal.ct.MoistureSAT
-        *(Crop.MaxRootingDepth-Crop.rootdepth), 
+        *(Crop.MaxRootingDepth-Crop.RootDepth), 
         InitSoilMoisture + Crop.MaxRootingDepth*WatBal.ct.MoistureWP - 
             WatBal.st.RootZoneMoisture);
-    
-    return WatBal;
+   
 }
-
 
 Soil WatBalRateCalulation() {
    
@@ -85,18 +83,19 @@ Soil WatBalRateCalulation() {
     float WELOW;
     
     /* if surface storage > 1 cm */
-    if (WatBal.st.SurfaceStorage > 1.) 
-        WatBal.rt.WaterEvap = Evtra.MaxEvapWater;
+    if (WatBal.st.SurfaceStorage > 1.) {
+        WatBal.rt.EvapWater = Evtra.MaxEvapWater;
+    }
     else {
         if (WatBal.rt.Infiltration >= 1) {
-            WatBal.rt.SoilEvap = Evtra.MaxEvapSoil;
+            WatBal.rt.EvapSoil = Evtra.MaxEvapSoil;
             WatBal.DaysSinceLastRain = 1.;
         }
         else {
             WatBal.DaysSinceLastRain++;
             MaxSoilEvap = Evtra.MaxEvapSoil*(sqrt(DaysSinceLastRain) - 
                     sqrt(DaysSinceLastRain -1));
-            WatBal.rt.SoilEvap = min(Evtra.MaxEvapSoil, MaxSoilEvap + 
+            WatBal.rt.EvapSoil = min(Evtra.MaxEvapSoil, MaxSoilEvap + 
                     WatBal.rt.Infiltration);
         }
     }
@@ -104,18 +103,18 @@ Soil WatBalRateCalulation() {
     /* Preliminary infiltration rate */
     if (WatBal.st.SurfaceStorage <= 0.1) {
         /* without surface storage */
-        if (FlagFixInfiltration) WatBal.rt.Infiltration = 
-                (1.-NotInfiltrating*Afgen(NotInfTB,Rain[Day])) * Rain[Day] + 
-                WatBal.rt.Irrigation + WatBal.st.SurfaceStorage/Step;
+        if (Site.FlagFixInfiltration) WatBal.rt.Infiltration = 
+               (1.-Site.NotInfiltrating * Afgen(Site.NotInfTB,Rain[Day])) * 
+               Rain[Day] + WatBal.rt.Irrigation + WatBal.st.SurfaceStorage/Step;
         else
-            WatBal.rt.Infiltration = (1.-NotInfiltrating) * Rain[Day] + 
+            WatBal.rt.Infiltration = (1.-Site.NotInfiltrating) * Rain[Day] + 
                 WatBal.rt.Irrigation + WatBal.st.SurfaceStorage/Step;
     }
     else {
         /* surface storage, infiltration limited by maximum percolation */
         /* rate root zone*/
-        Available = WatBal.st.SurfaceStorage + (Rain[Day] * (1.-NotInfiltrating)
-                + WatBal.rt.Irrigation - SoilEvap) * Step;
+        Available = WatBal.st.SurfaceStorage + (Rain[Day] * (1.-Site.NotInfiltrating)
+                + WatBal.rt.Irrigation - WatBal.rt.EvapSoil) * Step;
         WatBal.rt.Infiltration = min(WatBal.ct.MaxPercolRTZ*Step, 
                 Available)/Step;
     }
@@ -127,7 +126,7 @@ Soil WatBalRateCalulation() {
     /* excess moisture in rooted zone (not to exceed conductivity)*/
     Perc1 = limit(0., WatBal.ct.MaxPercolRTZ, 
             (WatBal.st.RootZoneMoisture - WaterEq)/Step - 
-            WatBal.rt.Transpiration - SoilEvap);
+            WatBal.rt.Transpiration - WatBal.rt.EvapSoil);
     
     /* loss of water at the lower end of the maximum root zone */
     /* equilibrium amount of soil moisture below rooted zone   */
@@ -147,14 +146,13 @@ Soil WatBalRateCalulation() {
     /* adjustment of infiltration rate */
     WatBal.rt.Infiltration = min (WatBal.rt.Infiltration,
             (WatBal.ct.MoistureSAT - SoilMoisture)*Crop.RootDepth/Step + 
-            WatBal.rt.Transpiration + WatBal.rt.SoilEvap + WatBal.rt.Percolation);
+            WatBal.rt.Transpiration + WatBal.rt.EvapSoil + WatBal.rt.Percolation);
             
     /* rates of change in amounts of moisture W and WLOW */
-    WatBal.rt.RootZoneMoisture = -WatBal.rt.Transpiration - WatBal.rt.SoilEvap -  
+    WatBal.rt.RootZoneMoisture = -WatBal.rt.Transpiration - WatBal.rt.EvapSoil -  
             WatBal.rt.Percolation + WatBal.rt.Infiltration;
     WatBal.rt.MoistureLOW = WatBal.rt.Percolation - WatBal.rt.Loss;
-                   
-    return WatBal;
+                  
 }
 
 Soil WatBalIntegration() {
@@ -167,14 +165,14 @@ Soil WatBalIntegration() {
     WatBal.st.EvapSoil  = WatBal.st.EvapSoil +  WatBal.rt.EvapSoil;
     
     WatBal.st.Infiltration = WatBal.st.Infiltration + WatBal.rt.Infiltration;
-    WatBal.st.Rain = WatBal.st.Rain + Rain[day];
+    WatBal.st.Rain = WatBal.st.Rain + Rain[Day];
     
     /* surface storage and runoff */
     PreSurfaceStorage = WatBal.st.SurfaceStorage + (Rain[Day] + 
             WatBal.rt.Irrigation - WatBal.rt.EvapWater - 
             WatBal.rt.Infiltration)*Step;
     WatBal.st.SurfaceStorage = min(PreSurfaceStorage, 
-            WatBal.ct.MaxSurfaceStorage);
+            Site.MaxSurfaceStorage);
     WatBal.st.Runoff = WatBal.st.Runoff + 
             (PreSurfaceStorage - WatBal.st.SurfaceStorage);
     
@@ -210,6 +208,5 @@ Soil WatBalIntegration() {
     /* mean soil moisture content in rooted zone */
     WatBal.st.Moisture = WatBal.st.RootZoneMoisture/Crop.RootDepth;
   
-    
-    return WatBal;
+   
 }

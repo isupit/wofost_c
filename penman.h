@@ -1,11 +1,14 @@
 
+#ifndef PENMAN_H
+#define PENMAN_H
+
 typedef struct ETP {
     float E0;
     float ES0;
     float ET0;
-} ETP;
+} Etp;
 
-ETP Penman;
+Etp Penman;
 
 extern float min(float a, float b);
 extern float max(float a, float b);
@@ -18,4 +21,7 @@ typedef struct EVP {
 } EVP;
 
 EVP Evtra;
+
+
+#endif	// PENMAN_H
 

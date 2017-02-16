@@ -183,7 +183,6 @@ int main(void)
 {
   int  Emergence, EndDay = 240;
   Plant Delta;
-  Soil  WatBal;
 
   Emergence = 1;
 
@@ -194,7 +193,7 @@ int main(void)
 
   Day = 0;
   Crop     = Initialize(Emergence); 
-  WatBal   = WatBalInitialize();
+  WatBalInitialize();
   
   while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) {
    
@@ -207,6 +206,10 @@ printf(" Leaves: %7.0f", Crop.leaves);
 printf(" sto: %7.0f", Crop.storage); 
 printf(" LAI: %7.2f", LAI);
 printf(" dvs: %7.2f", DevelopmentStage); 
+
+
+    Astro();
+    CalcPenman();
 
     Delta            = RateCalculationCrop();
     WatBalRateCalulation();

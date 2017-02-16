@@ -1,6 +1,5 @@
-/* original: Penman.for from I.G.A.M. Noy and C.A. van Diepen, 
-   van Kraalingen, and Allard de Wit, Sep 2011
-*/
+/* original: Penman.for from I.G.A.M. Noy and C.A. van Diepen, */
+/* van Kraalingen, and Allard de Wit, Sep 2011                 */
 
 #include <stdio.h>
 #include <math.h>

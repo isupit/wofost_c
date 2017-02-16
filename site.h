@@ -17,7 +17,7 @@ char *SiteParam[]={"SOFILE",
 		   };
 
 char *SiteParam2[]={
-                    "NotInfTB"
+                    "NINFTB"
 		    };
 
 extern int FillSiteVariables();

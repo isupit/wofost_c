@@ -12,7 +12,7 @@
 int Astro()
 {
     float Declination, SolarConstant, AOB, DSinB;
-    float FractionDiffuseRad, AtmosphTransm;
+    float FractionDiffuseRad;
     float AngotRadiation;
     
     if (Latitude > 67. || Latitude < 0.) return 0;  

@@ -41,9 +41,7 @@ int GetSoilData()
         Table->next = NULL;				     
 			       
 	while ((c=fgetc(fq)) !='\n');
-	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)
- {
-	    
+	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  {
 	    Table->next = malloc(sizeof(AFGEN));
             Table = Table->next; 
             Table->next = NULL;

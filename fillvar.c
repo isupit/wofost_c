@@ -104,19 +104,26 @@ int FillSoilVariables(float *Variable) {
 int FillSiteVariables(float *Variable) {
     int i;
     
-    SoilName            = Variable[0];
-    GroundWater         = Variable[1];
-    FlagFixInfiltration = Variable[2];
-    Drains              = Variable[3];
-    WatBal.ct.MaxSurfaceStorage      = Variable[4];
-    InitSoilMoisture     = Variable[5];
-
-    DepthGroundwater   = Variable[6];
-    RootZoneMaxPercolationR  = Variable[5];
-    SubSoilMaxPercolationR   = Variable[6];
     
-    /* No workability parameters will be used in this version */
-    
+    Site.SoilName                        = Variable[0];
+    Site.FlagGroundWater                 = Variable[1];
+    Site.FlagFixInfiltration             = Variable[2];
+    Site.FlagDrains                      = Variable[3];
+    Site.MaxSurfaceStorage               = Variable[4];
+    Site.InitSoilMoisture                = Variable[5];
+    Site.GroundwaterDepth                = Variable[6];
+    Site.DD                              = Variable[7];
+    Site.SoilLimRootDepth                = Variable[8];
+    Site.NotInfiltrating                 = Variable[9];
+    Site.NBase                           = Variable[10];
+    Site.NRecoveryFrac                   = Variable[11];
+    Site.PBase                           = Variable[12];
+    Site.PRecoveryFrac                   = Variable[13];
+    Site.KBase                           = Variable[14];
+    Site.KRecoveryFrac                   = Variable[15];
+    Site.SurfaceStorage                  = Variable[16];
+    Site.SurfaceStorageLim               = Variable[17];
+       
     for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
         Variable[i]= 0.;
     }

@@ -1,3 +1,4 @@
+float AtmosphTransm;
 float Daylength;
 float PARDaylength;
 float SinLD;

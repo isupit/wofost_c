@@ -1,6 +1,39 @@
 #define NUMBER_OF_VARIABLES	46
 #define NUMBER_OF_TABLES	15
 
+typedef struct TABLE {
+	     float x;
+	     float y;
+	     struct TABLE *next;
+	     } AFGEN;
+
+
+typedef struct SITE {
+   float AngstA;
+   float AngstB;
+   float SoilName;
+   float FlagGroundWater;
+   float FlagFixInfiltration;
+   float FlagDrains;
+   float MaxSurfaceStorage;     
+   float InitSoilMoisture;
+   float GroundwaterDepth;
+   float DD;
+   float SoilLimRootDepth;
+   float NotInfiltrating;
+   float NBase;
+   float NRecoveryFrac;
+   float PBase;
+   float PRecoveryFrac;
+   float KBase; 
+   float KRecoveryFrac;
+   float SurfaceStorage;
+   float SurfaceStorageLim;
+   AFGEN *NotInfTB;
+} Field;
+
+Field Site;
+
 typedef struct CONSTANTS {
     float MaxEvapWater;
     float MoistureFC;
@@ -22,6 +55,7 @@ typedef struct STATES {
         float Moisture;
         float MoistureLOW;
         float Percolation;
+        float Rain;
         float RootZoneMoisture;
         float Runoff;
         float SurfaceStorage;
@@ -34,7 +68,8 @@ typedef struct RATES {
         float EvapSoil;
         float Infiltration;
         float Irrigation;
-        float Loss; 
+        float Loss;
+        float Moisture;
         float MoistureLOW;
         float Percolation;
         float RootZoneMoisture;
@@ -52,7 +87,7 @@ typedef struct SOIL {
     Rates rt;
     } Soil;
     
-    Soil WatBal;
+Soil WatBal;
 
 typedef struct GREEN {
 	float weight;
@@ -74,11 +109,6 @@ typedef struct PLANT {
 	     } Plant;
 Plant Crop;
 
-typedef struct TABLE {
-	     float x;
-	     float y;
-	     struct TABLE *next;
-	     } AFGEN;
 
 /* Tables for Crop */
 AFGEN *Roots, *Stems, *Leaves, *Storage;

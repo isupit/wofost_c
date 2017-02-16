@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include "astro.h"
 #include "penman.h"
 #include "dynamic.h"
 #include "wofost.h"
@@ -16,7 +17,7 @@
 #define STBC    4.9e3   /* Stefan Boltzmann constant (J/m2/d/K4) */
 
 
-Penman Penman()
+int CalcPenman()
 {
     float RelSunShineDuration;
     float Tmpa;
@@ -24,7 +25,11 @@ Penman Penman()
     float BU;
     float Pbar;
     float Gamma;
-    float Delta;
+    float Ea;
+    float Eac;
+    float delta;
+    float RB;
+    float Rnw, Rns, Rnc;
     float VapourP, SaturatedVap;
             
 /* preparatory calculations mean daily temperature and temperature 
@@ -41,40 +46,41 @@ Penman Penman()
     Gamma = PSYCON * Pbar/1013.;
 
 
-/*   saturated vapour pressure according to equation of Goudriaan
-     (1977) derivative of SVAP with respect to temperature, i.e. 
-     slope of the SVAP-temperature curve (mbar/Celsius);
-     measured vapour pressure not to exceed saturated vapour pressure */
+/*   saturated vapour pressure according to equation of Goudriaan     */
+/*   (1977) derivative of SVAP with respect to temperature, i.e.      */
+/*   slope of the SVAP-temperature curve (mbar/Celsius);              */
+/*   measured vapour pressure not to exceed saturated vapour pressure */
 
       SaturatedVap  = 6.10588 * exp (17.32491*Tmpa/(Tmpa+238.102));
-      Delta         = 238.102*17.32491*SaturatedVap/(Tmpa +238.102)**2;
+      delta         = 238.102*17.32491*SaturatedVap/pow((Tmpa +238.102),2);
       VapourP       = min(Vapour[Day],SaturatedVap);
 
-/*   the expression n/N (RelLSSD) from the Penman formula is estimated
-     from the Angstrom formula: RI=RA(A+B.n/N) -> n/N=(RI/RA-A)/B,
-     where RI/RA is the atmospheric transmission obtained by a CALL
-     to ASTRO: */
+/*   the expression n/N (RelLSSD) from the Penman formula is estimated */
+/*   from the Angstrom formula: RI=RA(A+B.n/N) -> n/N=(RI/RA-A)/B,     */
+/*   where RI/RA is the atmospheric transmission obtained by a CALL    */
+/*    to ASTRO: */
               
-      RelSunShineDuration = Limit(0.,1.,(ATMTR-ABS(ANGSTA))/ABS(ANGSTB));
+      RelSunShineDuration = limit(0.,1.,(AtmosphTransm-(Site.AngstA))/(Site.AngstB));
 
 /*     Terms in Penman formula, for water, soil and canopy */
 /*     net outgoing long-wave radiation (J/m2/d) acc. to Brunt (1932) */
-      RB  = STBC*(Tmpa+273.)**4*(0.56-0.079*sqrt(VapourP))*(0.1+0.9*RelSunShineDuration);
+      RB  = STBC*pow((Tmpa+273.),4)*(0.56-0.079*sqrt(VapourP))*
+              (0.1+0.9*RelSunShineDuration);
 
 /*     net absorbed radiation, expressed in mm/d */
-      Rnw = (AVRAD*(1.-REFCFW)-RB)/LHVAP;
-      Rns = (AVRAD*(1.-REFCFS)-RB)/LHVAP;
-      Rnc = (AVRAD*(1.-REFCFC)-RB)/LHVAP;
+      Rnw = (Radiation[Day]*(1.-REFCFW)-RB)/LHVAP;
+      Rns = (Radiation[Day]*(1.-REFCFS)-RB)/LHVAP;
+      Rnc = (Radiation[Day]*(1.-REFCFC)-RB)/LHVAP;
 
 /*     evaporative demand of the atmosphere (mm/d)  */
-      Ea  = 0.26 * max (0.,(SaturatedVap-VapourP)) * (0.5+BU*Wind[Day]);
-      Eac = 0.26 * max (0.,(SaturatedVap-VapourP)) * (1.0+BU*Wind[Day]);
+      Ea  = 0.26 * max (0.,(SaturatedVap-VapourP)) * (0.5+BU * Windspeed[Day]);
+      Eac = 0.26 * max (0.,(SaturatedVap-VapourP)) * (1.0+BU * Windspeed[Day]);
 
 /*     Penman formula (1948)                */
 /*     Ensure reference evaporation >= 0.   */
-      Penman.E0  = max(0., (Delta*Rnw + Gamma*Ea)/(Delta + Gamma));
-      Penman.ES0 = max(0., (Delta*Rns + Gamma*Ea)/(Delta + Gamma));
-      Penman.ET0 = max(0., (Delta*Rnc + Gamma*Eac)/(Delta + Gamma));
+      Penman.E0  = max(0., (delta*Rnw + Gamma*Ea)/(delta + Gamma));
+      Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
+      Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
 
-      return 1
+      return 1;
 }
