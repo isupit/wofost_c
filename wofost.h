@@ -13,7 +13,7 @@ typedef struct SITE {
    float AngstB;
    float SoilName;
    float FlagGroundWater;
-   float FlagFixInfiltration;
+   float InfRainDependent;
    float FlagDrains;
    float MaxSurfaceStorage;     
    float InitSoilMoisture;
@@ -89,6 +89,23 @@ typedef struct SOIL {
     
 Soil WatBal;
 
+typedef struct P_RATES {
+    float roots;
+    float stems;
+    float leaves;
+    float LAIExp;
+    float storage;
+} p_rates;
+
+typedef struct P_STATES {
+    float roots;
+    float stems;
+    float leaves;
+    float LAIExp;
+    float storage;
+} p_states;
+
+
 typedef struct GREEN {
 	float weight;
 	float age;
@@ -97,14 +114,11 @@ typedef struct GREEN {
 	} Green;
 
 typedef struct PLANT {
-	     float roots;
              float RootDepth;
              float RootDepth_prev;
              float MaxRootingDepth;
-	     float stems;
-             float leaves;
-	     float storage;
-	     float LAIExp;
+             p_rates rt;
+             p_states st; 
 	     Green *LeaveProperties;
 	     } Plant;
 Plant Crop;

@@ -9,28 +9,22 @@
 #include "extern.h"
 
 
-void EulerIntegration(Plant Delta)	    
+void EulerIntegration()	    
 {
        float PhysAgeing;
        Green *previous;
 
        previous = Crop.LeaveProperties;
        
-       Crop.roots    = Crop.roots   + Delta.roots;
-       Crop.stems    = Crop.stems   + Delta.stems;
-       Crop.leaves   = Crop.leaves  + Delta.leaves;
-       Crop.storage  = Crop.storage + Delta.storage;
-       Crop.LAIExp   = Crop.LAIExp  + Delta.LAIExp;
-       
-       Crop.RootDepth_prev = Crop.RootDepth;
-       Crop.RootDepth = Crop.RootDepth + Delta.RootDepth;
+       Crop.st.roots    = Crop.st.roots   + Crop.rt.roots;
+       Crop.st.stems    = Crop.st.stems   + Crop.rt.stems;
+       Crop.st.leaves   = Crop.st.leaves  + Crop.rt.leaves;
+       Crop.st.storage  = Crop.st.storage + Crop.rt.storage;
+       Crop.st.LAIExp   = Crop.st.LAIExp  + Crop.rt.LAIExp;
 
        /* go to the end of the list */
        while (Crop.LeaveProperties->next) 
               Crop.LeaveProperties = Crop.LeaveProperties->next;
-    
-       Crop.LeaveProperties->next = Delta.LeaveProperties; 
-       Crop.LeaveProperties = previous;
        
        PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
        
@@ -42,7 +36,6 @@ void EulerIntegration(Plant Delta)
        /* return to beginning of the linked list */
        Crop.LeaveProperties = previous;	  
        
-       //free(Delta);
 }       	     
 
 float Conversion(float NetAssimilation)
@@ -59,31 +52,29 @@ float Conversion(float NetAssimilation)
 	return NetAssimilation/(shoot*(1-fr)+root);
 }
  
-Plant Growth(float NewPlantMaterial)
+void Growth(float NewPlantMaterial)
 {
-	Plant Delta;
         float shoots, FractionRoots;
 	float DeathRoots, DeathStems;
 		
 	FractionRoots = Afgen(Roots, &DevelopmentStage);
-	DeathRoots    = Crop.roots*Afgen(DeathRateRoots, &DevelopmentStage);
-	Delta.roots   = NewPlantMaterial*FractionRoots - DeathRoots;
+	DeathRoots    = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
+	Crop.rt.roots   = NewPlantMaterial*FractionRoots - DeathRoots;
 	
 	shoots        = NewPlantMaterial*(1-FractionRoots);
 	    
-	DeathStems    = Crop.stems*Afgen(DeathRateStems, &DevelopmentStage);	
-	Delta.stems   = shoots*Afgen(Stems, &DevelopmentStage)-DeathStems;
+	DeathStems    = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
+	Crop.rt.stems = shoots*Afgen(Stems, &DevelopmentStage)-DeathStems;
 	
-	Delta.storage = shoots*Afgen(Storage, &DevelopmentStage);
+	Crop.rt.storage = shoots*Afgen(Storage, &DevelopmentStage);
 	
-	Delta.leaves          = shoots*Afgen(Leaves, &DevelopmentStage);
-	Delta.LeaveProperties = LeaveGrowth(Crop.LAIExp, Delta.leaves, &Delta.LAIExp);	
-	Delta.leaves          = Delta.leaves - DyingLeaves();
+	Crop.rt.leaves = shoots*Afgen(Leaves, &DevelopmentStage);
+	Crop.rt.LAIExp = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves, );	
+	Crop.rt.leaves = Crop.rt.leaves - DyingLeaves();
 	
-        Delta.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
+        Crop.RootDepth_prev = Crop.RootDepth;
+        Crop.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
                 MaxIncreaseRoot*Step);
-        
-	return Delta;
 }	
 	
 
@@ -92,17 +83,17 @@ float RespirationRef(float TotalAssimilation)
       float respiration; 
       float TempRef = 25.;
 
-      respiration  = RelRespiLeaves*Crop.leaves;
-      respiration  = respiration + RelRespiStorage*Crop.storage;
-      respiration  = respiration + RelRespiRoots*Crop.roots;	
-      respiration  = respiration + RelRespiStems*Crop.stems;
+      respiration  = RelRespiLeaves*Crop.st.leaves;
+      respiration  = respiration + RelRespiStorage*Crop.st.storage;
+      respiration  = respiration + RelRespiRoots*Crop.st.roots;	
+      respiration  = respiration + RelRespiStems*Crop.st.stems;
       respiration  = respiration * Afgen(FactorSenescence, &DevelopmentStage);
       respiration  = respiration * pow(Q10, 0.1*(Temp-TempRef));
       
       return (min(respiration, TotalAssimilation));
 }
 
-Plant Initialize(int Emergence)
+void Initialize(int Emergence)
 {
        float FractionRoots, FractionShoots, InitialShootWeight;
        float DeltaTempSum, TempSum=0;
@@ -123,41 +114,42 @@ Plant Initialize(int Emergence)
        FractionShoots     = 1 - FractionRoots;
        InitialShootWeight = InitialDryWeight*FractionShoots;
        
-       Crop.roots     = InitialDryWeight*FractionRoots;
-       Crop.RootDepth = InitRootingDepth;
-       Crop.stems     = InitialShootWeight*Afgen(Stems, &DevelopmentStage);                   
-       Crop.leaves    = InitialShootWeight*Afgen(Leaves, &DevelopmentStage);
-       Crop.storage   = InitialShootWeight*Afgen(Storage, &DevelopmentStage);
+       Crop.st.roots     = InitialDryWeight*FractionRoots;
+       Crop.RootDepth    = InitRootingDepth;
+       Crop.st.stems     = InitialShootWeight*Afgen(Stems, &DevelopmentStage);                   
+       Crop.st.leaves    = InitialShootWeight*Afgen(Leaves, &DevelopmentStage);
+       Crop.st.storage   = InitialShootWeight*Afgen(Storage, &DevelopmentStage);
        
        Crop.MaxRootingDepth = max(InitRootingDepth,min(MaxRootingDepth,
             WatBal.SoilMaxRootingDepth));
 
-       LAIEmergence  = Crop.leaves*Afgen(SpecificLeaveArea, &DevelopmentStage); 
+       LAIEmergence  = Crop.st.leaves*Afgen(SpecificLeaveArea, &DevelopmentStage); 
        
-       Crop.LAIExp = LAIEmergence;
+       Crop.st.LAIExp = LAIEmergence;
       
-       LAI = LAIEmergence + Crop.stems*Afgen(SpecificStemArea, &DevelopmentStage) +
-	     Crop.storage*SpecificPodArea;
+       LAI = LAIEmergence + Crop.st.stems*Afgen(SpecificStemArea, &DevelopmentStage) +
+	     Crop.st.storage*SpecificPodArea;
 
        Crop.LeaveProperties         = malloc(sizeof (Green));
        Crop.LeaveProperties->age    = 0.;
-       Crop.LeaveProperties->weight = Crop.leaves;
+       Crop.LeaveProperties->weight = Crop.st.leaves;
        Crop.LeaveProperties->area   = Afgen(SpecificLeaveArea, &DevelopmentStage);
        
-       return Crop;
 }       
 
 
 Plant RateCalculationCrop()
 {
-       Plant Delta;
-
        float TotalAssimilation;
        float Maintenance, GrossAssimilation, GrossGrowth;    
        
-       /* set Delta to 0 */
-       Delta.roots = Delta.leaves = Delta.stems = Delta.storage = Delta.LAIExp =0.;      
-       Delta.LeaveProperties = NULL;
+       /* set rates to 0 */
+       Crop.rt.roots   = 0.;
+       Crop.rt.leaves  = 0.;
+       Crop.rt.stems   = 0.;
+       Crop.rt.storage = 0.;
+       Crop.rt.LAIExp  = 0.;      
+       Crop.LeaveProperties = NULL;
       
        /* assimilation */
        GrossAssimilation = DailyTotalAssimilation(Astro());
@@ -172,18 +164,15 @@ Plant RateCalculationCrop()
        GrossGrowth = Conversion(TotalAssimilation-Maintenance); 
       
        /* Growth of root, stems, leaves and storage organs */
-       Delta=Growth(GrossGrowth);
+       Growth(GrossGrowth);
              
        printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f", GrossGrowth, Maintenance, TotalAssimilation);
-
-       return Delta;
 }
 
 int main(void)
 {
   int  Emergence, EndDay = 240;
-  Plant Delta;
-
+  
   Emergence = 1;
 
   GetCropData(); 
@@ -201,9 +190,9 @@ int main(void)
     DayTemp    = 0.5*(Tmax[Day] + Temp);
     
 printf("\n%4d", Day); 
-printf(" Stems: %7.0f", Crop.stems);
-printf(" Leaves: %7.0f", Crop.leaves);
-printf(" sto: %7.0f", Crop.storage); 
+printf(" Stems: %7.0f", Crop.st.stems);
+printf(" Leaves: %7.0f", Crop.st.leaves);
+printf(" sto: %7.0f", Crop.st.storage); 
 printf(" LAI: %7.2f", LAI);
 printf(" dvs: %7.2f", DevelopmentStage); 
 
@@ -211,11 +200,11 @@ printf(" dvs: %7.2f", DevelopmentStage);
     Astro();
     CalcPenman();
 
-    Delta            = RateCalculationCrop();
+    RateCalculationCrop();
     WatBalRateCalulation();
     
-    EulerIntegration(Delta);
-    WatBal           = WatBalIntegration();
+    EulerIntegration();
+    WatBalIntegration();
     
     LAI              = LeaveAreaIndex();
     DevelopmentStage = GetDevelopmentStage();

@@ -4,9 +4,11 @@
 #include "dynamic.h"
 #include "wofost.h"
 
-Green *LeaveGrowth(float LAIExp, float NewLeaves, float *GrowthExpLAI)
+float LeaveGrowth(float LAIExp, float NewLeaves)
 {
-  float SpecLeafArea, GrowthSourceLimited; 
+  float GrowthExpLAI;
+  float GrowthSourceLimited;
+  float SpecLeafArea; 
   Green *New=NULL;
  
   SpecLeafArea = Afgen(SpecificLeaveArea, &DevelopmentStage);
@@ -29,6 +31,8 @@ Green *LeaveGrowth(float LAIExp, float NewLeaves, float *GrowthExpLAI)
   New->age    = 0.;
   New->area   = SpecLeafArea;
   New->next   = NULL;
+  
+  Crop.LeaveProperties->next = New;
      
-return New;
+  return GrowthExpLAI;
 }

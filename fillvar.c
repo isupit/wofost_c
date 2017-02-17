@@ -107,7 +107,7 @@ int FillSiteVariables(float *Variable) {
     
     Site.SoilName                        = Variable[0];
     Site.FlagGroundWater                 = Variable[1];
-    Site.FlagFixInfiltration             = Variable[2];
+    Site.InfRainDependent                = Variable[2];
     Site.FlagDrains                      = Variable[3];
     Site.MaxSurfaceStorage               = Variable[4];
     Site.InitSoilMoisture                = Variable[5];

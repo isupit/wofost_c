@@ -1,5 +1,6 @@
 char *SiteParam[]={"SOFILE",
                    "IZT",
+                   "IFUNRN",
 		   "IDRAIN",
 		   "SSMAX",
 		   "WAV",
