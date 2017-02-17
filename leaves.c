@@ -15,7 +15,7 @@ float DyingLeaves()
     
   CriticalLAI = 3.2/Afgen(KDiffuseTb, &DevelopmentStage);
   Death1      = 0;
-  Death2      = Crop.leaves * limit(0.,0.03, 0.03*(LAI-CriticalLAI)/CriticalLAI);
+  Death2      = Crop.st.leaves * limit(0.,0.03, 0.03*(LAI-CriticalLAI)/CriticalLAI);
   Death       = max(Death1, Death2);  
   
   DeathStress = Death;

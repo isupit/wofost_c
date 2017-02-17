@@ -69,7 +69,7 @@ void Growth(float NewPlantMaterial)
 	Crop.rt.storage = shoots*Afgen(Storage, &DevelopmentStage);
 	
 	Crop.rt.leaves = shoots*Afgen(Leaves, &DevelopmentStage);
-	Crop.rt.LAIExp = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves, );	
+	Crop.rt.LAIExp = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves);	
 	Crop.rt.leaves = Crop.rt.leaves - DyingLeaves();
 	
         Crop.RootDepth_prev = Crop.RootDepth;
@@ -138,7 +138,7 @@ void Initialize(int Emergence)
 }       
 
 
-Plant RateCalculationCrop()
+void RateCalculationCrop()
 {
        float TotalAssimilation;
        float Maintenance, GrossAssimilation, GrossGrowth;    
@@ -181,7 +181,7 @@ int main(void)
   GetSiteData();
 
   Day = 0;
-  Crop     = Initialize(Emergence); 
+  Initialize(Emergence); 
   WatBalInitialize();
   
   while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) {

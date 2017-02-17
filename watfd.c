@@ -8,7 +8,7 @@
 
 
 
-Soil WatBalInitialize()
+void WatBalInitialize()
 {
     /* InitSoilMoisture is the initial (at emergence) amount of water in */
     /* excess of wilting point, but not exceeding field capacity    cm   */
@@ -74,7 +74,7 @@ Soil WatBalInitialize()
    
 }
 
-Soil WatBalRateCalulation() {
+void WatBalRateCalulation() {
    
     float Available;
     float CMaxSoilEvap;
@@ -156,7 +156,7 @@ Soil WatBalRateCalulation() {
                   
 }
 
-Soil WatBalIntegration() {
+void WatBalIntegration() {
     
     float PreSurfaceStorage;
     float WaterRootExt;
@@ -180,7 +180,7 @@ Soil WatBalIntegration() {
     /* amount of water in rooted zone */
     WatBal.st.RootZoneMoisture += WatBal.rt.RootZoneMoisture*Step;
     if (WatBal.st.RootZoneMoisture < 0.) {
-           WatBal.st.EvapSoil += WatBal.st.RootZoneMoisture
+           WatBal.st.EvapSoil += WatBal.st.RootZoneMoisture;
             WatBal.st.RootZoneMoisture = 0.;
     }
     
