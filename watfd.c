@@ -47,15 +47,18 @@ void WatBalInitialize()
     
     /* Check initial soil moisture. It cannot be larger than the    */
     /* soil moisture SoilMoistureSAT or smaller than SoilMoistureWP */
-    if (WatBal.st.Moisture <= WatBal.ct.MoistureWP)  
-            WatBal.st.Moisture = WatBal.ct.MoistureWP;
-    if (WatBal.st.Moisture >= WatBal.ct.MoistureSAT) 
-            WatBal.st.Moisture = WatBal.ct.MoistureSAT;
+    if (Site.MaxInitSoilM<= WatBal.ct.MoistureWP)  
+            Site.MaxInitSoilM = WatBal.ct.MoistureWP;
+    if (Site.MaxInitSoilM >= WatBal.ct.MoistureSAT) 
+            Site.MaxInitSoilM = WatBal.ct.MoistureSAT;
+    
+    /* Set initial surface storage */
+    WatBal.st.SurfaceStorage = Site.SurfaceStorage;
     
     /* initial soil moisture for a rice crop */
-    if (Airducts) WatBal.st.Moisture = WatBal.ct.MoistureSAT; 
-        WatBal.st.Moisture = limit(WatBal.ct.MoistureWP, WatBal.st.Moisture, 
-            WatBal.ct.MoistureWP + InitSoilMoisture/Crop.RootDepth);
+    if (Airducts) Site.MaxInitSoilM = WatBal.ct.MoistureSAT; 
+        WatBal.st.Moisture = limit(WatBal.ct.MoistureWP, Site.MaxInitSoilM, 
+            WatBal.ct.MoistureWP + Site.InitSoilMoisture/Crop.RootDepth);
     
     /* Initial moisture amount in rooted zone */
     WatBal.st.RootZoneMoisture = WatBal.st.Moisture * Crop.RootDepth;

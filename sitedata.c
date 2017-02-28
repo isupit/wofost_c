@@ -9,8 +9,8 @@ int GetSiteData()
 {
   AFGEN *FillData[15], *Table, *start;
   int i, c;
-  float Variable[NUMBER_OF_VARIABLES], XValue, YValue;
-  char x[2], xx[2],  word[NUMBER_OF_VARIABLES];
+  float Variable[NR_VARIABLES_SITE], XValue, YValue;
+  char x[2], xx[2],  word[NR_VARIABLES_SITE];
   FILE *fq;
 
  if ((fq = fopen("data//wofost.sit", "rt")) == NULL)
@@ -27,7 +27,7 @@ int GetSiteData()
        }  
   }
 
-  if (i!=NUMBER_OF_VARIABLES) return 0;
+  if (i!=NR_VARIABLES_SITE) return 0;
   rewind(fq);  
   FillSiteVariables(Variable);
  
@@ -47,14 +47,14 @@ int GetSiteData()
 	    Table->x = XValue;
 	    Table->y = YValue;
 	    
-	    while ((c=fgetc(fq)) !='\n');
+	    while ((c=fgetc(fq)) !='\n' || (c=fgetc(fq)) != EOF );
 	    }
 	    FillData[i] = start;
 	i++; 
        }      
   }
 
-  if (i!= NUMBER_OF_TABLES) return 0;
+  if (i!= NR_TABLES_SITE) return 0;
    
   NotInfTB         = FillData[0];
 

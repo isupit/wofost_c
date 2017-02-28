@@ -1,5 +1,4 @@
-char *SiteParam[]={"SOFILE",
-                   "IZT",
+char *SiteParam[]={ "IZT",
                    "IFUNRN",
 		   "IDRAIN",
 		   "SSMAX",
@@ -7,6 +6,7 @@ char *SiteParam[]={"SOFILE",
 		   "ZTI",
 		   "DD",
 		   "RDMSOL",
+                   "NOTINF",
                    "NBASE",
 		   "NREC",
 		   "PBASE",
@@ -14,11 +14,13 @@ char *SiteParam[]={"SOFILE",
 		   "KBASE",
                    "KREC",
                    "SSI",
-                   "SSLIM"
+                   "SMLIM",
+                   "NULL"
 		   };
 
 char *SiteParam2[]={
-                    "NINFTB"
+                    "NINFTB",
+                    "NULL"
 		    };
 
 extern int FillSiteVariables();

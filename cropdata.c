@@ -9,8 +9,8 @@ int GetCropData()
 {
   AFGEN *FillData[15], *Table, *start;
   int i, c;
-  float Variable[NUMBER_OF_VARIABLES], XValue, YValue;
-  char x[2], xx[2],  word[NUMBER_OF_VARIABLES];
+  float Variable[NR_VARIABLES_CRP], XValue, YValue;
+  char x[2], xx[2],  word[NR_VARIABLES_CRP];
   FILE *fq;
 
  if ((fq = fopen("data//wwh107.cab", "rt")) == NULL)
@@ -22,13 +22,11 @@ int GetCropData()
     if (!strcmp(word, CropParam[i])) {
         while ((c=fgetc(fq)) !='=');
 	fscanf(fq,"%f",  &Variable[i]);
-
 	i++; 
        }  
-
   }
 
-  if (i!=NUMBER_OF_VARIABLES) return 0;
+  if (i!=NR_VARIABLES_CRP) return 0;
   rewind(fq);  
   FillCropVariables(Variable);
  
@@ -55,7 +53,7 @@ int GetCropData()
        }      
   }
 
-  if (i!= NUMBER_OF_TABLES) return 0;
+  if (i!= NR_TABLES_CRP) return 0;
  
   
   DeltaTempSum         = FillData[0];

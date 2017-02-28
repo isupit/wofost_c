@@ -73,7 +73,7 @@ KMAXVE                   = Variable[43];
 YZERO                    = Variable[44];
 NFIX                     = Variable[45];                	     
 
-for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
+for (i=0;i<=NR_VARIABLES_CRP;i++) {
     Variable[i] = 0.;
 }
 
@@ -83,18 +83,18 @@ for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
 int FillSoilVariables(float *Variable) {
     int i;
     
-    SoilMoistureWP       = Variable[0];
-    SoilMoistureFC       = Variable[1];
-    SoilMoistureSAT      = Variable[2];
-    CriticalSoilAirC     = Variable[3];
+    WatBal.ct.MoistureWP       = Variable[0];
+    WatBal.ct.MoistureFC       = Variable[1];
+    WatBal.ct.MoistureSAT      = Variable[2];
+    WatBal.ct.CriticalSoilAirC = Variable[3];
 
-    HydraulicConductivityC   = Variable[4];
-    RootZoneMaxPercolationR  = Variable[5];
-    SubSoilMaxPercolationR   = Variable[6];
+    WatBal.ct.MaxPercolRTZ  = Variable[5];
+    WatBal.ct.MaxPercolSubS = Variable[6];
+    WatBal.ct.K0            = Variable[4];
     
     /* No workability parameters will be used in this version */
     
-    for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
+    for (i=0;i<=NR_VARIABLES_SOIL;i++) {
         Variable[i]= 0.;
     }
     
@@ -103,28 +103,26 @@ int FillSoilVariables(float *Variable) {
 
 int FillSiteVariables(float *Variable) {
     int i;
-    
-    
-    Site.SoilName                        = Variable[0];
-    Site.FlagGroundWater                 = Variable[1];
-    Site.InfRainDependent                = Variable[2];
-    Site.FlagDrains                      = Variable[3];
-    Site.MaxSurfaceStorage               = Variable[4];
-    Site.InitSoilMoisture                = Variable[5];
-    Site.GroundwaterDepth                = Variable[6];
-    Site.DD                              = Variable[7];
-    Site.SoilLimRootDepth                = Variable[8];
-    Site.NotInfiltrating                 = Variable[9];
-    Site.NBase                           = Variable[10];
-    Site.NRecoveryFrac                   = Variable[11];
-    Site.PBase                           = Variable[12];
-    Site.PRecoveryFrac                   = Variable[13];
-    Site.KBase                           = Variable[14];
-    Site.KRecoveryFrac                   = Variable[15];
-    Site.SurfaceStorage                  = Variable[16];
-    Site.SurfaceStorageLim               = Variable[17];
+   
+    Site.FlagGroundWater                 = Variable[0];
+    Site.InfRainDependent                = Variable[1];
+    Site.FlagDrains                      = Variable[2];
+    Site.MaxSurfaceStorage               = Variable[3];
+    Site.InitSoilMoisture                = Variable[4];
+    Site.GroundwaterDepth                = Variable[5];
+    Site.DD                              = Variable[6];
+    Site.SoilLimRootDepth                = Variable[7];
+    Site.NotInfiltrating                 = Variable[8];
+    Site.NBase                           = Variable[9];
+    Site.NRecoveryFrac                   = Variable[10];
+    Site.PBase                           = Variable[11];
+    Site.PRecoveryFrac                   = Variable[12];
+    Site.KBase                           = Variable[13];
+    Site.KRecoveryFrac                   = Variable[14];
+    Site.SurfaceStorage                  = Variable[15];
+    Site.MaxInitSoilM                    = Variable[16];
        
-    for (i=0;i<=NUMBER_OF_VARIABLES;i++) {
+    for (i=0;i<=NR_VARIABLES_SITE;i++) {
         Variable[i]= 0.;
     }
     

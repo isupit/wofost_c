@@ -44,7 +44,7 @@ char *CropParam[]={"TBASEM",
 		   "KMAXVE",
 		   "YZERO",
 		   "NFIX",
-		   "NULL"
+                   "NULL"
 		   };
 		   
 char *CropParam2[]={

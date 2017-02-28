@@ -101,7 +101,7 @@ FLTB     =   0.00,    0.65,
              0.95,    0.00,
              2.00,    0.00
 FSTB     =   0.00,    0.35,  
-             0.10,    0.35,  
+             0.10,    0.35,   
              0.25,    0.30,
              0.50,    0.50,
              0.646,   0.70,
@@ -144,4 +144,4 @@ PMAXSO   =   0.0060 ;       PMAXVE   =   0.0020
 KMINSO   =   0.0030 ;       KMINVE   =   0.0070
 KMAXSO   =   0.0080 ;       KMAXVE   =   0.0280
 YZERO    = 200.     ! max. amount veg. organs at zero yield [kg ha-1]
-NFIX     =   0.00   ! fraction of N-uptake from biol. fixation [kg kg-1]
+NFIX     =   0.01   ! fraction of N-uptake from biol. fixation [kg kg-1]

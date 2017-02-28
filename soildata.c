@@ -17,7 +17,7 @@ int GetSoilData()
     {fprintf(stderr, "Cannot open input file.\n"); return 0;}
 
  i=0;
-  while ((c=fscanf(fq,"%s",word)) != EOF) 
+  while ((c=fscanf(fq,"%s",word)) != EOF && i < 12 ) 
   {
     if (!strcmp(word, SoilParam[i])) {
         while ((c=fgetc(fq)) !='=');
@@ -27,7 +27,7 @@ int GetSoilData()
        }  
   }
 
-  if (i!=NUMBER_OF_VARIABLES) return 0;
+  if (i != NR_VARIABLES_SOIL) return 0;
   rewind(fq);  
   FillSoilVariables(Variable);
  
@@ -55,9 +55,8 @@ int GetSoilData()
        }      
   }
 
-  if (i!= NUMBER_OF_TABLES) return 0;
+  if (i!= NR_TABLES_SOIL) return 0;
  
-  
   VolumetricSoilMoisture    = FillData[0];
   HydraulicConducitiy       = FillData[1];
   

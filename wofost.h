@@ -1,5 +1,11 @@
-#define NUMBER_OF_VARIABLES	46
-#define NUMBER_OF_TABLES	15
+#define NR_VARIABLES_CRP	46
+#define NR_TABLES_CRP   	15
+#define NR_VARIABLES_SITE       17
+#define NR_TABLES_SITE          1
+#define NR_VARIABLES_SOIL       12
+#define NR_TABLES_SOIL          2
+
+
 
 typedef struct TABLE {
 	     float x;
@@ -28,7 +34,7 @@ typedef struct SITE {
    float KBase; 
    float KRecoveryFrac;
    float SurfaceStorage;
-   float SurfaceStorageLim;
+   float MaxInitSoilM;
    AFGEN *NotInfTB;
 } Field;
 
