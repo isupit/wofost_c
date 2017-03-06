@@ -10,17 +10,18 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
   float GrowthSourceLimited;
   float SpecLeafArea; 
   Green *New=NULL;
+  Green *LeaveProperties=NULL;
  
   SpecLeafArea = Afgen(SpecificLeaveArea, &DevelopmentStage);
 
- /* leave area not to exceed exponential growth */
+ /* Leave area not to exceed exponential growth */
   if (LAIExp < 6 && NewLeaves > 0.) {
       GrowthExpLAI = LAIExp*RelIncreaseLAI*max(0.,Temp - TempBaseLeaves);
     
-      /* source limited leaf area increase */
+      /* Source limited leaf area increase */
       GrowthSourceLimited = NewLeaves* Afgen(SpecificLeaveArea, &DevelopmentStage);
     
-      /* sink-limited leaf area increase */
+      /* Sink-limited leaf area increase */
       SpecLeafArea = min(GrowthExpLAI, GrowthSourceLimited)/NewLeaves;
     }
  else
@@ -32,7 +33,20 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
   New->area   = SpecLeafArea;
   New->next   = NULL;
   
+  /* Store the start address */
+  LeaveProperties = Crop.LeaveProperties;
+  
+  /* Loop until the last element in the list */
+  while (Crop.LeaveProperties->next != NULL)
+  {
+      Crop.LeaveProperties = Crop.LeaveProperties->next; 
+  }
+          
+  /* Add new element to the list */
   Crop.LeaveProperties->next = New;
      
+  /* Restore the start address */
+  Crop.LeaveProperties = LeaveProperties;
+  
   return GrowthExpLAI;
 }

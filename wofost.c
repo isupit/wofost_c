@@ -12,9 +12,9 @@
 void EulerIntegration()	    
 {
        float PhysAgeing;
-       Green *previous;
+       Green *LeaveProperties;
 
-       previous = Crop.LeaveProperties;
+       LeaveProperties = Crop.LeaveProperties;
        
        Crop.st.roots    = Crop.st.roots   + Crop.rt.roots;
        Crop.st.stems    = Crop.st.stems   + Crop.rt.stems;
@@ -22,19 +22,19 @@ void EulerIntegration()
        Crop.st.storage  = Crop.st.storage + Crop.rt.storage;
        Crop.st.LAIExp   = Crop.st.LAIExp  + Crop.rt.LAIExp;
 
-       /* go to the end of the list */
-       while (Crop.LeaveProperties->next) 
-              Crop.LeaveProperties = Crop.LeaveProperties->next;
+       /* Go to the end of the list */
+       //while (Crop.LeaveProperties->next) 
+       //       Crop.LeaveProperties = Crop.LeaveProperties->next;
        
        PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
        
-       /* update the leave age for each age class */
+       /* Update the leave age for each age class */
        while (Crop.LeaveProperties->next) {
           Crop.LeaveProperties->age = Crop.LeaveProperties->age + PhysAgeing;
 	  Crop.LeaveProperties      = Crop.LeaveProperties->next;}
 	  
-       /* return to beginning of the linked list */
-       Crop.LeaveProperties = previous;	  
+       /* Return to beginning of the linked list */
+       Crop.LeaveProperties = LeaveProperties;	  
        
 }       	     
 
@@ -121,7 +121,7 @@ void Initialize(int Emergence)
        Crop.st.storage   = InitialShootWeight*Afgen(Storage, &DevelopmentStage);
        
        Crop.MaxRootingDepth = max(InitRootingDepth,min(MaxRootingDepth,
-            WatBal.SoilMaxRootingDepth));
+            Site.SoilLimRootDepth));
 
        LAIEmergence  = Crop.st.leaves*Afgen(SpecificLeaveArea, &DevelopmentStage); 
        
@@ -134,6 +134,7 @@ void Initialize(int Emergence)
        Crop.LeaveProperties->age    = 0.;
        Crop.LeaveProperties->weight = Crop.st.leaves;
        Crop.LeaveProperties->area   = Afgen(SpecificLeaveArea, &DevelopmentStage);
+       Crop.LeaveProperties->next   = NULL;
        
 }       
 
@@ -149,7 +150,7 @@ void RateCalculationCrop()
        Crop.rt.stems   = 0.;
        Crop.rt.storage = 0.;
        Crop.rt.LAIExp  = 0.;      
-       Crop.LeaveProperties = NULL;
+       //Crop.LeaveProperties = NULL;
       
        /* assimilation */
        GrossAssimilation = DailyTotalAssimilation(Astro());
@@ -212,6 +213,10 @@ printf(" dvs: %7.2f", DevelopmentStage);
     Day++;
 
 }
+  
+Clean();
+
+
 return 0;
 }           
                       	     

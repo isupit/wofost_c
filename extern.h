@@ -20,3 +20,4 @@ extern int CalcPenman();
 extern void WatBalInitialize();
 extern void WatBalRateCalulation();
 extern void WatBalIntegration();
+extern void Clean();
