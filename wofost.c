@@ -13,8 +13,6 @@ void EulerIntegration()
 {
        float PhysAgeing;
        Green *LeaveProperties;
-
-       LeaveProperties = Crop.LeaveProperties;
        
        Crop.st.roots    = Crop.st.roots   + Crop.rt.roots;
        Crop.st.stems    = Crop.st.stems   + Crop.rt.stems;
@@ -22,11 +20,11 @@ void EulerIntegration()
        Crop.st.storage  = Crop.st.storage + Crop.rt.storage;
        Crop.st.LAIExp   = Crop.st.LAIExp  + Crop.rt.LAIExp;
 
-       /* Go to the end of the list */
-       //while (Crop.LeaveProperties->next) 
-       //       Crop.LeaveProperties = Crop.LeaveProperties->next;
-       
+       /* Establish the age increase */
        PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
+       
+       /* Store the initial address */
+       LeaveProperties = Crop.LeaveProperties;
        
        /* Update the leave age for each age class */
        while (Crop.LeaveProperties->next) {
@@ -57,20 +55,22 @@ void Growth(float NewPlantMaterial)
         float shoots, FractionRoots;
 	float DeathRoots, DeathStems;
 		
-	FractionRoots = Afgen(Roots, &DevelopmentStage);
-	DeathRoots    = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
-	Crop.rt.roots   = NewPlantMaterial*FractionRoots - DeathRoots;
+	FractionRoots  = Afgen(Roots, &DevelopmentStage);
+	Crop.drt.roots = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
+	Crop.rt.roots  = NewPlantMaterial*FractionRoots - DeathRoots;
 	
 	shoots        = NewPlantMaterial*(1-FractionRoots);
 	    
-	DeathStems    = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
+	Crop.drt.stems    = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
 	Crop.rt.stems = shoots*Afgen(Stems, &DevelopmentStage)-DeathStems;
 	
 	Crop.rt.storage = shoots*Afgen(Storage, &DevelopmentStage);
 	
-	Crop.rt.leaves = shoots*Afgen(Leaves, &DevelopmentStage);
+	
+        Crop.drt.leaves = DyingLeaves(); 
+        Crop.rt.leaves = shoots*Afgen(Leaves, &DevelopmentStage);
 	Crop.rt.LAIExp = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves);	
-	Crop.rt.leaves = Crop.rt.leaves - DyingLeaves();
+	Crop.rt.leaves = Crop.rt.leaves -  Crop.drt.leaves;
 	
         Crop.RootDepth_prev = Crop.RootDepth;
         Crop.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
@@ -144,24 +144,23 @@ void RateCalculationCrop()
        float TotalAssimilation;
        float Maintenance, GrossAssimilation, GrossGrowth;    
        
-       /* set rates to 0 */
+       /* Set rates to 0 */
        Crop.rt.roots   = 0.;
        Crop.rt.leaves  = 0.;
        Crop.rt.stems   = 0.;
        Crop.rt.storage = 0.;
        Crop.rt.LAIExp  = 0.;      
-       //Crop.LeaveProperties = NULL;
       
-       /* assimilation */
+       /* Assimilation */
        GrossAssimilation = DailyTotalAssimilation(Astro());
 
-       /* correction for low minimum temperatures */
+       /* Correction for low minimum temperatures */
        TotalAssimilation = Correct(GrossAssimilation);
 
-       /* respiration */
+       /* Respiration */
        Maintenance = RespirationRef(TotalAssimilation);
 
-       /* conversion */
+       /* Conversion */
        GrossGrowth = Conversion(TotalAssimilation-Maintenance); 
       
        /* Growth of root, stems, leaves and storage organs */

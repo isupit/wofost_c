@@ -32,55 +32,56 @@ int CalcPenman()
     float Rnw, Rns, Rnc;
     float VapourP, SaturatedVap;
             
-/* preparatory calculations mean daily temperature and temperature 
-   difference (Celsius) coefficient Bu in wind function, dependent on 
-   temperature difference */
+    /* Preparatory calculations mean daily temperature and temperature 
+       difference (Celsius) coefficient Bu in wind function, dependent on 
+       temperature difference */
     
     Tmpa  = (Tmin[Day] + Tmax[Day])/2.;
     Tdif  = Tmax[Day] - Tmin[Day];
     BU    = 0.54 + 0.35 * limit(0.,1.,(Tdif-12.)/4.);
 
-/*  barometric pressure (mbar)             */
-/*  psychrometric constant (mbar/Celsius)  */
+    /* Barometric pressure (mbar)             */
+    /* Psychrometric constant (mbar/Celsius)  */
     Pbar  = 1013.*exp (-0.034*Altitude/(Tmpa+273.));
     Gamma = PSYCON * Pbar/1013.;
 
 
-/*   saturated vapour pressure according to equation of Goudriaan     */
-/*   (1977) derivative of SVAP with respect to temperature, i.e.      */
-/*   slope of the SVAP-temperature curve (mbar/Celsius);              */
-/*   measured vapour pressure not to exceed saturated vapour pressure */
+    /* Saturated vapour pressure according to equation of Goudriaan     */
+    /* (1977) derivative of SVAP with respect to temperature, i.e.      */
+    /* slope of the SVAP-temperature curve (mbar/Celsius).              */
+            
+    /* Measured vapour pressure not to exceed saturated vapour pressure */
 
-      SaturatedVap  = 6.10588 * exp (17.32491*Tmpa/(Tmpa+238.102));
-      delta         = 238.102*17.32491*SaturatedVap/pow((Tmpa +238.102),2);
-      VapourP       = min(Vapour[Day],SaturatedVap);
+    SaturatedVap  = 6.10588 * exp (17.32491*Tmpa/(Tmpa+238.102));
+    delta         = 238.102*17.32491*SaturatedVap/pow((Tmpa +238.102),2);
+    VapourP       = min(Vapour[Day],SaturatedVap);
 
-/*   the expression n/N (RelLSSD) from the Penman formula is estimated */
-/*   from the Angstrom formula: RI=RA(A+B.n/N) -> n/N=(RI/RA-A)/B,     */
-/*   where RI/RA is the atmospheric transmission obtained by a CALL    */
-/*    to ASTRO: */
+    /* The expression n/N (RelLSSD) from the Penman formula is estimated   */
+    /* from the Angstrom formula: RI=RA(A+B.n/N) -> n/N=(RI/RA-A)/B,       */
+    /* where RI/RA is the atmospheric transmission obtained by a CALL */
+    /* to ASTRO: */
               
-      RelSunShineDuration = limit(0.,1.,(AtmosphTransm-(Site.AngstA))/(Site.AngstB));
+    RelSunShineDuration = limit(0.,1.,(AtmosphTransm-(Site.AngstA))/(Site.AngstB));
 
-/*     Terms in Penman formula, for water, soil and canopy */
-/*     net outgoing long-wave radiation (J/m2/d) acc. to Brunt (1932) */
-      RB  = STBC*pow((Tmpa+273.),4)*(0.56-0.079*sqrt(VapourP))*
+    /* Terms in Penman formula, for water, soil and canopy            */
+    /* Net outgoing long-wave radiation (J/m2/d) acc. to Brunt (1932) */
+    RB  = STBC*pow((Tmpa+273.),4)*(0.56-0.079*sqrt(VapourP))*
               (0.1+0.9*RelSunShineDuration);
 
-/*     net absorbed radiation, expressed in mm/d */
-      Rnw = (Radiation[Day]*(1.-REFCFW)-RB)/LHVAP;
-      Rns = (Radiation[Day]*(1.-REFCFS)-RB)/LHVAP;
-      Rnc = (Radiation[Day]*(1.-REFCFC)-RB)/LHVAP;
+    /* Net absorbed radiation, expressed in mm/d */
+    Rnw = (Radiation[Day]*(1.-REFCFW)-RB)/LHVAP;
+    Rns = (Radiation[Day]*(1.-REFCFS)-RB)/LHVAP;
+    Rnc = (Radiation[Day]*(1.-REFCFC)-RB)/LHVAP;
 
-/*     evaporative demand of the atmosphere (mm/d)  */
-      Ea  = 0.26 * max (0.,(SaturatedVap-VapourP)) * (0.5+BU * Windspeed[Day]);
-      Eac = 0.26 * max (0.,(SaturatedVap-VapourP)) * (1.0+BU * Windspeed[Day]);
+    /* Evaporative demand of the atmosphere (mm/d)  */
+    Ea  = 0.26 * max (0.,(SaturatedVap-VapourP)) * (0.5+BU * Windspeed[Day]);
+    Eac = 0.26 * max (0.,(SaturatedVap-VapourP)) * (1.0+BU * Windspeed[Day]);
 
-/*     Penman formula (1948)                */
-/*     Ensure reference evaporation >= 0.   */
-      Penman.E0  = max(0., (delta*Rnw + Gamma*Ea)/(delta + Gamma));
-      Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
-      Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
+    /* Penman formula (1948)                */
+    /* Ensure reference evaporation >= 0.   */
+    Penman.E0  = max(0., (delta*Rnw + Gamma*Ea)/(delta + Gamma));
+    Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
+    Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
 
       return 1;
 }

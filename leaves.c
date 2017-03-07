@@ -3,6 +3,7 @@
 #include "dynamic.h"
 #include "mmla.h"
 #include "wofost.h"
+#include "penman.h"
 
 float DyingLeaves()
 {
@@ -10,11 +11,11 @@ float DyingLeaves()
   float CriticalLAI;
   Green *wipe;
 
-  /* death due to water stress or high LAI */
-  /* Death1 = WeightLeaves*(1. - Tra/TraMax)*MaxRelDeathRate ; */
+  /* Dying rate of leaves due to water stress or high LAI */
     
   CriticalLAI = 3.2/Afgen(KDiffuseTb, &DevelopmentStage);
-  Death1      = 0;
+  Death1      = Crop.st.leaves *(1. - WatBal.rt.Transpiration / 
+                Evtra.MaxTranspiration)*MaxRelDeathRate ;
   Death2      = Crop.st.leaves * limit(0.,0.03, 0.03*(LAI-CriticalLAI)/CriticalLAI);
   Death       = max(Death1, Death2);  
   

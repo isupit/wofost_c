@@ -33,25 +33,26 @@ float Evtra() {
     
     KDiffuse = Afgen(KDiffuseTb, &DevelopmentStage);      
     Evtra.MaxEvapWater = Penman.E0 * exp(-0.75 * KDiffuse * Lai);
-    Evtra.MaxEvapSoil  = max(Penman.ES0 * exp(-0.75 * KDiffuse * Lai);
-    MaxTranspiration = max(0.0001,  Penman.ET0*(1.-exp(-0.75 * KDiffuse * Lai)));
+    Evtra.MaxEvapSoil  = max(0., Penman.ES0 * exp(-0.75 * KDiffuse * Lai));
+    Evtra.MaxTranspiration = max(0.0001,  
+            Penman.ET0*(1.-exp(-0.75 * KDiffuse * Lai)));
     
-    /*crop specific correction on potential transpiration rate */
-    ET0 = CorrectionTransp * Penman.ET0;
+    /* Crop specific correction on potential transpiration rate */
+    ET0 = CorrectionTransp * Penman.ET0; 
     
     SoilWatDepletion = sweaf(CropGroupNumber);
     CriticalSoilMoisture = (1. - SoilWatDepletion)*
             (WatBal.ct.MoistureFC-WatBal.ct.MoistureWP) + WatBal.ct.MoistureWP;
     
-/*   reduction in transpiration in case of water shortage */
-    ReductionMoisture = limit(0.,1.,(SM-WatBal.ct.MoistureWP)/
+    /* Transpiration reduction in case of water shortage */
+    ReductionMoisture = limit(0.,1.,(WatBal.st.Moisture - WatBal.ct.MoistureWP)/
             (CriticalSoilMoisture-WatBal.ct.MoistureWP));
     
     if (!Airducts) {
-        /* critical soil moisture content for aeration */
+        /* Critical soil moisture content for aeration */
         SoilMoistureAeration = WatBal.ct.MoistureSAT - WatBal.ct.CriticalSoilAirC;
         
-        /* count days since start oxygen shortage (up to 4 days)*/
+        /* Count days since start oxygen shortage (up to 4 days)*/
         if (SoilMoisture >= SoilMoistureAeration) {
             DaysOxygenStress = min(DaysOxygenStress++, 4.);
         }
@@ -59,7 +60,7 @@ float Evtra() {
             DaysOxygenStress = 0.;
         }
         
-        /* maximum reduction reached after 4 days */
+        /* Maximum reduction reached after 4 days */
         MaxReductionOxygenStress = limit (0.,1.,(WatBal.ct.MoistureSAT-SoilMoisture)/
                 (WatBal.ct.MoistureSAT - SoilMoistureAeration));
         ReductionOxygenStress   = MaxReductionOxygenStress + 
@@ -69,7 +70,8 @@ float Evtra() {
         ReductionOxygenStress = 1.;
     }
      
-    WatBal.rt.Transpiration = ReductionMoisture * ReductionOxygenStress * MaxTranspiration;
+    WatBal.rt.Transpiration = ReductionMoisture * ReductionOxygenStress * 
+            Evtra.MaxTranspiration;
 
     return 1;
 

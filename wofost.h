@@ -1,5 +1,8 @@
-#define NR_VARIABLES_CRP	46
-#define NR_TABLES_CRP   	15
+#ifndef WOFOST_H
+#define WOFOST_H
+
+#define NR_VARIABLES_CRP	65
+#define NR_TABLES_CRP   	18
 #define NR_VARIABLES_SITE       17
 #define NR_TABLES_SITE          1
 #define NR_VARIABLES_SOIL       12
@@ -111,6 +114,12 @@ typedef struct P_STATES {
     float storage;
 } p_states;
 
+typedef struct DYING_RATES {
+    float roots;
+    float stems;
+    float leaves;
+} dying_rates; 
+
 
 typedef struct GREEN {
 	float weight;
@@ -124,6 +133,7 @@ typedef struct PLANT {
              float RootDepth_prev;
              float MaxRootingDepth;
              p_rates rt;
+             dying_rates drt;
              p_states st; 
 	     Green *LeaveProperties;
 	     } Plant;
@@ -142,6 +152,13 @@ AFGEN *HydraulicConducitiy; /* currently not used */
 
 /* Table for rainfall dependent infiltration */
 AFGEN *NotInfTB; 
+
+
+/* Tables for the maximum nutrient content in leaves as a function of DVS*/
+AFGEN *N_MaxLeaves;
+AFGEN *P_MaxLeaves;
+AFGEN *K_MaxLeaves;
+
 
 /** Meteorological Variables  **/
 int Station, Year;
@@ -248,3 +265,43 @@ float InitAvailMoisture;
 float InitSoilMoisture;
 float DaysSinceLastRain;
 float MoistureLOW;
+
+
+/** Nutrients **/
+float RDRNS; 
+float DVSNLT; 
+float DVSNT;
+float FNTRT;  
+float FRNX;   
+float FRPX;   
+float FRKX;   
+float N_MaxRoots ;   
+float N_MaxStems ;   
+float P_MaxRoots ;   
+float P_MaxStems ;   
+float K_MaxRoots ;   
+float K_MaxStems ;   
+float NLAI;   
+float NLUE;   
+float NMAXSO; 
+float PMAXSO; 
+float KMAXSO; 
+float NPART;  
+float NSLA;   
+float RNFLV;  
+float RNFST;  
+float RNFRT;  
+float RPFLV;  
+float RPFST;  
+float RPFRT;  
+float RKFLV;  
+float RKFST;  
+float RKFRT;  
+float TCNT;   
+float TCPT;   
+float TCKT;   
+float NFIXF;  
+
+
+#endif	// WOFOST_H
+

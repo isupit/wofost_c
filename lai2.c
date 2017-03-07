@@ -23,6 +23,6 @@ float LeaveAreaIndex()
  Crop.LeaveProperties = LeaveProperties; 
  
  /* Return Green Area Index which will be used as LAI */     
-return (LAISum + Crop.st.stems*Afgen(SpecificStemArea, &DevelopmentStage) +
-	     Crop.st.storage*SpecificPodArea) ;
+return (LAISum + Crop.st.stems * Afgen(SpecificStemArea, &DevelopmentStage) +
+	     Crop.st.storage * SpecificPodArea) ;
 }

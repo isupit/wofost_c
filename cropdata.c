@@ -7,7 +7,7 @@
 
 int GetCropData()
 {
-  AFGEN *FillData[15], *Table, *start;
+  AFGEN *FillData[18], *Table, *start;
   int i, c;
   float Variable[NR_VARIABLES_CRP], XValue, YValue;
   char x[2], xx[2],  word[NR_VARIABLES_CRP];
@@ -71,7 +71,10 @@ int GetCropData()
   Storage              = FillData[12];
   DeathRateStems       = FillData[13];
   DeathRateRoots       = FillData[14]; 
-
+  N_MaxLeaves          = FillData[15];
+  P_MaxLeaves          = FillData[16];
+  N_MaxLeaves          = FillData[17];
+          
 return 1;
 }
 

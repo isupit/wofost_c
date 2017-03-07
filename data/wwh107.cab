@@ -134,14 +134,58 @@ RDI      =  10.     ! initial rooting depth [cm]
 RRI      =   1.2    ! maximum daily increase in rooting depth [cm d-1]
 RDMCR    = 125.     ! maximum rooting depth [cm]
 
-** nutrients
-** maximum and minimum concentrations of N, P, and K
-** in storage organs        in vegetative organs [kg kg-1]
-NMINSO   =   0.0110 ;       NMINVE   =   0.0030
-NMAXSO   =   0.0310 ;       NMAXVE   =   0.0105
-PMINSO   =   0.0016 ;       PMINVE   =   0.0004
-PMAXSO   =   0.0060 ;       PMAXVE   =   0.0020
-KMINSO   =   0.0030 ;       KMINVE   =   0.0070
-KMAXSO   =   0.0080 ;       KMAXVE   =   0.0280
-YZERO    = 200.     ! max. amount veg. organs at zero yield [kg ha-1]
-NFIX     =   0.01   ! fraction of N-uptake from biol. fixation [kg kg-1]
+** nitrogen use
+RDRNS    = 0.05     ! max. relative death rate of leaves due to nutrient (N-P-K) stress
+DVSNLT   = 1.3      ! development stage above which no crop N-P-K uptake does occur
+DVSNT    = 0.8      ! development stage above which N-P-K translocation to storage organs does occur 
+FNTRT    = 0.15     ! N-P-K translocations from roots as a fraction of resp. total N-P-K amounts translocated from leaves and stems
+FRNX     = 1.00     ! optimal N concentration as fraction of maximum N concentration
+FRPX     = 1.00     ! optimal P concentration as fraction of maximum P concentration
+FRKX     = 1.00     ! optimal K concentration as fraction of maximum K concentration
+LRNR     = 0.50     ! maximum N concentration in roots as fraction of maximum N concentration in leaves
+LSNR     = 0.50     ! maximum N concentration in stems as fraction of maximum N concentration in leaves
+LRPR     = 0.50     ! maximum P concentration in roots as fraction of maximum P concentration in leaves
+LSPR     = 0.50     ! maximum P concentration in stems as fraction of maximum P concentration in leaves
+LRKR     = 0.50     ! maximum K concentration in roots as fraction of maximum K concentration in leaves
+LSKR     = 0.50     ! maximum K concentration in stems as fraction of maximum K concentration in leaves
+NLAI     = 1.0      ! coefficient for the reduction due to nutrient (N-P-K) stress of the LAI increase (during juvenile phase)
+NLUE     = 1.1      ! coefficient for the reduction of RUE due to nutrient (N-P-K) stress
+NMAXSO   = 0.0176   ! maximum N concentration (= 1.6*min. N conc.) in storage organs [kg N kg-1 dry biomass]
+PMAXSO   = 0.0026   ! maximum P concentration (= 1.6*min. P conc.) in storage organs [kg P kg-1 dry biomass]
+KMAXSO   = 0.0048   ! maximum K concentration (= 1.6*min. K conc.) in storage organs [kg K kg-1 dry biomass]
+NPART    = 1.0      ! coefficient for the effect of N stress on leaf allocation 
+NSLA     = 0.5      ! coefficient for the effect of nutrient (N-P-K) stress on SLA reduction
+RNFLV    = 0.004    ! residual N fraction in leaves [kg N kg-1 dry biomass]
+RNFST    = 0.002    ! residual N fraction in stems [kg N kg-1 dry biomass]
+RNFRT    = 0.002    ! residual N fraction in roots [kg N kg-1 dry biomass]
+RPFLV    = 0.0005   ! residual P fraction in leaves [kg P kg-1 dry biomass]
+RPFST    = 0.0003   ! residual P fraction in stems [kg P kg-1 dry biomass]
+RPFRT    = 0.0003   ! residual P fraction in roots [kg P kg-1 dry biomass]
+RKFLV    = 0.009    ! residual K fraction in leaves [kg K kg-1 dry biomass]
+RKFST    = 0.005    ! residual K fraction in stems [kg K kg-1 dry biomass]
+RKFRT    = 0.005    ! residual K fraction in roots [kg K kg-1 dry biomass]
+TCNT     = 10.      ! time coefficient for N translocation to storage organs [days]
+TCPT     = 10.      ! time coefficient for P translocation to storage organs [days]
+TCKT     = 10.      ! time coefficient for K translocation to storage organs [days]
+NFIXF    = 0.00     ! fraction of crop nitrogen uptake by biological fixation [-]
+
+
+NMXLV    =  0.0,   0.06,   ! maximum N concentration in leaves as function of development stage [kg N kg-1 dry biomass]
+            0.4,   0.04,
+            0.7,   0.03,
+            1.0,   0.02,
+            2.0,   0.014,
+            2.1,   0.014
+PMXLV    =  0.0, 0.011,   ! maximum P concentration in leaves as function of development stage [kg P kg-1 dry biomass]
+            0.4, 0.008,
+            0.7, 0.006,
+            1.0, 0.004,
+            2.0, 0.0027,
+            2.1, 0.0027
+
+KMXLV    =  0.0, 0.12,   ! maximum K concentration in leaves as function of development stage [kg K kg-1 dry biomass]
+            0.4, 0.08,
+            0.7, 0.06,
+            1.0, 0.04,
+            2.0, 0.028,
+            2.1, 0.028

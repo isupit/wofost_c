@@ -30,21 +30,40 @@ char *CropParam[]={"TBASEM",
 		   "RDI",
 		   "RRI",
 		   "RDMCR",
-                   "NMINSO",
-		   "NMINVE",
-                   "NMAXSO",
-                   "NMAXVE",
-		   "PMINSO",
-		   "PMINVE",
-                   "PMAXSO",
-                   "PMAXVE",
-                   "KMINSO",
-                   "KMINVE",
-		   "KMAXSO",
-		   "KMAXVE",
-		   "YZERO",
-		   "NFIX",
-                   "NULL"
+                   "RDRNS"  
+                    "DVSNLT" 
+                    "DVSNT"  
+                    "FNTRT"  
+                    "FRNX"   
+                    "FRPX"   
+                    "FRKX"   
+                    "LRNR"   
+                    "LSNR"   
+                    "LRPR"   
+                    "LSPR"   
+                    "LRKR"   
+                    "LSKR"   
+                    "NLAI"   
+                    "NLUE"   
+                    "NMAXSO" 
+                    "PMAXSO" 
+                    "KMAXSO" 
+                    "NPART"  
+                    "NSLA"   
+                    "RNFLV"  
+                    "RNFST"  
+                    "RNFRT"  
+                    "RPFLV"  
+                    "RPFST"  
+                    "RPFRT"  
+                    "RKFLV"  
+                    "RKFST"  
+                    "RKFRT"  
+                    "TCNT"   
+                    "TCPT"   
+                    "TCKT"   
+                    "NFIXF"  
+                    "NULL"
 		   };
 		   
 char *CropParam2[]={
@@ -63,6 +82,9 @@ char *CropParam2[]={
 		    "FOTB",
 		    "RDRRTB",
 		    "RDRSTB",
+                    "NMXLV",
+                    "PMXLV",
+                    "PMXLV",
                     "NULL"
 		    };
 

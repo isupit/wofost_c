@@ -55,23 +55,40 @@ MaxIncreaseRoot          = Variable[30];
 MaxRootingDepth          = Variable[31];
 
 /** Nutrients  **/
-NMINSO                   = Variable[32];
-NMINVE                   = Variable[33];
-NMAXSO                   = Variable[34];
-NMAXVE                   = Variable[35];
+RDRNS                    = Variable[32];
+DVSNLT                   = Variable[33];
+DVSNT                    = Variable[34];
+FNTRT                    = Variable[35];
+FRNX                     = Variable[36];
+FRPX                     = Variable[37];
+FRKX                     = Variable[38];
+N_MaxRoots               = Variable[39];
+N_MaxStems               = Variable[40];
+P_MaxRoots               = Variable[41];
+P_MaxStems               = Variable[42];
+K_MaxRoots               = Variable[43];
+K_MaxStems               = Variable[44];
+NLAI                     = Variable[45];                	     
+NLUE                     = Variable[46];
+NMAXSO                   = Variable[47];
+PMAXSO                   = Variable[48];
+KMAXSO                   = Variable[49];
+NPART                    = Variable[50];
+NSLA                     = Variable[51];
+RNFLV                    = Variable[52];
+RNFST                    = Variable[53];
+RNFRT                    = Variable[54];
+RPFLV                    = Variable[55];
+RPFST                    = Variable[56];
+RPFRT                    = Variable[57]; 
+RKFLV                    = Variable[58];
+RKFST                    = Variable[59];
+RKFRT                    = Variable[60];
+TCNT                     = Variable[61];
+TCPT                     = Variable[62];
+TCKT                     = Variable[63];
+NFIXF                    = Variable[64];
 
-PMINSO                   = Variable[36];
-PMINVE                   = Variable[37];
-PMAXSO                   = Variable[38];
-PMAXVE                   = Variable[39];
-
-KMINSO                   = Variable[40];
-KMINVE                   = Variable[41];
-KMAXSO                   = Variable[42];
-KMAXVE                   = Variable[43];
-
-YZERO                    = Variable[44];
-NFIX                     = Variable[45];                	     
 
 for (i=0;i<=NR_VARIABLES_CRP;i++) {
     Variable[i] = 0.;

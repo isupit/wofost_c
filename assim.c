@@ -33,31 +33,31 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
  for (i=0;i<3;i++)
  {
       LAIC   = LAI*XGauss[i];
-/*    absorbed radiation */
-      AbsorbedRadiationDiffuse = (1.-Reflection)*PARDiffuse*KDiffuse * exp(-KDiffuse *LAIC);
-      AbsorbedRadiationTotal   = (1.-Reflection)*PARDirect*KDirectTl * exp(-KDirectTl *LAIC);
-      AbsorbedRadiationDirect  = (1.-ScatCoef)  *PARDirect*KDirectBl * exp(-KDirectBl*LAIC);
-      
-/*    Absorbed flux in W/m2 for shaded leaves and assimilation */
-      AbsorbedShadedLeaves = AbsorbedRadiationDiffuse+ AbsorbedRadiationTotal - AbsorbedRadiationDirect;
-      AssimShadedLeaves  = AssimMax*(1.-exp (-AbsorbedShadedLeaves*EFF/max(2.0,AssimMax)));
-      
-/*    Direct light absorbed by leaves perpendicular on direct */
-/*    beam and assimilation of sunlit leaf area               */
-      AbsorbedDirectLeaves=(1-ScatCoef)*PARDirect/SinB;
-      if (AbsorbedDirectLeaves <= 0) AssimSunlitLeaves = AssimShadedLeaves;
-      else AssimSunlitLeaves = AssimMax*(1.-(AssimMax-AssimShadedLeaves)*
-                 (1-exp (-AbsorbedDirectLeaves*EFF/max(2.0,AssimMax)))/(EFF*AbsorbedDirectLeaves));
+    /* Absorbed radiation */
+    AbsorbedRadiationDiffuse = (1.-Reflection)*PARDiffuse*KDiffuse * exp(-KDiffuse *LAIC);
+    AbsorbedRadiationTotal   = (1.-Reflection)*PARDirect*KDirectTl * exp(-KDirectTl *LAIC);
+    AbsorbedRadiationDirect  = (1.-ScatCoef)  *PARDirect*KDirectBl * exp(-KDirectBl*LAIC);
+    
+    /* Absorbed flux in W/m2 for shaded leaves and assimilation */
+    AbsorbedShadedLeaves = AbsorbedRadiationDiffuse+ AbsorbedRadiationTotal - AbsorbedRadiationDirect;
+    AssimShadedLeaves  = AssimMax*(1.-exp (-AbsorbedShadedLeaves*EFF/max(2.0,AssimMax)));
+    
+    /* Direct light absorbed by leaves perpendicular on direct */
+    /* beam and assimilation of sunlit leaf area               */
+    AbsorbedDirectLeaves=(1-ScatCoef)*PARDirect/SinB;
+    if (AbsorbedDirectLeaves <= 0) AssimSunlitLeaves = AssimShadedLeaves;
+    else AssimSunlitLeaves = AssimMax*(1.-(AssimMax-AssimShadedLeaves)*
+               (1-exp (-AbsorbedDirectLeaves*EFF/max(2.0,AssimMax)))/(EFF*AbsorbedDirectLeaves));
 
-/*    Fraction of sunlit leaf area and local assimilation rate  */ 
-      FractionSunlitLeaves  = exp (-KDirectBl*LAIC);
-      AssimTotal = FractionSunlitLeaves*AssimSunlitLeaves+(1. - FractionSunlitLeaves)*AssimShadedLeaves;
+/*  Fraction of sunlit leaf area and local assimilation rate  */ 
+    FractionSunlitLeaves  = exp (-KDirectBl*LAIC);
+    AssimTotal = FractionSunlitLeaves*AssimSunlitLeaves+(1. - FractionSunlitLeaves)*AssimShadedLeaves;
 
-/*    Integration */
-      GrossCO2 = GrossCO2 + AssimTotal * WGauss[i];
+/*  Integration */
+    GrossCO2 = GrossCO2 + AssimTotal * WGauss[i];
 }
-      GrossCO2 = GrossCO2*LAI;
-      return (GrossCO2);     
+    GrossCO2 = GrossCO2*LAI;
+    return (GrossCO2);     
 }
 
 
@@ -83,7 +83,7 @@ float DailyTotalAssimilation(int astro)
     PARDiffuse = min (PAR,SinB*DiffRadPP);
     PARDirect  = PAR-PARDiffuse;
     DailyTotalAssimilation = DailyTotalAssimilation + 
-                             InstantAssimilation(KDiffuse,EFF,AssimMax,SinB,PARDiffuse,PARDirect)*WGauss[i];
+        InstantAssimilation(KDiffuse,EFF,AssimMax,SinB,PARDiffuse,PARDirect) * WGauss[i];
     }  
  }
     return(DailyTotalAssimilation*Daylength);
