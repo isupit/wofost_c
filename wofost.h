@@ -8,7 +8,7 @@
 #define NR_VARIABLES_SOIL       12
 #define NR_TABLES_SOIL          2
 
-
+int NUMBER_OF_TABLES = NR_TABLES_CRP + NR_TABLES_SITE + NR_TABLES_SOIL;
 
 typedef struct TABLE {
 	     float x;
@@ -16,6 +16,7 @@ typedef struct TABLE {
 	     struct TABLE *next;
 	     } AFGEN;
 
+AFGEN *AfgenTable[NUMBER_OF_TABLES];
 
 typedef struct SITE {
    float AngstA;
@@ -98,21 +99,35 @@ typedef struct SOIL {
     
 Soil WatBal;
 
-typedef struct P_RATES {
+typedef struct NUTRIENT_RATES {
     float roots;
     float stems;
     float leaves;
-    float LAIExp;
     float storage;
-} p_rates;
+} nutrient_rates;
 
-typedef struct P_STATES {
+typedef struct NUTRIENT_STATES {
+    float roots;
+    float stems;
+    float leaves;
+    float storage;
+} nutrient_states;
+
+typedef struct GROWTH_RATES {
     float roots;
     float stems;
     float leaves;
     float LAIExp;
     float storage;
-} p_states;
+} growth_rates;
+
+typedef struct GROWTH_STATES {
+    float roots;
+    float stems;
+    float leaves;
+    float LAIExp;
+    float storage;
+} growth_states;
 
 typedef struct DYING_RATES {
     float roots;
@@ -132,10 +147,20 @@ typedef struct PLANT {
              float RootDepth;
              float RootDepth_prev;
              float MaxRootingDepth;
-             p_rates rt;
-             dying_rates drt;
-             p_states st; 
-	     Green *LeaveProperties;
+             
+             growth_rates  rt;
+             growth_states st;
+             dying_rates   drt;
+             
+             nutrient_states N_st;
+	     nutrient_states P_st;
+             nutrient_states K_st;
+             
+             nutrient_rates N_rt;
+	     nutrient_rates P_rt;
+             nutrient_rates K_rt;            
+             
+             Green *LeaveProperties;
 	     } Plant;
 Plant Crop;
 
@@ -271,7 +296,7 @@ float MoistureLOW;
 float RDRNS; 
 float DVSNLT; 
 float DVSNT;
-float FNTRT;  
+float FracTranslocRoots;  
 float FRNX;   
 float FRPX;   
 float FRKX;   
@@ -288,20 +313,20 @@ float PMAXSO;
 float KMAXSO; 
 float NPART;  
 float NSLA;   
-float RNFLV;  
-float RNFST;  
-float RNFRT;  
-float RPFLV;  
-float RPFST;  
-float RPFRT;  
-float RKFLV;  
-float RKFST;  
-float RKFRT;  
+float N_ResidualFracLeaves;  
+float N_ResidualFracStems;  
+float N_ResidualFracRoots;  
+float P_ResidualFracLeaves;  
+float P_ResidualFracStems;  
+float P_ResidualFracRoots;  
+float K_ResidualFracLeaves;  
+float K_ResidualFracStems;   
+float K_ResidualFracRoots;   
 float TCNT;   
 float TCPT;   
 float TCKT;   
 float NFIXF;  
 
 
-#endif	// WOFOST_H
+
 

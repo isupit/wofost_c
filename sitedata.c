@@ -7,7 +7,7 @@
 
 int GetSiteData()
 {
-  AFGEN *FillData[15], *Table, *start;
+  AFGEN *Table, *start;
   int i, c;
   float Variable[NR_VARIABLES_SITE], XValue, YValue;
   char x[2], xx[2],  word[NR_VARIABLES_SITE];
@@ -49,14 +49,14 @@ int GetSiteData()
 	    
 	    while ((c=fgetc(fq)) !='\n' || (c=fgetc(fq)) != EOF );
 	    }
-	    FillData[i] = start;
+	    AfgenTable[i] = start;
 	i++; 
        }      
   }
 
   if (i!= NR_TABLES_SITE) return 0;
    
-  NotInfTB         = FillData[0];
+  NotInfTB         = AfgenTable[20];
 
 return 1;
 }

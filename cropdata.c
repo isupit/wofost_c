@@ -7,7 +7,7 @@
 
 int GetCropData()
 {
-  AFGEN *FillData[18], *Table, *start;
+  AFGEN *Table, *start;
   int i, c;
   float Variable[NR_VARIABLES_CRP], XValue, YValue;
   char x[2], xx[2],  word[NR_VARIABLES_CRP];
@@ -48,7 +48,7 @@ int GetCropData()
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    FillData[i] = start;
+	    AfgenTable[i] = start;
 	i++; 
        }      
   }
@@ -56,24 +56,24 @@ int GetCropData()
   if (i!= NR_TABLES_CRP) return 0;
  
   
-  DeltaTempSum         = FillData[0];
-  SpecificLeaveArea    = FillData[1];
-  SpecificStemArea     = FillData[2];
-  KDiffuseTb           = FillData[3];
-  EFFTb                = FillData[4];
-  MaxAssimRate         = FillData[5];
-  FactorAssimRateTemp  = FillData[6];
-  FactorGrossAssimTemp = FillData[7];
-  FactorSenescence     = FillData[8];
-  Roots                = FillData[9];
-  Leaves               = FillData[10];
-  Stems                = FillData[11];
-  Storage              = FillData[12];
-  DeathRateStems       = FillData[13];
-  DeathRateRoots       = FillData[14]; 
-  N_MaxLeaves          = FillData[15];
-  P_MaxLeaves          = FillData[16];
-  N_MaxLeaves          = FillData[17];
+  DeltaTempSum         = AfgenTable[0];
+  SpecificLeaveArea    = AfgenTable[1];
+  SpecificStemArea     = AfgenTable[2];
+  KDiffuseTb           = AfgenTable[3];
+  EFFTb                = AfgenTable[4];
+  MaxAssimRate         = AfgenTable[5];
+  FactorAssimRateTemp  = AfgenTable[6];
+  FactorGrossAssimTemp = AfgenTable[7];
+  FactorSenescence     = AfgenTable[8];
+  Roots                = AfgenTable[9];
+  Leaves               = AfgenTable[10];
+  Stems                = AfgenTable[11];
+  Storage              = AfgenTable[12];
+  DeathRateStems       = AfgenTable[13];
+  DeathRateRoots       = AfgenTable[14]; 
+  N_MaxLeaves          = AfgenTable[15];
+  P_MaxLeaves          = AfgenTable[16];
+  K_MaxLeaves          = AfgenTable[17];
           
 return 1;
 }

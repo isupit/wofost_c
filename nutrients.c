@@ -10,39 +10,40 @@
 /* ---------------------------------------------------------------------------*/     
 void NutrientLoss() 
 {         
-    RNLDRT= RNFRT*Crop.drt.roots;
-    RNLDST= RNFST*Crop.drt.stems;
-    RNLDLV= RNFLV*Crop.drt.leaves;
+    RNLDRT= N_ResidualFracRoots * Crop.drt.roots;
+    RNLDST= N_ResidualFracStems * Crop.drt.stems;
+    RNLDLV= N_ResidualFracLeaves* Crop.drt.leaves;
     
-    RPLDRT = RPFRT*Crop.drt.roots;
-    RPLDST = RPFST*Crop.drt.stems;
-    RPLDLV = RPFLV*Crop.drt.leaves;
+    RPLDRT = P_ResidualFracRoots * Crop.drt.roots;
+    RPLDST = P_ResidualFracStems * Crop.drt.stems;
+    RPLDLV = P_ResidualFracLeaves* Crop.drt.leaves;
     
-    RKLDRT = RKFRT*Crop.drt.roots;
-    RKLDST = RKFST*Crop.drt.stems;
-    RKLDLV = RKFLV*Crop.drt.leaves;
+    RKLDRT = K_ResidualFracRoots * Crop.drt.roots;
+    RKLDST = K_ResidualFracStems * Crop.drt.stems;
+    RKLDLV = K_ResidualFracLeaves* Crop.drt.leaves;
 }      
 
 
-void NutrientOptimum()
+void NutrientOptimum(float *NMAXLV, float *PMAXLV, float *KMAXLV)
 {  
-    float TBGMR;
+    float VegetativeMass;
     
     /* Total vegetative living above-ground biomass (kg DM ha-1)     */
-    TBGMR = Crop.st.leaves + Crop.st.stems;
+    VegetativeMass = Crop.st.leaves + Crop.st.stems;
       
-    /* Optimal N/P/K amount in vegetative above-ground living biomass and its N concentration */
+    /* Optimal N/P/K amount in vegetative above-ground living biomass */
+    /* and its N concentration                                        */
     NOPTL  = FRNX * NMAXLV * Crop.st.leaves;
     NOPTS  = FRNX * NMAXST * Crop.st.stems;
-    NOPTMR = (NOPTL + NOPTS)/notnul(TBGMR);
+    NOPTMR = (NOPTL + NOPTS)/notnul(VegetativeMass);
     
     POPTL  = FRPX * PMAXLV * Crop.st.leaves;
     POPTS  = FRPX * PMAXST * Crop.st.stems;
-    POPTMR = (POPTL + POPTS)/notnul(TBGMR);
+    POPTMR = (POPTL + POPTS)/notnul(VegetativeMass);
 
     KOPTL  = FRKX * KMAXLV * Crop.st.leaves;
     KOPTS  = FRKX * KMAXST * Crop.st.stems;
-    KOPTMR = (KOPTL+ KOPTS)/notnul(TBGMR);
+    KOPTMR = (KOPTL+ KOPTS)/notnul(VegetativeMass);
 }
  
 /* -------------------------------------------------------------------------*/
@@ -52,20 +53,20 @@ void NutrientOptimum()
 
 void NutrientDemand()
 {
-      NDEML  =  max (NMAXLV*Crop.st.leaves  - ANLV, 0.);
-      NDEMS  =  max (NMAXST*Crop.st.stems  - ANST, 0.);
-      NDEMR  =  max (NMAXRT*Crop.st.roots  - ANRT, 0.);
-      NDEMSO =  max (NMAXSO*WSO  - ANSO, 0.)/TCNT;
+      NDEML  =  max (NMAXLV*Crop.st.leaves - Crop.N_st.leaves, 0.);
+      NDEMS  =  max (NMAXST*Crop.st.stems  - Crop.N_st.stems, 0.);
+      NDEMR  =  max (NMAXRT*Crop.st.roots  - Crop.N_st.roots, 0.);
+      NDEMSO =  max (NMAXSO*Crop.st.storage- Crop.N_st.storage, 0.)/TCNT;
 
-      PDEML  =  max (PMAXLV*Crop.st.leaves  - APLV, 0.);
-      PDEMS  =  max (PMAXST*Crop.st.stems  - APST, 0.);
-      PDEMR  =  max (PMAXRT*Crop.st.roots  - APRT, 0.);
-      PDEMSO =  max (PMAXSO*WSO  - APSO, 0.)/TCPT;
+      PDEML  =  max (PMAXLV*Crop.st.leaves - Crop.P_st.leaves, 0.);
+      PDEMS  =  max (PMAXST*Crop.st.stems  - Crop.P_st.stems, 0.);
+      PDEMR  =  max (PMAXRT*Crop.st.roots  - Crop.P_st.roots, 0.);
+      PDEMSO =  max (PMAXSO*Crop.st.storage- Crop.P_st.storage, 0.)/TCPT;
 
-      KDEML  =  max (KMAXLV*Crop.st.leaves  - AKLV, 0.);
-      KDEMS  =  max (KMAXST*Crop.st.stems  - AKST, 0.);
-      KDEMR  =  max (KMAXRT*Crop.st.roots  - AKRT, 0.);
-      KDEMSO =  max (KMAXSO*WSO  - AKSO, 0.)/TCKT;
+      KDEML  =  max (KMAXLV*Crop.st.leaves - Crop.K_st.leaves, 0.);
+      KDEMS  =  max (KMAXST*Crop.st.stems  - Crop.K_st.stems, 0.);
+      KDEMR  =  max (KMAXRT*Crop.st.roots  - Crop.K_st.roots, 0.);
+      KDEMSO =  max (KMAXSO*Crop.st.storage- Crop.K_st.storage, 0.)/TCKT;
 }
  
       
@@ -76,44 +77,48 @@ void NutrientDemand()
 /*  be translocated (kg N ha-1)                                                */
 /* ---------------------------------------------------------------------------*/
 
-void AvailableTranslocation()
-{
-      ATNLV = max (0. , ANLV-Crop.st.leaves*RNFLV)
-      ATNST = max (0. , ANST-Crop.st.stems*RNFST)
-      ATNRT = max (0. , min((ATNLV + ATNST) * FNTRT, ANRT-Crop.st.roots*RNFRT))
-      ATN   = ATNLV +  ATNST + ATNRT
-      
-      ATPLV = max (0. , APLV-Crop.st.leaves*RPFLV)
-      ATPST = max (0. , APST-Crop.st.stems*RPFST)
-      ATPRT = max (0. , min((ATPLV + ATPST) * FNTRT, APRT-Crop.st.roots*RPFRT))
-      ATP   = ATPLV +  ATPST + ATPRT
-      
-      ATKLV = max (0. , AKLV-Crop.st.leaves*RKFLV)
-      ATKST = max (0. , AKST-Crop.st.stems*RKFST)
-      ATKRT = max (0. , min((ATKLV + ATKST) * FNTRT, AKRT-Crop.st.roots*RKFRT))
-      ATK   = ATKLV +  ATKST + ATKRT
-}      
-     
-      
-/* ---------------------------------------------------------------------------*/
-/*  function Translocation()                                                  */
-/*  Purpose: To compute the amount of nutrients translocated from various     */ 
-/*  organs (kg N ha-1 d-1)                                                    */
-/* ---------------------------------------------------------------------------*/
-
 void Translocation()
 {
-      RNTLV= RNSO* ATNLV/ notnul(ATN)
-      RNTST= RNSO* ATNST/ notnul(ATN)
-      RNTRT= RNSO* ATNRT/ notnul(ATN)
-      
-      RPTLV= RPSO* ATPLV/ notnul(ATP)
-      RPTST= RPSO* ATPST/ notnul(ATP)
-      RPTRT= RPSO* ATPRT/ notnul(ATP)
+    float N_TranslocLeaves, P_TranslocLeaves, K_TranslocLeaves;
+    float N_TranslocStems,  P_TranslocStems,  K_TranslocStems;
+    float N_TranslocRoots,  P_TranslocRoots,  K_TranslocRoots;
+    float N_AvailTransloc,  P_AvailTransloc,  K_AvailTransloc;
+    
+    /* N amount available for translocation */                                                                                                              
+    N_TranslocLeaves = max(0.,Crop.N_st.leaves - Crop.st.leaves * N_ResidualFracLeaves);
+    N_TranslocStems  = max(0.,Crop.N_st.stems  - Crop.st.stems  * N_ResidualFracStems);
+    N_TranslocRoots  = max(0.,min((N_TranslocLeaves + N_TranslocStems) * FracTranslocRoots, 
+            Crop.N_st.roots - Crop.st.roots * N_ResidualFracRoots));
+    N_AvailTransloc = N_TranslocLeaves + N_TranslocStems + N_TranslocRoots;
+    
+    
+    /* P amount available for translocation */ 
+    P_TranslocLeaves = max (0.,Crop.P_st.leaves - Crop.st.leaves * P_ResidualFracLeaves);
+    P_TranslocStems  = max (0.,Crop.P_st.stems  - Crop.st.stems  * P_ResidualFracStems);
+    P_TranslocRoots  = max (0.,min((P_TranslocLeaves + P_TranslocStems) * FracTranslocRoots, 
+            Crop.P_st.roots - Crop.st.roots * P_ResidualFracRoots));
+    P_AvailTransloc  = P_TranslocLeaves + P_TranslocStems + P_TranslocRoots;
+    
+    
+    /* K amount available for translocation */ 
+    K_TranslocLeaves = max(0.,Crop.K_st.leaves - Crop.st.leaves * K_ResidualFracLeaves);
+    K_TranslocStems  = max(0.,Crop.K_st.stems  - Crop.st.stems  * K_ResidualFracStems);
+    K_TranslocRoots  = max(0.,min((K_TranslocLeaves + K_TranslocStems) * FracTranslocRoots, 
+            Crop.K_st.roots - Crop.st.roots * P_ResidualFracRoots));
+    K_AvailTransloc  = K_TranslocLeaves + K_TranslocStems + K_TranslocRoots;
 
-      RKTLV= RKSO* ATKLV/ notnul(ATK)
-      RKTST= RKSO* ATKST/ notnul(ATK)
-      RKTRT= RKSO* ATKRT/ notnul(ATK)
+    
+    RNTLV= RNSO * ATNLV/ notnul(N_AvailTransloc);
+    RNTST= RNSO * ATNST/ notnul(N_AvailTransloc);
+    RNTRT= RNSO * ATNRT/ notnul(N_AvailTransloc);
+    
+    RPTLV= RPSO* ATPLV/ notnul(P_AvailTransloc);
+    RPTST= RPSO* ATPST/ notnul(P_AvailTransloc);
+    RPTRT= RPSO* ATPRT/ notnul(P_AvailTransloc);
+
+    RKTLV= RKSO* ATKLV/ notnul(K_AvailTransloc);
+    RKTST= RKSO* ATKST/ notnul(K_AvailTransloc);
+    RKTRT= RKSO* ATKRT/ notnul(K_AvailTransloc);
 }     
 
 /* -------------------------------------------------------------------------*/
@@ -204,53 +209,66 @@ void NutrientINIT()
 
 void NutrientEmergence()
 {
-    float NMAXLVI;
-    float NMAXSTI;
-    float NMAXRTI; 
+    float Max_N_leaves;
+    float Max_N_stems;
+    float Max_N_roots; 
     
-    float PMAXLVI;
-    float PMAXSTI;
-    float PMAXRTI; 
+    float Max_P_leaves;
+    float Max_P_stems;
+    float Max_P_roots; 
     
-    float KMAXLVI;
-    float KMAXSTI;
-    float KMAXRTI; 
+    float Max_K_leaves;
+    float Max_K_stems;
+    float Max_K_roots; 
     
-    NMAXLVI= Afgen (N_MaxLeaves, &DevelopmentStage);
-    NMAXSTI= N_MaxStems * NMAXLVI;
-    NMAXRTI= N_MaxRoots * NMAXLVI;
+    /* Initial maximum N concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
+    Max_N_leaves= Afgen (N_MaxLeaves, &DevelopmentStage);
+    Max_N_stems = Fraction_N_MaxStems * Max_N_leaves;
+    Max_N_roots = Fraction_N_MaxRoots * Max_N_leaves;
         
     /* Initial maximum N concentration in plant organs [kg N ]           */
-    Crop.N_st.leaves = NMAXLVI * Crop.st.leaves;
-    Crop.N_st.stems  = NMAXSTI * Crop.st.stems;
-    Crop.N_st.roots  = NMAXRTI * Crop.st.roots;
+    Crop.N_st.leaves = Max_N_leaves * Crop.st.leaves;
+    Crop.N_st.stems  = Max_N_stems  * Crop.st.stems;
+    Crop.N_st.roots  = Max_N_roots  * Crop.st.roots;
     Crop.N_st.storage = 0.;
        
     /* Initial maximum P concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
-    PMAXLVI= Afgen (P_MaxLeaves, &DevelopmentStage);
-    PMAXSTI= P_MaxStems * PMAXLVI;
-    PMAXRTI= P_MaxRoots * PMAXLVI;
+    Max_P_leaves = Afgen (P_MaxLeaves, &DevelopmentStage);
+    Max_P_stems  = Fraction_P_MaxStems * Max_P_leaves;
+    Max_P_roots  = Fraction_K_MaxRoots * Max_P_leaves;
            
     /* Initial maximum P concentration in plant organs [kg N ] */
-    Crop.P_st.leaves = PMAXLVI * Crop.st.leaves;
-    Crop.P_st.stems  = PMAXSTI * Crop.st.stems;
-    Crop.P_st.roots  = PMAXRTI * Crop.st.roots;
+    Crop.P_st.leaves = Max_P_leaves * Crop.st.leaves;
+    Crop.P_st.stems  = Max_P_stems  * Crop.st.stems;
+    Crop.P_st.roots  = Max_P_roots  * Crop.st.roots;
     Crop.P_st.storage = 0.;
                   
     /* Initial maximum K concentration in plant organs per kg biomass [kg N kg-1 dry biomass]    */
-    KMAXLVI= Afgen (K_MaxLeaves, &DevelopmentStage)
-    KMAXSTI= LSPR * KMAXLVI
-    KMAXRTI= LRPR * KMAXLVI
+    Max_K_leaves = Afgen (K_MaxLeaves, &DevelopmentStage);
+    Max_K_stems = Fraction_K_MaxStems * Max_K_leaves;
+    Max_K_roots = Fraction_K_MaxRoots * Max_K_leaves;
            
     /* Initial maximum k concentration in plant organs [kg N ] */
-    AKLVI= KMAXLVI * Crop.st.leaves
-    AKSTI= KMAXSTI * Crop.st.stems
-    AKRTI= KMAXRTI * Crop.st.roots
-          
-    AKLV = AKLVI
-    AKST = AKSTI
-    AKRT = AKRTI
-    AKSO = AKSOI     
+    Crop.K_st.leaves = Max_K_leaves * Crop.st.leaves;
+    Crop.K_st.stems  = Max_K_stems  * Crop.st.stems;
+    Crop.K_st.roots  = Max_K_roots  * Crop.st.roots;
+    Crop.K_st.storage = 0.;
+    
+    /* Set the nutrient change rates to 0. */
+    Crop.N_rt.leaves  = 0.;
+    Crop.N_rt.stems   = 0.;
+    Crop.N_rt.roots   = 0.;
+    Crop.N_rt.storage = 0.;
+           
+    Crop.P_rt.leaves  = 0.;
+    Crop.P_rt.stems   = 0.;
+    Crop.P_rt.roots   = 0.;
+    Crop.P_rt.storage = 0.;
+           
+    Crop.K_rt.leaves  = 0.;
+    Crop.K_rt.stems   = 0.;
+    Crop.K_rt.roots   = 0.;
+    Crop.K_rt.storage = 0.;      
 }     
       
 /* ---------------------------------------------------------------*/
@@ -258,21 +276,22 @@ void NutrientEmergence()
 /*  Purpose: Initialization of nutrient parameters at sowing      */
 /* ---------------------------------------------------------------*/      
 void NutrientSowing()
-{      
-            ANLV= 0.
-	    ANST= 0.
-	    ANRT= 0.
-            ANSO= 0.
+{    
+    /* Set the nutrient states to 0. */
+    Crop.N_st.leaves  = 0.;
+    Crop.N_st.stems   = 0.;
+    Crop.N_st.roots   = 0.;
+    Crop.N_st.storage = 0.;
             
-            APLV= 0.
-	    APST= 0.
-	    APRT= 0.
-            APSO= 0.
+    Crop.P_st.leaves  = 0.;
+    Crop.P_st.stems   = 0.;
+    Crop.P_st.roots   = 0.;
+    Crop.P_st.storage = 0.;
             
-            AKLV= 0.
-	    AKST= 0.
-	    AKRT= 0.
-            AKSO= 0.
+    Crop.K_st.leaves  = 0.;
+    Crop.K_st.stems   = 0.;
+    Crop.K_st.roots   = 0.;
+    Crop.K_st.storage = 0.;
 }            
   
 /*------------------------------------------------------*/

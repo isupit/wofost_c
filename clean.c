@@ -4,6 +4,8 @@
 
 void Clean()
 {
+  int i;  
+    
   Green *LeaveProperties = NULL;
   
   /* Loop until the last element in the list */
@@ -18,5 +20,23 @@ void Clean()
   free(Crop.LeaveProperties);
   
   Crop.LeaveProperties = NULL;
+  
+  /* Clean Afgen Tables*/
+  AFGEN *table = NULL;
+  AFGEN *base  = NULL;  
+    
+  for (i = 0; i < NUMBER_OF_TABLES; i++)
+  {
+    table = AfgenTable[i];  
+    while (table->next)
+    {
+      base  = table;
+      table = table->next; 
+      free(base);
+    }
+    free(table);
+    AfgenTable[i] = NULL;
+    i++;
+  }
   
 }
