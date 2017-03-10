@@ -165,6 +165,9 @@ void RateCalculationCrop()
       
        /* Growth of root, stems, leaves and storage organs */
        Growth(GrossGrowth);
+       
+       /* Soil nutrient supply */
+       Nutrients();
              
        printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f", GrossGrowth, Maintenance, TotalAssimilation);
 }

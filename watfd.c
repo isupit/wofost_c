@@ -213,5 +213,4 @@ void WatBalIntegration() {
     /* Mean soil moisture content in rooted zone */
     WatBal.st.Moisture = WatBal.st.RootZoneMoisture/Crop.RootDepth;
   
-   
 }

@@ -104,6 +104,10 @@ typedef struct NUTRIENT_RATES {
     float stems;
     float leaves;
     float storage;
+    float Dmnd_leaves;
+    float Dmnd_stems;
+    float Dmnd_roots;
+    float Dmnd_storage;
 } nutrient_rates;
 
 typedef struct NUTRIENT_STATES {
@@ -111,6 +115,15 @@ typedef struct NUTRIENT_STATES {
     float stems;
     float leaves;
     float storage;
+    float Max_leaves;
+    float Max_stems;
+    float Max_roots;
+    float Max_storage;
+    float Opt_leaves;
+    float Opt_stems;
+    float Opt_roots;
+    float Opt_storage;
+    float Indx;   
 } nutrient_states;
 
 typedef struct GROWTH_RATES {
@@ -245,25 +258,6 @@ float InitRootingDepth;
 float MaxIncreaseRoot;
 float MaxRootingDepth;
 
-/** Nutrients  **/
-float NMINSO;
-float NMINVE;
-float NMAXSO;
-float NMAXVE;
-
-float PMINSO;
-float PMINVE;
-float PMAXSO;
-float PMAXVE;
-
-float KMINSO;
-float KMINVE;
-float KMAXSO;
-float KMAXVE;
-
-float YZERO;
-float NFIX;
-
 /** Soil **/
 float SoilMoistureFC;
 float SoilMoistureSAT;
@@ -300,17 +294,17 @@ float FracTranslocRoots;
 float FRNX;   
 float FRPX;   
 float FRKX;   
-float N_MaxRoots ;   
-float N_MaxStems ;   
-float P_MaxRoots ;   
-float P_MaxStems ;   
-float K_MaxRoots ;   
-float K_MaxStems ;   
+float N_MaxRoots;   
+float N_MaxStems;   
+float P_MaxRoots;   
+float P_MaxStems;   
+float K_MaxRoots;   
+float K_MaxStems;   
 float NLAI;   
 float NLUE;   
-float NMAXSO; 
-float PMAXSO; 
-float KMAXSO; 
+float Max_N_storage; 
+float Max_P_storage; 
+float Max_K_storage; 
 float NPART;  
 float NSLA;   
 float N_ResidualFracLeaves;  
@@ -328,5 +322,5 @@ float TCKT;
 float NFIXF;  
 
 
-
+#endif	// 
 
