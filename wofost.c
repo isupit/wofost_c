@@ -53,16 +53,15 @@ float Conversion(float NetAssimilation)
 void Growth(float NewPlantMaterial)
 {
         float shoots, FractionRoots;
-	float DeathRoots, DeathStems;
 		
 	FractionRoots  = Afgen(Roots, &DevelopmentStage);
 	Crop.drt.roots = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
-	Crop.rt.roots  = NewPlantMaterial*FractionRoots - DeathRoots;
+	Crop.rt.roots  = NewPlantMaterial*FractionRoots - Crop.drt.roots;
 	
 	shoots        = NewPlantMaterial*(1-FractionRoots);
 	    
 	Crop.drt.stems    = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
-	Crop.rt.stems = shoots*Afgen(Stems, &DevelopmentStage)-DeathStems;
+	Crop.rt.stems = shoots*Afgen(Stems, &DevelopmentStage)-Crop.drt.stems;
 	
 	Crop.rt.storage = shoots*Afgen(Storage, &DevelopmentStage);
 	
@@ -167,7 +166,7 @@ void RateCalculationCrop()
        Growth(GrossGrowth);
        
        /* Soil nutrient supply */
-       Nutrients();
+//       Nutrients();
              
        printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f", GrossGrowth, Maintenance, TotalAssimilation);
 }

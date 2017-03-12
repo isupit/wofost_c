@@ -7,8 +7,7 @@
 #define NR_TABLES_SITE          1
 #define NR_VARIABLES_SOIL       12
 #define NR_TABLES_SOIL          2
-
-int NUMBER_OF_TABLES = NR_TABLES_CRP + NR_TABLES_SITE + NR_TABLES_SOIL;
+# define NUMBER_OF_TABLES       22
 
 typedef struct TABLE {
 	     float x;
@@ -16,7 +15,7 @@ typedef struct TABLE {
 	     struct TABLE *next;
 	     } AFGEN;
 
-AFGEN *AfgenTable[NUMBER_OF_TABLES];
+AFGEN AfgenTable[22];
 
 typedef struct SITE {
    float AngstA;
@@ -289,7 +288,7 @@ float MoistureLOW;
 /** Nutrients **/
 float RDRNS; 
 float DVSNLT; 
-float DVSNT;
+float DevelopmentStageNT;
 float FracTranslocRoots;  
 float FRNX;   
 float FRPX;   

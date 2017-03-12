@@ -374,16 +374,22 @@ void InitSoil()
 
 void NutrientAvailStorage()
 {
+    /* N/P/K supply to the storage organs (kg N ha-1 d-1) */
+    N_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,ATN/TCNT)
+    P_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,ATP/TCPT)
+    K_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,ATK/TCKT)
+    
     /* Total N/P/K demand (kg N/P/K ha-1) */
-     NDEMTO = MAX (0.0,(NDEML + NDEMS + NDEMR))
-     PDEMTO = MAX (0.0,(PDEML + PDEMS + PDEMR))
-     KDEMTO = MAX (0.0,(KDEML + KDEMS + KDEMR))
+     NDEMTO = NDEML + NDEMS + NDEMR
+     PDEMTO = PDEML + PDEMS + PDEMR
+     KDEMTO = KDEML + KDEMS + KDEMR
     
     /* Rate of N/P/K uptake in grains (kg N/P/K ha-1 d-1) */
-    Crop.SO =  AMIN1 (NDEMSO,NSUPSO)
-    RPSO =  AMIN1 (PDEMSO,PSUPSO)
-    RKSO =  AMIN1 (KDEMSO,KSUPSO)  
+    Crop.N_rt.storage = min(Crop.N_rt.Dmnd_storage, N_to_storage);
+    Crop.P_rt.storage = min(Crop.P_rt.Dmnd_storage, P_to_storage);
+    Crop.K_rt.storage = min(Crop.K_rt.Dmnd_storage, K_to_storage);  
 }
+
  
 void NutrientStress()
 {
