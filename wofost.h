@@ -98,6 +98,14 @@ typedef struct SOIL {
     
 Soil WatBal;
 
+typedef struct MINERALS {
+    float N_mint;
+    float P_mint;
+    float K_mint;
+} Minerals;
+
+Minerals Fertiliser;
+
 typedef struct NUTRIENT_RATES {
     float roots;
     float stems;
@@ -107,6 +115,9 @@ typedef struct NUTRIENT_RATES {
     float Dmnd_stems;
     float Dmnd_roots;
     float Dmnd_storage;
+    float Transloc_lv;
+    float Transloc_st;
+    float Transloc_rt;
 } nutrient_rates;
 
 typedef struct NUTRIENT_STATES {
@@ -287,7 +298,7 @@ float MoistureLOW;
 
 /** Nutrients **/
 float RDRNS; 
-float DVSNLT; 
+float DevelopmentStageNLimit; 
 float DevelopmentStageNT;
 float FracTranslocRoots;  
 float FRNX;   

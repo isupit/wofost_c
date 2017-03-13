@@ -95,48 +95,49 @@ void NutrientDemand()
 /*  be translocated (kg N ha-1)                                                */
 /* ---------------------------------------------------------------------------*/
 
-void Translocation()
+void Translocation(float *Total_N_Avail, float *Total_P_Avail, float *Total_K_Avail)                                                                                                       
 {
-    float N_TranslocLeaves, P_TranslocLeaves, K_TranslocLeaves;
-    float N_TranslocStems,  P_TranslocStems,  K_TranslocStems;
-    float N_TranslocRoots,  P_TranslocRoots,  K_TranslocRoots;
-    float N_AvailTransloc,  P_AvailTransloc,  K_AvailTransloc;
-    
+     float Avail_N_lv, Avail_P_lv, Avail_K_lv;
+     float Avail_N_st, Avail_P_st, Avail_K_st;                                                                                                               
+     float Avail_N_rt, Avail_P_rt, Avail_K_rt;  
+                                                                                                                      
     /* N amount available for translocation */                                                                                                              
-    N_TranslocLeaves = max(0.,Crop.N_st.leaves - Crop.st.leaves * N_ResidualFracLeaves);
-    N_TranslocStems  = max(0.,Crop.N_st.stems  - Crop.st.stems  * N_ResidualFracStems);
-    N_TranslocRoots  = max(0.,min((N_TranslocLeaves + N_TranslocStems) * FracTranslocRoots, 
+    Avail_N_lv = max(0.,Crop.N_st.leaves - Crop.st.leaves * N_ResidualFracLeaves);
+    Avail_N_st = max(0.,Crop.N_st.stems  - Crop.st.stems  * N_ResidualFracStems);
+    Avail_N_rt = max(0.,min((Crop.N_rt.Transloc_lv + Crop.N_rt.Transloc_st) * FracTranslocRoots, 
             Crop.N_st.roots - Crop.st.roots * N_ResidualFracRoots));
-    N_AvailTransloc = N_TranslocLeaves + N_TranslocStems + N_TranslocRoots;
-    
-    
+   
     /* P amount available for translocation */ 
-    P_TranslocLeaves = max (0.,Crop.P_st.leaves - Crop.st.leaves * P_ResidualFracLeaves);
-    P_TranslocStems  = max (0.,Crop.P_st.stems  - Crop.st.stems  * P_ResidualFracStems);
-    P_TranslocRoots  = max (0.,min((P_TranslocLeaves + P_TranslocStems) * FracTranslocRoots, 
+    Avail_P_lv = max (0.,Crop.P_st.leaves - Crop.st.leaves * P_ResidualFracLeaves);
+    Avail_P_st = max (0.,Crop.P_st.stems  - Crop.st.stems  * P_ResidualFracStems);
+    Avail_P_rt = max (0.,min((Crop.P_rt.Transloc_lv + Crop.P_rt.Transloc_st) * FracTranslocRoots, 
             Crop.P_st.roots - Crop.st.roots * P_ResidualFracRoots));
-    P_AvailTransloc  = P_TranslocLeaves + P_TranslocStems + P_TranslocRoots;
-    
     
     /* K amount available for translocation */ 
-    K_TranslocLeaves = max(0.,Crop.K_st.leaves - Crop.st.leaves * K_ResidualFracLeaves);
-    K_TranslocStems  = max(0.,Crop.K_st.stems  - Crop.st.stems  * K_ResidualFracStems);
-    K_TranslocRoots  = max(0.,min((K_TranslocLeaves + K_TranslocStems) * FracTranslocRoots, 
+    Avail_K_lv = max(0.,Crop.K_st.leaves - Crop.st.leaves * K_ResidualFracLeaves);
+    Avail_K_st = max(0.,Crop.K_st.stems  - Crop.st.stems  * K_ResidualFracStems);
+    Avail_K_rt = max(0.,min((Crop.K_rt.Transloc_lv + Crop.K_rt.Transloc_st) * FracTranslocRoots, 
             Crop.K_st.roots - Crop.st.roots * P_ResidualFracRoots));
-    K_AvailTransloc  = K_TranslocLeaves + K_TranslocStems + K_TranslocRoots;
 
+    /* Total available nutrient amount for translocation */
+    *Total_N_Avail = Avail_N_lv + Avail_N_lv + Avail_N_rt;
+    *Total_P_Avail = Avail_P_lv + Avail_P_lv + Avail_P_rt;
+    *Total_K_Avail = Avail_K_lv + Avail_K_lv + Avail_K_rt;
     
-    RNTLV= Crop.N_rt.storage * N_TranslocLeaves/ notnul(N_AvailTransloc);
-    RNTST= Crop.N_rt.storage * N_TranslocStems / notnul(N_AvailTransloc);
-    RNTRT= Crop.N_rt.storage * N_TranslocRoots / notnul(N_AvailTransloc);
+    /* Actual N translocation rate */ 
+    Crop.N_rt.Transloc_lv = Crop.N_rt.storage * Avail_N_lv / notnul(*Total_N_Avail);
+    Crop.N_rt.Transloc_st = Crop.N_rt.storage * Avail_N_st / notnul(*Total_N_Avail);
+    Crop.K_rt.Transloc_rt = Crop.N_rt.storage * Avail_N_rt / notnul(*Total_N_Avail);
     
-    RPTLV= Crop.P_rt.storage * P_TranslocLeaves/ notnul(P_AvailTransloc);
-    RPTST= Crop.P_rt.storage * P_TranslocStems / notnul(P_AvailTransloc);
-    RPTRT= Crop.P_rt.storage * P_TranslocRoots / notnul(P_AvailTransloc);
-
-    RKTLV= Crop.K_rt.storage * K_TranslocLeaves/ notnul(K_AvailTransloc);
-    RKTST= Crop.K_rt.storage * K_TranslocStems / notnul(K_AvailTransloc);
-    RKTRT= Crop.K_rt.storage * K_TranslocRoots / notnul(K_AvailTransloc);
+    /* Actual P translocation rate */
+    Crop.N_rt.Transloc_lv = Crop.P_rt.storage * Avail_P_lv / notnul(*Total_P_Avail);
+    Crop.N_rt.Transloc_st = Crop.P_rt.storage * Avail_P_st / notnul(*Total_P_Avail);
+    Crop.K_rt.Transloc_rt = Crop.P_rt.storage * Avail_P_rt / notnul(*Total_P_Avail);
+    
+    /* Actual K translocation rate */
+    Crop.N_rt.Transloc_lv = Crop.K_rt.storage * Avail_K_lv / notnul(*Total_K_Avail);
+    Crop.N_rt.Transloc_st = Crop.K_rt.storage * Avail_K_st / notnul(*Total_K_Avail);
+    Crop.K_rt.Transloc_rt = Crop.K_rt.storage * Avail_K_rt / notnul(*Total_K_Avail);
 }     
 
 /* -------------------------------------------------------------------------*/
@@ -147,17 +148,41 @@ void Translocation()
 
 void NutrientPartioning()
 {     
-      RNULV = (Crop.N_rt.Dmnd_leaves / notnul(NDEMTO))* (NUPTR+NFIXTR);
-      RNUST = (Crop.N_rt.Dmnd_stems  / notnul(NDEMTO))* (NUPTR+NFIXTR);
-      RNURT = (Crop.N_rt.Dmnd_roots  / notnul(NDEMTO))* (NUPTR+NFIXTR);
+    float Total_N_demand;
+    float Total_P_demand;
+    float Total_K_demand;
     
-      RPULV = (Crop.P_rt.Dmnd_leaves / notnul(PDEMTO))* PUPTR;
-      RPUST = (Crop.P_rt.Dmnd_stems  / notnul(PDEMTO))* PUPTR;
-      RPURT = (Crop.P_rt.Dmnd_roots  / notnul(PDEMTO))* PUPTR;
+    float NUPTR;
+    float PUPTR;
+    float KUPTR;
+    
+    float NutrientLimit;
+    
+    Total_N_demand = Crop.N_rt.Dmnd_leaves + Crop.N_rt.Dmnd_stems + Crop.N_rt.Dmnd_roots;
+    Total_P_demand = Crop.P_rt.Dmnd_leaves + Crop.P_rt.Dmnd_stems + Crop.P_rt.Dmnd_roots;
+    Total_K_demand = Crop.K_rt.Dmnd_leaves + Crop.K_rt.Dmnd_stems + Crop.K_rt.Dmnd_roots;
+    
+    NutrientLimit = insw(DevelopmentStage - DevelopmentStageNLimit , insw(TRANRF-0.01,0.,1.) , 0.0);
+    
+    NUPTR = (max(0., min((1.-NFIXF)*Total_N_demand, NMINT))* NutrientLimit)/Step;
+    PUPTR = (max(0., min(Total_P_demand, PMINT))* NutrientLimit)/Step;
+    KUPTR = (max(0., min(Total_K_demand, KMINT))* NutrientLimit)/Step;
+    
+    NFIXTR= max(0.,NUPTR * NFIXF / max(0.02, 1.-NFIXF));
+    
+    
+    /**/
+    RNULV = (Crop.N_rt.Dmnd_leaves / notnul(Total_N_demand))* (NUPTR+NFIXTR);
+    RNUST = (Crop.N_rt.Dmnd_stems  / notnul(Total_N_demand))* (NUPTR+NFIXTR);
+    RNURT = (Crop.N_rt.Dmnd_roots  / notnul(Total_N_demand))* (NUPTR+NFIXTR);
+    
+    RPULV = (Crop.P_rt.Dmnd_leaves / notnul(Total_P_demand))* PUPTR;
+    RPUST = (Crop.P_rt.Dmnd_stems  / notnul(Total_P_demand))* PUPTR;
+    RPURT = (Crop.P_rt.Dmnd_roots  / notnul(Total_P_demand))* PUPTR;
 
-      RKULV = (Crop.K_rt.Dmnd_leaves / notnul(KDEMTO))* KUPTR;
-      RKUST = (Crop.K_rt.Dmnd_stems  / notnul(KDEMTO))* KUPTR;
-      RKURT = (Crop.K_rt.Dmnd_roots  / notnul(KDEMTO))* KUPTR;
+    RKULV = (Crop.K_rt.Dmnd_leaves / notnul(Total_K_demand))* KUPTR;
+    RKUST = (Crop.K_rt.Dmnd_stems  / notnul(Total_K_demand))* KUPTR;
+    RKURT = (Crop.K_rt.Dmnd_roots  / notnul(Total_K_demand))* KUPTR;
 }     
 
 
@@ -374,15 +399,17 @@ void InitSoil()
 
 void NutrientAvailStorage()
 {
-    /* N/P/K supply to the storage organs (kg N ha-1 d-1) */
-    N_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,ATN/TCNT)
-    P_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,ATP/TCPT)
-    K_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,ATK/TCKT)
+    float Total_N_Avail = 0.;
+    float Total_P_Avail = 0.;
+    float Total_K_Avail = 0.;
     
-    /* Total N/P/K demand (kg N/P/K ha-1) */
-     NDEMTO = NDEML + NDEMS + NDEMR
-     PDEMTO = PDEML + PDEMS + PDEMR
-     KDEMTO = KDEML + KDEMS + KDEMR
+    Translocation(&Total_N_Avail, &Total_P_Avail, &Total_K_Avail);
+        
+    /* N/P/K supply to the storage organs (kg N ha-1 d-1) */
+    N_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,Total_N_Avail/TCNT);
+    P_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,Total_P_Avail/TCPT);
+    K_to_storage = insw(DevelopmentStage -DevelopmentStageNT,0.,Total_K_Avail/TCKT);
+    
     
     /* Rate of N/P/K uptake in grains (kg N/P/K ha-1 d-1) */
     Crop.N_rt.storage = min(Crop.N_rt.Dmnd_storage, N_to_storage);
@@ -393,10 +420,10 @@ void NutrientAvailStorage()
  
 void NutrientStress()
 {
-    /* Establish the maximum nutrient concentrations in the crop organs*/
+    /* Establish the maximum nutrient concentrations in the crop organs */
     NutrientMax();
     
-    /* Establish the optimum nutrient concentrations in the crop organs*/
+    /* Establish the optimum nutrient concentrations in the crop organs */
     NutrientOptimum();
     
     /* Calculate the nutrition index */
