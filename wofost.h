@@ -3,11 +3,13 @@
 
 #define NR_VARIABLES_CRP	65
 #define NR_TABLES_CRP   	18
-#define NR_VARIABLES_SITE       17
+#define NR_VARIABLES_SITE       11
 #define NR_TABLES_SITE          1
 #define NR_VARIABLES_SOIL       12
 #define NR_TABLES_SOIL          2
-# define NUMBER_OF_TABLES       22
+#define NR_VARIABLES_MANAGEMENT 6
+#define NR_TABLES_MANAGEMENT    7
+#define NUMBER_OF_TABLES        29
 
 typedef struct TABLE {
 	     float x;
@@ -30,11 +32,11 @@ typedef struct SITE {
    float DD;
    float SoilLimRootDepth;
    float NotInfiltrating;
-   float NBase;
+   float N_Mins;
    float NRecoveryFrac;
-   float PBase;
+   float P_Mins;
    float PRecoveryFrac;
-   float KBase; 
+   float K_Mins; 
    float KRecoveryFrac;
    float SurfaceStorage;
    float MaxInitSoilM;
@@ -99,15 +101,20 @@ typedef struct SOIL {
 Soil WatBal;
 
 typedef struct MINERALS {
-    float N_mint;
-    float P_mint;
-    float K_mint;
+    float N_fert;
+    float P_fert;
+    float K_fert;
+    
+    float N_mins;
+    float P_mins;
+    float K_mint;   
+    
 } Minerals;
 
 Minerals Fertiliser;
 
 typedef struct NUTRIENT_RATES {
-    float roots;
+    float roNR_VARIABLES_SOILots;
     float stems;
     float leaves;
     float storage;
@@ -206,6 +213,15 @@ AFGEN *NotInfTB;
 AFGEN *N_MaxLeaves;
 AFGEN *P_MaxLeaves;
 AFGEN *K_MaxLeaves;
+
+/* Tables for fertilizer application and recovery fraction */
+AFGEN N_Fert_table;
+AFGEN P_Fert_table;
+AFGEN K_Fert_table;
+AFGEN N_Uptake_frac;
+AFGEN P_Uptake_frac;
+AFGEN K_Uptake_frac;
+AFGEN Irrigation;
 
 
 /** Meteorological Variables  **/

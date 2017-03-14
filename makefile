@@ -1,6 +1,6 @@
-OBJS	 = afgen.o assim.o astro.o cropdata.o develop.o fillvar.o lai.o lai2.o leaves.o limit.o max.o min.o meteodata.o penman.o sitedata.o soildata.o watfd.o wofost.o clean.o
+OBJS	 = afgen.o assim.o astro.o cropdata.o develop.o fillvar.o lai.o lai2.o leaves.o limit.o max.o min.o meteodata.o penman.o sitedata.o soildata.o watfd.o wofost.o management.o clean.o
 EXECUTABLE = wofost
-CC       = clang
+CC       = gcc
 CFLAGS   = -Wall -g
 
 all: $(EXECUTABLE)

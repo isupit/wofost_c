@@ -15,6 +15,7 @@ extern int GetCropData();
 extern int GetMeteoData();
 extern int GetSoilData();
 extern int GetSiteData();
+extern int GetManagement();
 extern int Astro();
 extern int CalcPenman();
 extern void WatBalInitialize();

@@ -130,16 +130,27 @@ int FillSiteVariables(float *Variable) {
     Site.DD                              = Variable[6];
     Site.SoilLimRootDepth                = Variable[7];
     Site.NotInfiltrating                 = Variable[8];
-    Site.NBase                           = Variable[9];
-    Site.NRecoveryFrac                   = Variable[10];
-    Site.PBase                           = Variable[11];
-    Site.PRecoveryFrac                   = Variable[12];
-    Site.KBase                           = Variable[13];
-    Site.KRecoveryFrac                   = Variable[14];
-    Site.SurfaceStorage                  = Variable[15];
-    Site.MaxInitSoilM                    = Variable[16];
+    Site.SurfaceStorage                  = Variable[9];
+    Site.MaxInitSoilM                    = Variable[10];
        
     for (i=0;i<=NR_VARIABLES_SITE;i++) {
+        Variable[i]= 0.;
+    }
+    
+    return 1;
+}
+
+int FillSiteVariables(float *Variable) {
+    int i;
+    
+    Site.N_Mins                          = Variable[0];
+    Site.NRecoveryFrac                   = Variable[1];
+    Site.P_Mins                          = Variable[2];
+    Site.PRecoveryFrac                   = Variable[3];
+    Site.K_Mins                          = Variable[4];
+    Site.KRecoveryFrac                   = Variable[5];
+    
+    for (i=0;i<=NR_VARIABLES_MANAGEMENT;i++) {
         Variable[i]= 0.;
     }
     
