@@ -181,6 +181,7 @@ int main(void)
   GetMeteoData();
   GetSoilData();
   GetSiteData();
+  GetManagement();
 
   Day = 0;
   Initialize(Emergence); 
