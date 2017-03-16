@@ -17,7 +17,7 @@ typedef struct TABLE {
 	     struct TABLE *next;
 	     } AFGEN;
 
-AFGEN AfgenTable[22];
+AFGEN AfgenTable[29];
 
 typedef struct SITE {
    float AngstA;
@@ -107,14 +107,21 @@ typedef struct MINERALS {
     
     float N_mins;
     float P_mins;
-    float K_mint;   
+    float K_mint;
+
+    float rt_N_fert;
+    float rt_P_fert;
+    float rt_fert;
     
+    float rt_N_mins;
+    float rt_P_mins;
+    float rt_K_mint;
 } Minerals;
 
-Minerals Fertiliser;
+Minerals SoilNtrs;
 
 typedef struct NUTRIENT_RATES {
-    float roNR_VARIABLES_SOILots;
+    float roots;
     float stems;
     float leaves;
     float storage;
@@ -125,6 +132,10 @@ typedef struct NUTRIENT_RATES {
     float Transloc_lv;
     float Transloc_st;
     float Transloc_rt;
+    float Uptake;
+    float Uptake_lv;
+    float Uptake_st;
+    float Uptake_rt;
 } nutrient_rates;
 
 typedef struct NUTRIENT_STATES {
@@ -140,7 +151,12 @@ typedef struct NUTRIENT_STATES {
     float Opt_stems;
     float Opt_roots;
     float Opt_storage;
-    float Indx;   
+    float Indx;
+    float Uptake;
+    float Uptake_lv;
+    float Uptake_st;
+    float Uptake_rt;
+    
 } nutrient_states;
 
 typedef struct GROWTH_RATES {
@@ -286,7 +302,7 @@ float MaxRootingDepth;
 
 /** Soil **/
 float SoilMoistureFC;
-float SoilMoistureSAT;
+float SoilMoistureSANFIXTRT;
 float SoilMoistureWP;
 float CriticalSoilAirC;
 
@@ -317,9 +333,9 @@ float RDRNS;
 float DevelopmentStageNLimit; 
 float DevelopmentStageNT;
 float FracTranslocRoots;  
-float FRNX;   
-float FRPX;   
-float FRKX;   
+float Opt_N_Frac;   
+float Opt_P_Frac;   
+float Opt_K_Frac;   
 float N_MaxRoots;   
 float N_MaxStems;   
 float P_MaxRoots;   
@@ -345,7 +361,7 @@ float K_ResidualFracRoots;
 float TCNT;   
 float TCPT;   
 float TCKT;   
-float NFIXF;  
+float N_fixation;  
 
 
 #endif	// 

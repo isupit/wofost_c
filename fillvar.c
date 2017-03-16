@@ -87,7 +87,7 @@ K_ResidualFracRoots                    = Variable[60];
 TCNT                     = Variable[61];
 TCPT                     = Variable[62];
 TCKT                     = Variable[63];
-NFIXF                    = Variable[64];
+N_fixation                    = Variable[64];
 
 
 for (i=0;i<=NR_VARIABLES_CRP;i++) {

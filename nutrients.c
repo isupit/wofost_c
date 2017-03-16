@@ -40,28 +40,28 @@ void NutrientMax()
     Crop.K_st.Max_leaves = Afgen(K_MaxLeaves, &DevelopmentStage);
       
     /* Maximum N/P/K concentrations in stems and roots (kg powfN kg-1 DM) */
-    Crop.N_st.Max_stems = LSNR * Crop.N_st.Max_leaves;
-    Crop.N_st.Max_roots = LRNR * Crop.N_st.Max_leaves;
+    Crop.N_st.Max_stems = N_MaxRoots * Crop.N_st.Max_leaves;
+    Crop.N_st.Max_roots = N_MaxStems * Crop.N_st.Max_leaves;
     
-    Crop.P_st.Max_stems = LSPR * Crop.P_st.Max_leaves;
-    Crop.P_st.Max_roots = LRPR * Crop.P_st.Max_leaves;
+    Crop.P_st.Max_stems = P_MaxRoots * Crop.P_st.Max_leaves;
+    Crop.P_st.Max_roots = P_MaxStems * Crop.P_st.Max_leaves;
     
-    Crop.K_st.Max_stems = LSKR * Crop.K_st.Max_leaves;
-    Crop.K_st.Max_roots = LRKR * Crop.K_st.Max_leaves;
+    Crop.K_st.Max_stems = K_MaxRoots* Crop.K_st.Max_leaves;
+    Crop.K_st.Max_roots = K_MaxStems* Crop.K_st.Max_leaves;
 }
 
 void NutrientOptimum()
 {  
     /* Optimal N/P/K amount in vegetative above-ground living biomass */
     /* and its N concentration                                        */
-    Crop.N_st.Opt_leaves = FRNX * Crop.N_st.Max_leaves * Crop.st.leaves;
-    Crop.N_st.Opt_stems  = FRNX * Crop.N_st.Max_stems  * Crop.st.stems;
+    Crop.N_st.Opt_leaves = Opt_N_Frac * Crop.N_st.Max_leaves * Crop.st.leaves;
+    Crop.N_st.Opt_stems  = Opt_N_Frac * Crop.N_st.Max_stems  * Crop.st.stems;
         
-    Crop.P_st.Opt_leaves = FRPX * Crop.P_st.Max_leaves * Crop.st.leaves;
-    Crop.P_st.Opt_stems  = FRPX * Crop.P_st.Max_stems  * Crop.st.stems;
+    Crop.P_st.Opt_leaves = Opt_P_Frac * Crop.P_st.Max_leaves * Crop.st.leaves;
+    Crop.P_st.Opt_stems  = Opt_P_Frac * Crop.P_st.Max_stems  * Crop.st.stems;
 
-    Crop.K_st.Opt_leaves = FRKX * Crop.K_st.Max_leaves * Crop.st.leaves;
-    Crop.K_st.Opt_stems  = FRKX * Crop.K_st.Max_stems  * Crop.st.stems;
+    Crop.K_st.Opt_leaves = Opt_K_Frac * Crop.K_st.Max_leaves * Crop.st.leaves;
+    Crop.K_st.Opt_stems  = Opt_K_Frac * Crop.K_st.Max_stems  * Crop.st.stems;
 }
  
 /* -------------------------------------------------------------------------*/
@@ -152,11 +152,8 @@ void NutrientPartioning()
     float Total_P_demand;
     float Total_K_demand;
     
-    float NUPTR;
-    float PUPTR;
-    float KUPTR;
-    
     float NutrientLimit;
+    float N_Fix_rt;
     
     Total_N_demand = Crop.N_rt.Dmnd_leaves + Crop.N_rt.Dmnd_stems + Crop.N_rt.Dmnd_roots;
     Total_P_demand = Crop.P_rt.Dmnd_leaves + Crop.P_rt.Dmnd_stems + Crop.P_rt.Dmnd_roots;
@@ -164,25 +161,24 @@ void NutrientPartioning()
     
     NutrientLimit = insw(DevelopmentStage - DevelopmentStageNLimit , insw(TRANRF-0.01,0.,1.) , 0.0);
     
-    NUPTR = (max(0., min((1.-NFIXF)*Total_N_demand, NMINT))* NutrientLimit)/Step;
-    PUPTR = (max(0., min(Total_P_demand, PMINT))* NutrientLimit)/Step;
-    KUPTR = (max(0., min(Total_K_demand, KMINT))* NutrientLimit)/Step;
+    Crop.N_rt.Uptake = (max(0., min((1.-N_fixation)*Total_N_demand, NMINT))* NutrientLimit)/Step;
+    Crop.P_rt.Uptake = (max(0., min(Total_P_demand, PMINT))* NutrientLimit)/Step;
+    Crop.K_rt.Uptake = (max(0., min(Total_K_demand, KMINT))* NutrientLimit)/Step;
     
-    NFIXTR= max(0.,NUPTR * NFIXF / max(0.02, 1.-NFIXF));
-    
-    
+    N_Fix_rt= max(0.,Crop.N_rt.Uptake * N_fixation / max(0.02, 1.-N_fixation);
+   
     /**/
-    RNULV = (Crop.N_rt.Dmnd_leaves / notnul(Total_N_demand))* (NUPTR+NFIXTR);
-    RNUST = (Crop.N_rt.Dmnd_stems  / notnul(Total_N_demand))* (NUPTR+NFIXTR);
-    RNURT = (Crop.N_rt.Dmnd_roots  / notnul(Total_N_demand))* (NUPTR+NFIXTR);
+    Crop.N_rt.Uptake_lv = (Crop.N_rt.Dmnd_leaves / notnul(Total_N_demand))* (Crop.N_rt.Uptake + N_Fix_rt);
+    Crop.N_rt.Uptake_st = (Crop.N_rt.Dmnd_stems  / notnul(Total_N_demand))* (Crop.N_rt.Uptake + N_Fix_rt);
+    Crop.N_rt.Uptake_rt = (Crop.N_rt.Dmnd_roots  / notnul(Total_N_demand))* (Crop.N_rt.Uptake + N_Fix_rt);
     
-    RPULV = (Crop.P_rt.Dmnd_leaves / notnul(Total_P_demand))* PUPTR;
-    RPUST = (Crop.P_rt.Dmnd_stems  / notnul(Total_P_demand))* PUPTR;
-    RPURT = (Crop.P_rt.Dmnd_roots  / notnul(Total_P_demand))* PUPTR;
+    Crop.P_rt.Uptake_lv = (Crop.P_rt.Dmnd_leaves / notnul(Total_P_demand))* Crop.P_rt.Uptake;
+    Crop.P_rt.Uptake_st = (Crop.P_rt.Dmnd_stems  / notnul(Total_P_demand))* Crop.P_rt.Uptake;
+    Crop.P_rt.Uptake_rt = (Crop.P_rt.Dmnd_roots  / notnul(Total_P_demand))* Crop.P_rt.Uptake;
 
-    RKULV = (Crop.K_rt.Dmnd_leaves / notnul(Total_K_demand))* KUPTR;
-    RKUST = (Crop.K_rt.Dmnd_stems  / notnul(Total_K_demand))* KUPTR;
-    RKURT = (Crop.K_rt.Dmnd_roots  / notnul(Total_K_demand))* KUPTR;
+    Crop.K_rt.Uptake_lv = (Crop.K_rt.Dmnd_leaves / notnul(Total_K_demand))* Crop.K_rt.Uptake;
+    Crop.K_rt.Uptake_st = (Crop.K_rt.Dmnd_stems  / notnul(Total_K_demand))* Crop.K_rt.Uptake;
+    Crop.K_rt.Uptake_rt = (Crop.K_rt.Dmnd_roots  / notnul(Total_K_demand))* Crop.K_rt.Uptake;
 }     
 
 
@@ -397,7 +393,7 @@ void InitSoil()
     KMINT  = FERTK * KRF
 }        
 
-void NutrientAvailStorage()
+void NutrientToStorage()
 {
     float Total_N_Avail = 0.;
     float Total_P_Avail = 0.;
@@ -417,7 +413,25 @@ void NutrientAvailStorage()
     Crop.K_rt.storage = min(Crop.K_rt.Dmnd_storage, K_to_storage);  
 }
 
- 
+NutrientAvailSoil()
+{
+    float Fertilzer_N;
+    float Fertilzer_P;
+    float Fertilzer_K;
+    
+    Fertilzer_N = Afgen(N_Fert_table, DAY) * Afgen(N_Uptake_frac, DAY);
+    Fertilzer_P = Afgen(P_Fert_table, DAY) * Afgen(N_Uptake_frac, DAY);
+    Fertilzer_K = Afgen(P_Fert_table, DAY) * Afgen(K_Uptake_frac, DAY);
+   
+    /* Change in total inorganic N/P/K in soil as function of fertilizer */
+    RNMINT = Fertilzer_N/Step -Crop.N_rt.Uptake - RNMINS;
+    RPMINT = Fertilzer_P/Step -Crop.P_rt.Uptake - RPMINS;
+    RKMINT = Fertilzer_K/Step -Crop.K_rt.Uptake - RKMINS;     
+}
+
+
+
+
 void NutrientStress()
 {
     /* Establish the maximum nutrient concentrations in the crop organs */
