@@ -101,21 +101,21 @@ typedef struct SOIL {
 Soil WatBal;
 
 typedef struct MINERALS {
-    float N_fert;
-    float P_fert;
-    float K_fert;
+    float st_N_tot;
+    float st_P_tot;
+    float st_K_tot;
     
-    float N_mins;
-    float P_mins;
-    float K_mint;
+    float st_N_mins;
+    float st_P_mins;
+    float st_K_mins;
 
-    float rt_N_fert;
-    float rt_P_fert;
-    float rt_fert;
+    float rt_N_tot;
+    float rt_P_tot;
+    float rt_K_tot;
     
     float rt_N_mins;
     float rt_P_mins;
-    float rt_K_mint;
+    float rt_K_mins;
 } Minerals;
 
 Minerals SoilNtrs;
@@ -129,6 +129,7 @@ typedef struct NUTRIENT_RATES {
     float Dmnd_stems;
     float Dmnd_roots;
     float Dmnd_storage;
+    float Transloc;
     float Transloc_lv;
     float Transloc_st;
     float Transloc_rt;
@@ -136,6 +137,9 @@ typedef struct NUTRIENT_RATES {
     float Uptake_lv;
     float Uptake_st;
     float Uptake_rt;
+    float death_lv;
+    float death_st;
+    float death_rt;
 } nutrient_rates;
 
 typedef struct NUTRIENT_STATES {
@@ -156,6 +160,7 @@ typedef struct NUTRIENT_STATES {
     float Uptake_lv;
     float Uptake_st;
     float Uptake_rt;
+    float death_lv;
     
 } nutrient_states;
 

@@ -11,29 +11,57 @@
 
 void EulerIntegration()	    
 {
-       float PhysAgeing;
-       Green *LeaveProperties;
-       
-       Crop.st.roots    = Crop.st.roots   + Crop.rt.roots;
-       Crop.st.stems    = Crop.st.stems   + Crop.rt.stems;
-       Crop.st.leaves   = Crop.st.leaves  + Crop.rt.leaves;
-       Crop.st.storage  = Crop.st.storage + Crop.rt.storage;
-       Crop.st.LAIExp   = Crop.st.LAIExp  + Crop.rt.LAIExp;
+    float PhysAgeing;
+    Green *LeaveProperties;
+    
+    Crop.st.roots    = + Crop.rt.roots;
+    Crop.st.stems    = + Crop.rt.stems;
+    Crop.st.leaves   = + Crop.rt.leaves;
+    Crop.st.storage  = + Crop.rt.storage;
+    Crop.st.LAIExp   = + Crop.rt.LAIExp;
 
-       /* Establish the age increase */
-       PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
+    /* Establish the age increase */
+    PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
+    
+    /* Store the initial address */
+    LeaveProperties = Crop.LeaveProperties;
+    
+    /* Update the leave age for each age class */
+    while (Crop.LeaveProperties->next) {
+       Crop.LeaveProperties->age = Crop.LeaveProperties->age + PhysAgeing;
+    Crop.LeaveProperties      = Crop.LeaveProperties->next;}
+  
+    /* Return to beginning of the linked list */
+    Crop.LeaveProperties = LeaveProperties;	 
        
-       /* Store the initial address */
-       LeaveProperties = Crop.LeaveProperties;
-       
-       /* Update the leave age for each age class */
-       while (Crop.LeaveProperties->next) {
-          Crop.LeaveProperties->age = Crop.LeaveProperties->age + PhysAgeing;
-	  Crop.LeaveProperties      = Crop.LeaveProperties->next;}
-	  
-       /* Return to beginning of the linked list */
-       Crop.LeaveProperties = LeaveProperties;	  
-       
+    /* Integration of the total of soil N,P,K */
+    SoilNtrs.st_N_tot =+ SoilNtrs.rt_N_tot;
+    SoilNtrs.st_P_tot =+ SoilNtrs.rt_P_tot;
+    SoilNtrs.st_K_tot =+ SoilNtrs.rt_K_tot;
+    
+    /* Integration of the total N,P,K soil mineralization */
+    SoilNtrs.st_N_mins =+ SoilNtrs.rt_N_mins;
+    SoilNtrs.st_P_mins =+ SoilNtrs.rt_P_mins;
+    SoilNtrs.st_K_mins =+ SoilNtrs.rt_K_mins;
+    
+    /* Actual N amount in various living organs and total living N amount(kg N ha-1) */
+    Crop.N_st.leaves  =+ Crop.N_rt.leaves;
+    Crop.N_st.stems   =+ Crop.N_rt.stems;
+    Crop.N_st.roots   =+ Crop.N_rt.roots;
+    Crop.N_st.storage =+ Crop.N_rt.storage;
+    
+    /* Actual P amount in various living organs and total living P amount(kg N ha-1) */
+    Crop.P_st.leaves  =+ Crop.P_rt.leaves;
+    Crop.P_st.stems   =+ Crop.P_rt.stems;
+    Crop.P_st.roots   =+ Crop.P_rt.roots;
+    Crop.P_st.storage =+ Crop.P_rt.storage;
+    
+    /* Actual K amount in various living organs and total living k amount(kg N ha-1) */
+    Crop.K_st.leaves  =+ Crop.K_rt.leaves;
+    Crop.K_st.stems   =+ Crop.K_rt.stems;
+    Crop.K_st.roots   =+ Crop.K_rt.roots;
+    Crop.K_st.storage =+ Crop.K_rt.storage;
+
 }       	     
 
 float Conversion(float NetAssimilation)
@@ -58,18 +86,18 @@ void Growth(float NewPlantMaterial)
 	Crop.drt.roots = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
 	Crop.rt.roots  = NewPlantMaterial*FractionRoots - Crop.drt.roots;
 	
-	shoots        = NewPlantMaterial*(1-FractionRoots);
+	shoots         = NewPlantMaterial*(1-FractionRoots);
 	    
-	Crop.drt.stems    = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
-	Crop.rt.stems = shoots*Afgen(Stems, &DevelopmentStage)-Crop.drt.stems;
+	Crop.drt.stems = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
+	Crop.rt.stems  = shoots*Afgen(Stems, &DevelopmentStage)-Crop.drt.stems;
 	
 	Crop.rt.storage = shoots*Afgen(Storage, &DevelopmentStage);
 	
 	
         Crop.drt.leaves = DyingLeaves(); 
-        Crop.rt.leaves = shoots*Afgen(Leaves, &DevelopmentStage);
-	Crop.rt.LAIExp = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves);	
-	Crop.rt.leaves = Crop.rt.leaves -  Crop.drt.leaves;
+        Crop.rt.leaves  = shoots*Afgen(Leaves, &DevelopmentStage);
+	Crop.rt.LAIExp  = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves);	
+	Crop.rt.leaves  = Crop.rt.leaves -  Crop.drt.leaves;
 	
         Crop.RootDepth_prev = Crop.RootDepth;
         Crop.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,

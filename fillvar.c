@@ -56,12 +56,12 @@ MaxRootingDepth          = Variable[31];
 
 /** Nutrients  **/
 RDRNS                    = Variable[32];
-DVSNLT                   = Variable[33];
-DVSNT                    = Variable[34];
-FracTranslocRoots                    = Variable[35];
-FRNX                     = Variable[36];
-FRPX                     = Variable[37];
-FRKX                     = Variable[38];
+DevelopmentStageNLimit   = Variable[33];
+DevelopmentStageNT       = Variable[34];
+FracTranslocRoots        = Variable[35];
+Opt_N_Frac               = Variable[36];
+Opt_P_Frac               = Variable[37];
+Opt_K_Frac               = Variable[38];
 N_MaxRoots               = Variable[39];
 N_MaxStems               = Variable[40];
 P_MaxRoots               = Variable[41];
@@ -70,20 +70,20 @@ K_MaxRoots               = Variable[43];
 K_MaxStems               = Variable[44];
 NLAI                     = Variable[45];                	     
 NLUE                     = Variable[46];
-Max_N_storage                   = Variable[47];
-Max_P_storage                   = Variable[48];
-Max_K_storage                   = Variable[49];
+Max_N_storage            = Variable[47];
+Max_P_storage            = Variable[48];
+Max_K_storage            = Variable[49];
 NPART                    = Variable[50];
 NSLA                     = Variable[51];
-N_ResidualFracLeaves                   = Variable[52];
-N_ResidualFracStems                    = Variable[53];
-N_ResidualFracRoots                    = Variable[54];
-P_ResidualFracLeaves                   = Variable[55];
-P_ResidualFracStems                    = Variable[56];
-P_ResidualFracRoots                    = Variable[57]; 
-K_ResidualFracLeaves                   = Variable[58];
-K_ResidualFracStems                   = Variable[59];
-K_ResidualFracRoots                    = Variable[60];
+N_ResidualFracLeaves     = Variable[52];
+N_ResidualFracStems      = Variable[53];
+N_ResidualFracRoots      = Variable[54];
+P_ResidualFracLeaves     = Variable[55];
+P_ResidualFracStems      = Variable[56];
+P_ResidualFracRoots      = Variable[57]; 
+K_ResidualFracLeaves     = Variable[58];
+K_ResidualFracStems      = Variable[59];
+K_ResidualFracRoots      = Variable[60];
 TCNT                     = Variable[61];
 TCPT                     = Variable[62];
 TCKT                     = Variable[63];
@@ -105,9 +105,9 @@ int FillSoilVariables(float *Variable) {
     WatBal.ct.MoistureSAT      = Variable[2];
     WatBal.ct.CriticalSoilAirC = Variable[3];
 
-    WatBal.ct.MaxPercolRTZ  = Variable[5];
-    WatBal.ct.MaxPercolSubS = Variable[6];
-    WatBal.ct.K0            = Variable[4];
+    WatBal.ct.MaxPercolRTZ     = Variable[5];
+    WatBal.ct.MaxPercolSubS    = Variable[6];
+    WatBal.ct.K0               = Variable[4];
     
     /* No workability parameters will be used in this version */
     
@@ -140,7 +140,7 @@ int FillSiteVariables(float *Variable) {
     return 1;
 }
 
-int FillSiteVariables(float *Variable) {
+int FillManageVariables(float *Variable) {
     int i;
     
     Site.N_Mins                          = Variable[0];

@@ -8,6 +8,8 @@ extern float LeaveGrowth(float LAIExp, float Newleaves);
 extern float LeaveAreaIndex();
 extern float Correct(float GrossAssimilation);
 extern int FillCropVariables();
+extern int FillSoilVariables();
+extern int FillManageVariables();
 extern int FillSiteVariables();
 extern int FillAfgenTables();
 extern int GetAfgenTables();
