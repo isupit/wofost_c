@@ -214,6 +214,7 @@ int main(void)
   Day = 0;
   Initialize(Emergence); 
   WatBalInitialize();
+  NutrientsInitialize();
   
   while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) {
    
@@ -233,9 +234,11 @@ printf(" dvs: %7.2f", DevelopmentStage);
 
     RateCalculationCrop();
     WatBalRateCalulation();
+    RateCalcultionNutrients();
     
     EulerIntegration();
     WatBalIntegration();
+    NutrientsIntegration();
     
     LAI              = LeaveAreaIndex();
     DevelopmentStage = GetDevelopmentStage();

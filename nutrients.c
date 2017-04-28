@@ -211,7 +211,7 @@ void Translocation()
                                                                                                                                                                                                                                                                                                                                     
                                                                                                                   
 /* -------------------------------------------------------------------------*/
-/*  function NutrientPartioning()                                                         */
+/*  function NutrientPartioning()                                           */
 /*  Purpose: To compute the partitioning of the total N/P/K uptake rate     */
 /*           (N,P,K UPTR) over leaves, stem, and roots (kg N/P/K ha-1 d-1)  */
 /* -------------------------------------------------------------------------*/
@@ -238,18 +238,47 @@ void NutrientPartioning()
     
     N_Fix_rt= max(0.,Crop.N_rt.Uptake * N_fixation / max(0.02, 1.-N_fixation));
    
-    /**/
-    Crop.N_rt.Uptake_lv = (Crop.N_rt.Dmnd_leaves / notnul(Total_N_demand))* (Crop.N_rt.Uptake + N_Fix_rt);
-    Crop.N_rt.Uptake_st = (Crop.N_rt.Dmnd_stems  / notnul(Total_N_demand))* (Crop.N_rt.Uptake + N_Fix_rt);
-    Crop.N_rt.Uptake_rt = (Crop.N_rt.Dmnd_roots  / notnul(Total_N_demand))* (Crop.N_rt.Uptake + N_Fix_rt);
+    /* N uptake per crop organ kg ha-1 d-1*/
+    if (Total_N_demand > 0.001)
+    {
+        Crop.N_rt.Uptake_lv = (Crop.N_rt.Dmnd_leaves / Total_N_demand)* (Crop.N_rt.Uptake + N_Fix_rt);
+        Crop.N_rt.Uptake_st = (Crop.N_rt.Dmnd_stems  / Total_N_demand)* (Crop.N_rt.Uptake + N_Fix_rt);
+        Crop.N_rt.Uptake_rt = (Crop.N_rt.Dmnd_roots  / Total_N_demand)* (Crop.N_rt.Uptake + N_Fix_rt);
+    }
+    else
+    {
+        Crop.N_rt.Uptake_lv = 0.;
+        Crop.N_rt.Uptake_st = 0.;
+        Crop.N_rt.Uptake_rt = 0.;
+    }
     
-    Crop.P_rt.Uptake_lv = (Crop.P_rt.Dmnd_leaves / notnul(Total_P_demand))* Crop.P_rt.Uptake;
-    Crop.P_rt.Uptake_st = (Crop.P_rt.Dmnd_stems  / notnul(Total_P_demand))* Crop.P_rt.Uptake;
-    Crop.P_rt.Uptake_rt = (Crop.P_rt.Dmnd_roots  / notnul(Total_P_demand))* Crop.P_rt.Uptake;
-
-    Crop.K_rt.Uptake_lv = (Crop.K_rt.Dmnd_leaves / notnul(Total_K_demand))* Crop.K_rt.Uptake;
-    Crop.K_rt.Uptake_st = (Crop.K_rt.Dmnd_stems  / notnul(Total_K_demand))* Crop.K_rt.Uptake;
-    Crop.K_rt.Uptake_rt = (Crop.K_rt.Dmnd_roots  / notnul(Total_K_demand))* Crop.K_rt.Uptake;
+    /* P uptake per crop organ kg ha-1 d-1 */
+    if (Total_P_demand > 0.001)
+    {
+        Crop.P_rt.Uptake_lv = (Crop.P_rt.Dmnd_leaves / Total_P_demand)* Crop.P_rt.Uptake;
+        Crop.P_rt.Uptake_st = (Crop.P_rt.Dmnd_stems  / Total_P_demand)* Crop.P_rt.Uptake;
+        Crop.P_rt.Uptake_rt = (Crop.P_rt.Dmnd_roots  / Total_P_demand)* Crop.P_rt.Uptake; 
+    }
+    else
+    {
+        Crop.P_rt.Uptake_lv = 0.;      
+        Crop.P_rt.Uptake_st = 0.;      
+        Crop.P_rt.Uptake_rt = 0.;      
+    }
+    
+   /* K uptake per crop organ kg ha-1 d-1*/
+    if (Total_K_demand > 0.001)
+    {
+        Crop.K_rt.Uptake_lv = (Crop.K_rt.Dmnd_leaves / Total_K_demand)* Crop.K_rt.Uptake;
+        Crop.K_rt.Uptake_st = (Crop.K_rt.Dmnd_stems  / Total_K_demand)* Crop.K_rt.Uptake;
+        Crop.K_rt.Uptake_rt = (Crop.K_rt.Dmnd_roots  / Total_K_demand)* Crop.K_rt.Uptake;   
+    }
+    else
+    {
+        Crop.K_rt.Uptake_lv = 0.;
+        Crop.K_rt.Uptake_st = 0.;
+        Crop.K_rt.Uptake_rt = 0.;        
+    }
 }    
 
 void SoilNutrients()
@@ -287,7 +316,7 @@ void SoilNutrients()
 /*  function NutritionINDX()                                           */
 /*  Purpose: To compute N,P,K Nutrition Index (-)                      */
 /* --------------------------------------------------------------------*/
-void NutritionINDX()
+float NutritionINDX()
 {    
     float VegetativeMass;
     
@@ -324,8 +353,8 @@ void NutritionINDX()
         K_res = (Crop.st.leaves * K_ResidualFracLeaves +Crop.st.stems.*K_ResidualFracStems)/VegetativeMass;
 
         N_opt_veg = (Crop.N_st.Opt_leaves + Crop.N_st.Opt_stems)/VegetativeMass;
-        P_opt_veg = (Crop.N_st.Opt_leaves + Crop.N_st.Opt_stems)/VegetativeMass;
-        K_opt_veg = (Crop.N_st.Opt_leaves + Crop.N_st.Opt_stems)/VegetativeMass;
+        P_opt_veg = (Crop.P_st.Opt_leaves + Crop.P_st.Opt_stems)/VegetativeMass;
+        K_opt_veg = (Crop.K_st.Opt_leaves + Crop.K_st.Opt_stems)/VegetativeMass;
     }
     
     
@@ -342,13 +371,47 @@ void NutritionINDX()
     
 }
 
+   
 /* --------------------------------------------------------------------*/
-/*  function NutrientINIT()                                            */
+/*  function NutrientsInitialize()                                            */
 /*  Purpose: Initialization of nutrient parameters                     */
 /* --------------------------------------------------------------------*/
-
-void NutrientINIT()
+void NutrientsInitialize()
 {
+    /* Initial maximum N concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
+    Crop.N_st.Max_leaves = Afgen(N_MaxLeaves, &DevelopmentStage);
+    Crop.N_st.Max_stems  = N_MaxStems * Crop.N_st.Max_leaves;
+    Crop.N_st.Max_roots  = N_MaxRoots * Crop.N_st.Max_leaves;
+        
+    /* Initial maximum N concentration in plant organs [kg N ]           */
+    Crop.N_st.leaves = Crop.N_st.Max_leaves * Crop.st.leaves;
+    Crop.N_st.stems  = Crop.N_st.Max_stems  * Crop.st.stems;
+    Crop.N_st.roots  = Crop.N_st.Max_roots  * Crop.st.roots;
+    Crop.N_st.storage = 0.;
+       
+    /* Initial maximum P concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
+    Crop.P_st.Max_leaves = Afgen(P_MaxLeaves, &DevelopmentStage);
+    Crop.P_st.Max_stems  = P_MaxStems * Crop.P_st.Max_leaves;
+    Crop.P_st.Max_roots  = P_MaxRoots * Crop.P_st.Max_leaves;
+           
+    /* Initial maximum P concentration in plant organs [kg N ] */
+    Crop.P_st.leaves = Crop.P_st.Max_leaves * Crop.st.leaves;
+    Crop.P_st.stems  = Crop.P_st.Max_stems  * Crop.st.stems;
+    Crop.P_st.roots  = Crop.P_st.Max_roots  * Crop.st.roots;
+    Crop.P_st.storage = 0.;
+                  
+    /* Initial maximum K concentration in plant organs per kg biomass [kg N kg-1 dry biomass]    */
+    Crop.K_st.Max_leaves = Afgen(K_MaxLeaves, &DevelopmentStage);
+    Crop.K_st.Max_stems  = K_MaxStems * Crop.K_st.Max_leaves;
+    Crop.K_st.Max_roots  = K_MaxRoots * Crop.K_st.Max_leaves;
+           
+    /* Initial maximum k concentration in plant organs [kg N ] */
+    Crop.K_st.leaves = Crop.K_st.Max_leaves * Crop.st.leaves;
+    Crop.K_st.stems  = Crop.K_st.Max_stems  * Crop.st.stems;
+    Crop.K_st.roots  = Crop.K_st.Max_roots  * Crop.st.roots;
+    Crop.K_st.storage = 0.;
+    
+    /* Set the soil nutrient rates to zero */
     SoilNtrs.rt_N_tot = 0.;
     SoilNtrs.rt_P_tot = 0.;
     SoilNtrs.rt_K_tot = 0.;
@@ -357,6 +420,16 @@ void NutrientINIT()
     SoilNtrs.rt_P_mins = 0.;
     SoilNtrs.rt_K_mins = 0.;
     
+     /* Set the soil nutrient states */
+    SoilNtrs.st_N_tot = Afgen(N_Fert_table, &Day) * Afgen(N_Uptake_frac, &Day);
+    SoilNtrs.st_P_tot = Afgen(P_Fert_table, &Day) * Afgen(P_Uptake_frac, &Day);
+    SoilNtrs.st_K_tot = Afgen(K_Fert_table, &Day) * Afgen(K_Uptake_frac, &Day);
+
+    SoilNtrs.st_N_mins = 0.;
+    SoilNtrs.st_P_mins = 0.;
+    SoilNtrs.st_K_mins = 0.;
+    
+    /* Set the crop nutrient rates to zero */
     Crop.N_rt.Uptake = 0.;
     Crop.P_rt.Uptake = 0.;
     Crop.K_rt.Uptake = 0.; 
@@ -412,58 +485,11 @@ void NutrientINIT()
     Crop.K_rt.roots  = 0.;
     Crop.K_rt.storage= 0.;
     
+    /* No nutrient stress at initialization*/
     Crop.N_st.Indx = 1.;
     Crop.P_st.Indx = 1.;
     Crop.K_st.Indx = 1.;
-
-        TRANRF = 1.;
- 
-
- 
- 
-
-}     
-      
-/* --------------------------------------------------------------------*/
-/*  function NutrientEmergence()                                       */
-/*  Purpose: Initialization of nutrient parameters at emergence        */
-/* --------------------------------------------------------------------*/
-
-void NutrientEmergence()
-{
-    /* Initial maximum N concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
-    Crop.N_st.Max_leaves = Afgen(N_MaxLeaves, &DevelopmentStage);
-    Crop.N_st.Max_stems  = N_MaxStems * Crop.N_st.Max_leaves;
-    Crop.N_st.Max_roots  = N_MaxRoots * Crop.N_st.Max_leaves;
-        
-    /* Initial maximum N concentration in plant organs [kg N ]           */
-    Crop.N_st.leaves = Crop.N_st.Max_leaves * Crop.st.leaves;
-    Crop.N_st.stems  = Crop.N_st.Max_stems  * Crop.st.stems;
-    Crop.N_st.roots  = Crop.N_st.Max_roots  * Crop.st.roots;
-    Crop.N_st.storage = 0.;
-       
-    /* Initial maximum P concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
-    Crop.P_st.Max_leaves = Afgen(P_MaxLeaves, &DevelopmentStage);
-    Crop.P_st.Max_stems  = P_MaxStems * Crop.P_st.Max_leaves;
-    Crop.P_st.Max_roots  = P_MaxRoots * Crop.P_st.Max_leaves;
-           
-    /* Initial maximum P concentration in plant organs [kg N ] */
-    Crop.P_st.leaves = Crop.P_st.Max_leaves * Crop.st.leaves;
-    Crop.P_st.stems  = Crop.P_st.Max_stems  * Crop.st.stems;
-    Crop.P_st.roots  = Crop.P_st.Max_roots  * Crop.st.roots;
-    Crop.P_st.storage = 0.;
-                  
-    /* Initial maximum K concentration in plant organs per kg biomass [kg N kg-1 dry biomass]    */
-    Crop.K_st.Max_leaves = Afgen(K_MaxLeaves, &DevelopmentStage);
-    Crop.K_st.Max_stems  = K_MaxStems * Crop.K_st.Max_leaves;
-    Crop.K_st.Max_roots  = K_MaxRoots * Crop.K_st.Max_leaves;
-           
-    /* Initial maximum k concentration in plant organs [kg N ] */
-    Crop.K_st.leaves = Crop.K_st.Max_leaves * Crop.st.leaves;
-    Crop.K_st.stems  = Crop.K_st.Max_stems  * Crop.st.stems;
-    Crop.K_st.roots  = Crop.K_st.Max_roots  * Crop.st.roots;
-    Crop.K_st.storage = 0.;
-      
+    
 }     
       
 /* ---------------------------------------------------------------*/
@@ -521,48 +547,42 @@ void InitSoil()
     KMINT  = FERTK * KRF
 }        
 
-
-NutrientAvailSoil()
-{
-    float Fertilzer_N;
-    float Fertilzer_P;
-    float Fertilzer_K;
+void NutrientsIntegration()
+{   
+    /* Soil nutrients */
+    SoilNtrs.st_N_tot =+ SoilNtrs.rt_N_tot;
+    SoilNtrs.st_P_tot =+ SoilNtrs.rt_P_tot;
+    SoilNtrs.st_K_tot =+ SoilNtrs.rt_K_tot;
     
-    Fertilzer_N = Afgen(N_Fert_table, Day) * Afgen(N_Uptake_frac, Day);
-    Fertilzer_P = Afgen(P_Fert_table, Day) * Afgen(N_Uptake_frac, Day);
-    Fertilzer_K = Afgen(P_Fert_table, Day) * Afgen(K_Uptake_frac, Day);
+    SoilNtrs.st_N_mins=+ SoilNtrs.rt_N_mins;
+    SoilNtrs.st_P_mins=+ SoilNtrs.rt_P_mins;
+    SoilNtrs.st_K_mins=+ SoilNtrs.rt_K_mins;
     
-    RNMINS = 
-   
-    /* Change in total inorganic N/P/K in soil as function of fertilizer */
-    SoilNtrs.rt_N_fert = Fertilzer_N/Step - Crop.N_rt.Uptake - RNMINS;
-    SoilNtrs.rt_P_fert = Fertilzer_P/Step - Crop.P_rt.Uptake - RPMINS;
-    SoilNtrs.rt_K_fert = Fertilzer_K/Step - Crop.K_rt.Uptake - RKMINS;     
+     /* Crops nutrients */
 }
 
 
-
-
-void NutrientStress()
+float  NutrientStress()
 {
-    /* Establish the maximum nutrient concentrations in the crop organs */
-    NutrientMax();
-    
     /* Establish the optimum nutrient concentrations in the crop organs */
     NutrientOptimum();
     
     /* Calculate the nutrition index */
-    NutritionINDX();
+    return NutritionINDX();
     
 }
 
-void NutrientRates()
+void RateCalcultionNutrients()
 {
-    NutrientLoss();
+    NutrientMax();
     
     NutrientDemand();
     
-    NutrientAvailStorage();
+    NutrientLoss();
     
+    NutrientPartioning();
     
+    Translocation();
+    
+    NutrientRates();
 }
