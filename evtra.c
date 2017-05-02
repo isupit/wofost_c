@@ -22,12 +22,10 @@ float Evtra() {
     float KDiffuse;
     float Lai;
     float MaxReductionOxygenStress;
-    float MaxTranspiration;
     float ReductionMoisture;
     float ReductionOxygenStress;
     float SoilMoistureAeration;
     float SoilWatDepletion;
-    float test;
 
     Lai = LeaveAreaIndex();
     
@@ -69,9 +67,12 @@ float Evtra() {
     else {
         ReductionOxygenStress = 1.;
     }
+    
+    WatBal.WaterStress = ReductionMoisture * ReductionOxygenStress;
      
-    WatBal.rt.Transpiration = ReductionMoisture * ReductionOxygenStress * 
-            Evtra.MaxTranspiration;
+    WatBal.rt.Transpiration = WatBal.WaterStress * Evtra.MaxTranspiration;
+    
+
 
     return 1;
 

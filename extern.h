@@ -13,9 +13,9 @@ extern void Clean();
 
 
 /* Nutrients */
-extern void NutrientsInitialize();
-extern void NutrientsIntegration();
-extern float NutritionINDX();
+extern void InitializeNutrients();
+extern void IntegrationNutrients();
+extern void NutritionINDX();
 extern void NutrientLoss();
 extern void NutrientMax();
 extern void NutrientPartioning();
@@ -42,6 +42,6 @@ extern int FillAfgenTables();
 
 
 /* Water balance */
-extern void WatBalInitialize();
-extern void WatBalRateCalulation();
-extern void WatBalIntegration();
+extern void InitializeWatBal();
+extern void RateCalulationWatBal();
+extern void IntegrationWatBal();

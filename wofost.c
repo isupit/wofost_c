@@ -9,7 +9,7 @@
 #include "extern.h"
 
 
-void EulerIntegration()	    
+void IntegrationCrop()	    
 {
     float PhysAgeing;
     Green *LeaveProperties;
@@ -33,17 +33,7 @@ void EulerIntegration()
   
     /* Return to beginning of the linked list */
     Crop.LeaveProperties = LeaveProperties;	 
-       
-    /* Integration of the total of soil N,P,K */
-    SoilNtrs.st_N_tot =+ SoilNtrs.rt_N_tot;
-    SoilNtrs.st_P_tot =+ SoilNtrs.rt_P_tot;
-    SoilNtrs.st_K_tot =+ SoilNtrs.rt_K_tot;
-    
-    /* Integration of the total N,P,K soil mineralization */
-    SoilNtrs.st_N_mins =+ SoilNtrs.rt_N_mins;
-    SoilNtrs.st_P_mins =+ SoilNtrs.rt_P_mins;
-    SoilNtrs.st_K_mins =+ SoilNtrs.rt_K_mins;
-    
+           
     /* Actual N amount in various living organs and total living N amount(kg N ha-1) */
     Crop.N_st.leaves  =+ Crop.N_rt.leaves;
     Crop.N_st.stems   =+ Crop.N_rt.stems;
@@ -66,41 +56,63 @@ void EulerIntegration()
 
 float Conversion(float NetAssimilation)
 {
-	float fr, root, shoot;
+	float fr, root, shoots;
 	
 	fr    = Afgen(Roots, &DevelopmentStage);
 	root  = fr/ConversionRoots;
-	shoot = Afgen(Stems, &DevelopmentStage)/ConversionStems;
-	shoot = shoot + Afgen(Leaves, &DevelopmentStage)/ConversionLeaves;	
-	shoot = shoot + Afgen(Storage, &DevelopmentStage)/ConversionStorage;
+	shoots =  Afgen(Stems, &DevelopmentStage)/ConversionStems;
+	shoots =+ Afgen(Leaves, &DevelopmentStage)/ConversionLeaves;	
+	shoots =+ Afgen(Storage, &DevelopmentStage)/ConversionStorage;
 	
 	/* conversion */
-	return NetAssimilation/(shoot*(1-fr)+root);
+	return NetAssimilation/(shoots*(1-fr)+root);
 }
  
 void Growth(float NewPlantMaterial)
 {
-        float shoots, FractionRoots;
-		
-	FractionRoots  = Afgen(Roots, &DevelopmentStage);
-	Crop.drt.roots = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
-	Crop.rt.roots  = NewPlantMaterial*FractionRoots - Crop.drt.roots;
+    float shoots, factor, flv;
+    float Fraction_ro, Fraction_lv, Fraction_st, Fraction_so;
+        
+        
+    /* Water stress is more severe as compared to Nitrogen stress and */
+    /* partitioning will follow the original assumptions of LINTUL2   */     
+        
+    if (WatBal.WaterStress < Crop.N_st.Indx)
+    {
+        factor = max(1., 1./(WatBal.WaterStress + 0.5));
+        Fraction_ro = min(0.6, Afgen(Roots, &DevelopmentStage) * factor);
+        Fraction_lv = Afgen(Leaves, &DevelopmentStage);
+        Fraction_st = Afgen(Stems, &DevelopmentStage);
+        Fraction_so = Afgen(Storage, &DevelopmentStage);
+    }
+    else
+    {
+        flv = Afgen(Leaves, &DevelopmentStage);
+        factor = exp(-N_lv_partitioning * ( 1. - Crop.N_st.Indx));
+        
+        Fraction_lv = flv * factor;
+        Fraction_ro = Afgen(Roots, &DevelopmentStage);
+        Fraction_st = Afgen(Stems, &DevelopmentStage) - flv - Fraction_lv;
+        Fraction_so = Afgen(Storage, &DevelopmentStage);
+    }
+                
+    Crop.drt.roots = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
+    Crop.rt.roots  = NewPlantMaterial*Fraction_ro - Crop.drt.roots;
 	
-	shoots         = NewPlantMaterial*(1-FractionRoots);
+    shoots         = NewPlantMaterial*(1-Fraction_ro);
 	    
-	Crop.drt.stems = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
-	Crop.rt.stems  = shoots*Afgen(Stems, &DevelopmentStage)-Crop.drt.stems;
+    Crop.drt.stems = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
+    Crop.rt.stems  = shoots*Fraction_st - Crop.drt.stems;
 	
-	Crop.rt.storage = shoots*Afgen(Storage, &DevelopmentStage);
+    Crop.rt.storage = shoots * Fraction_so;
 	
+    Crop.drt.leaves = DyingLeaves(); 
+    Crop.rt.leaves  = shoots * Fraction_lv;
+    Crop.rt.LAIExp  = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves);	
+    Crop.rt.leaves  = Crop.rt.leaves -  Crop.drt.leaves;
 	
-        Crop.drt.leaves = DyingLeaves(); 
-        Crop.rt.leaves  = shoots*Afgen(Leaves, &DevelopmentStage);
-	Crop.rt.LAIExp  = LeaveGrowth(Crop.st.LAIExp, Crop.rt.leaves);	
-	Crop.rt.leaves  = Crop.rt.leaves -  Crop.drt.leaves;
-	
-        Crop.RootDepth_prev = Crop.RootDepth;
-        Crop.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
+    Crop.RootDepth_prev = Crop.RootDepth;
+    Crop.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
                 MaxIncreaseRoot*Step);
 }	
 	
@@ -111,16 +123,16 @@ float RespirationRef(float TotalAssimilation)
       float TempRef = 25.;
 
       respiration  = RelRespiLeaves*Crop.st.leaves;
-      respiration  = respiration + RelRespiStorage*Crop.st.storage;
-      respiration  = respiration + RelRespiRoots*Crop.st.roots;	
-      respiration  = respiration + RelRespiStems*Crop.st.stems;
+      respiration  =+ RelRespiStorage*Crop.st.storage;
+      respiration  =+ RelRespiRoots*Crop.st.roots;	
+      respiration  =+ RelRespiStems*Crop.st.stems;
       respiration  = respiration * Afgen(FactorSenescence, &DevelopmentStage);
       respiration  = respiration * pow(Q10, 0.1*(Temp-TempRef));
       
       return (min(respiration, TotalAssimilation));
 }
 
-void Initialize(int Emergence)
+void InitializeCrop(int Emergence)
 {
        float FractionRoots, FractionShoots, InitialShootWeight;
        float DeltaTempSum, TempSum=0;
@@ -161,15 +173,15 @@ void Initialize(int Emergence)
        Crop.LeaveProperties->age    = 0.;
        Crop.LeaveProperties->weight = Crop.st.leaves;
        Crop.LeaveProperties->area   = Afgen(SpecificLeaveArea, &DevelopmentStage);
-       Crop.LeaveProperties->next   = NULL;
-       
+       Crop.LeaveProperties->next   = NULL;   
 }       
 
 
 void RateCalculationCrop()
 {
        float TotalAssimilation;
-       float Maintenance, GrossAssimilation, GrossGrowth;    
+       float Maintenance, GrossAssimilation, GrossGrowth;
+       float Stress;
        
        /* Set rates to 0 */
        Crop.rt.roots   = 0.;
@@ -180,9 +192,12 @@ void RateCalculationCrop()
       
        /* Assimilation */
        GrossAssimilation = DailyTotalAssimilation(Astro());
+       
+       /* Stress: either nutrient shortage or water shortage */
+       Stress = min(Crop.NutrientStress, WatBal.WaterStress);
 
-       /* Correction for low minimum temperatures */
-       TotalAssimilation = Correct(GrossAssimilation);
+       /* Correction for low minimum temperatures and stress factors */
+       TotalAssimilation = Stress * Correct(GrossAssimilation);       
 
        /* Respiration */
        Maintenance = RespirationRef(TotalAssimilation);
@@ -193,8 +208,6 @@ void RateCalculationCrop()
        /* Growth of root, stems, leaves and storage organs */
        Growth(GrossGrowth);
        
-       /* Soil nutrient supply */
-//       Nutrients();
              
        printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f", GrossGrowth, Maintenance, TotalAssimilation);
 }
@@ -212,39 +225,39 @@ int main(void)
   GetManagement();
 
   Day = 0;
-  Initialize(Emergence); 
-  WatBalInitialize();
-  NutrientsInitialize();
+  InitializeCrop(Emergence); 
+  InitializeWatBal();
+  InitializeNutrients();
   
-  while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) {
+  while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) 
+  {
    
     Temp = 0.5*(Tmax[Day] + Tmin[Day]);
     DayTemp    = 0.5*(Tmax[Day] + Temp);
     
-printf("\n%4d", Day); 
-printf(" Stems: %7.0f", Crop.st.stems);
-printf(" Leaves: %7.0f", Crop.st.leaves);
-printf(" sto: %7.0f", Crop.st.storage); 
-printf(" LAI: %7.2f", LAI);
-printf(" dvs: %7.2f", DevelopmentStage); 
+    printf("\n%4d", Day); 
+    printf(" Stems: %7.0f", Crop.st.stems);
+    printf(" Leaves: %7.0f", Crop.st.leaves);
+    printf(" sto: %7.0f", Crop.st.storage); 
+    printf(" LAI: %7.2f", LAI);
+    printf(" dvs: %7.2f", DevelopmentStage); 
 
 
     Astro();
     CalcPenman();
 
     RateCalculationCrop();
-    WatBalRateCalulation();
+    RateCalulationWatBal();
     RateCalcultionNutrients();
     
-    EulerIntegration();
-    WatBalIntegration();
-    NutrientsIntegration();
+    IntegrationCrop();
+    IntegrationWatBal();
+    IntegrationNutrients();
     
     LAI              = LeaveAreaIndex();
     DevelopmentStage = GetDevelopmentStage();
     
     Day++;
-
 }
   
 Clean();

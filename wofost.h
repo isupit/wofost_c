@@ -93,6 +93,7 @@ typedef struct RATES {
 typedef struct SOIL {
     float DaysSinceLastRain;
     float SoilMaxRootingDepth;
+    float WaterStress;
     Constants ct;
     States st;
     Rates rt;
@@ -125,21 +126,21 @@ typedef struct NUTRIENT_RATES {
     float stems;
     float leaves;
     float storage;
-    float Dmnd_leaves;
-    float Dmnd_stems;
-    float Dmnd_roots;
-    float Dmnd_storage;
+    float Demand_lv;
+    float Demand_st;
+    float Demand_ro;
+    float Demand_so;
     float Transloc;
     float Transloc_lv;
     float Transloc_st;
-    float Transloc_rt;
+    float Transloc_ro;
     float Uptake;
     float Uptake_lv;
     float Uptake_st;
-    float Uptake_rt;
+    float Uptake_ro;
     float death_lv;
     float death_st;
-    float death_rt;
+    float death_ro;
 } nutrient_rates;
 
 typedef struct NUTRIENT_STATES {
@@ -147,20 +148,20 @@ typedef struct NUTRIENT_STATES {
     float stems;
     float leaves;
     float storage;
-    float Max_leaves;
-    float Max_stems;
-    float Max_roots;
-    float Max_storage;
-    float Opt_leaves;
-    float Opt_stems;
-    float Opt_roots;
-    float Opt_storage;
+    float Max_lv;
+    float Max_st;
+    float Max_ro;
+    float Max_so;
+    float Optimum_lv;
+    float Optimum_st;
     float Indx;
     float Uptake;
     float Uptake_lv;
     float Uptake_st;
-    float Uptake_rt;
+    float Uptake_ro;
     float death_lv;
+    float death_st;
+    float death_ro;
     
 } nutrient_states;
 
@@ -198,6 +199,8 @@ typedef struct PLANT {
              float RootDepth;
              float RootDepth_prev;
              float MaxRootingDepth;
+             float NPK_Indx;
+             float NutrientStress;
              
              growth_rates  rt;
              growth_states st;
@@ -236,13 +239,13 @@ AFGEN *P_MaxLeaves;
 AFGEN *K_MaxLeaves;
 
 /* Tables for fertilizer application and recovery fraction */
-AFGEN N_Fert_table;
-AFGEN P_Fert_table;
-AFGEN K_Fert_table;
-AFGEN N_Uptake_frac;
-AFGEN P_Uptake_frac;
-AFGEN K_Uptake_frac;
-AFGEN Irrigation;
+AFGEN *N_Fert_table;
+AFGEN *P_Fert_table;
+AFGEN *K_Fert_table;
+AFGEN *N_Uptake_frac;
+AFGEN *P_Uptake_frac;
+AFGEN *K_Uptake_frac;
+AFGEN *Irrigation;
 
 
 /** Meteorological Variables  **/
@@ -334,7 +337,7 @@ float MoistureLOW;
 
 
 /** Nutrients **/
-float RDRNS; 
+float DyingLeaves_NPK_Stress; 
 float DevelopmentStageNLimit; 
 float DevelopmentStageNT;
 float FracTranslocRoots;  
@@ -347,22 +350,22 @@ float P_MaxRoots;
 float P_MaxStems;   
 float K_MaxRoots;   
 float K_MaxStems;   
-float NLAI;   
+float NutrientStressLAI;   
 float NLUE;   
 float Max_N_storage; 
 float Max_P_storage; 
 float Max_K_storage; 
-float NPART;  
+float N_lv_partitioning;  
 float NSLA;   
-float N_ResidualFracLeaves;  
-float N_ResidualFracStems;  
-float N_ResidualFracRoots;  
-float P_ResidualFracLeaves;  
-float P_ResidualFracStems;  
-float P_ResidualFracRoots;  
-float K_ResidualFracLeaves;  
-float K_ResidualFracStems;   
-float K_ResidualFracRoots;   
+float N_ResidualFrac_lv;  
+float N_ResidualFrac_st;  
+float N_ResidualFrac_ro;  
+float P_ResidualFrac_lv;  
+float P_ResidualFrac_st;  
+float P_ResidualFrac_ro;  
+float K_ResidualFrac_lv;  
+float K_ResidualFrac_st;   
+float K_ResidualFrac_ro;   
 float TCNT;   
 float TCPT;   
 float TCKT;   
