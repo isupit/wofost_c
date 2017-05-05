@@ -7,6 +7,7 @@
 #include "wofost.h"
 #include "dynamic.h"
 #include "extern.h"
+#include "penman.h"
 /* ---------------------------------------------------------------------------*/
 /*  function NutrientLoss                                                     */
 /*  Purpose: To calculate nutrient loss rate of dying of roots, stems leaves  */
@@ -348,9 +349,9 @@ void NutritionINDX()
 
         /* Residual N,P,K concentration in total vegetative living */
         /* above-ground biomass  (kg N,P,K kg-1 DM)                */
-        N_res = (Crop.st.leaves * N_ResidualFrac_lv +Crop.st.stems.*N_ResidualFrac_st)/VegetativeMass;
-        P_res = (Crop.st.leaves * P_ResidualFrac_lv +Crop.st.stems.*P_ResidualFrac_st)/VegetativeMass;
-        K_res = (Crop.st.leaves * K_ResidualFrac_lv +Crop.st.stems.*K_ResidualFrac_st)/VegetativeMass;
+        N_res = (Crop.st.leaves * N_ResidualFrac_lv +Crop.st.stems*N_ResidualFrac_st)/VegetativeMass;
+        P_res = (Crop.st.leaves * P_ResidualFrac_lv +Crop.st.stems*P_ResidualFrac_st)/VegetativeMass;
+        K_res = (Crop.st.leaves * K_ResidualFrac_lv +Crop.st.stems*K_ResidualFrac_st)/VegetativeMass;
 
         N_opt_veg = (Crop.N_st.Optimum_lv + Crop.N_st.Optimum_st)/VegetativeMass;
         P_opt_veg = (Crop.P_st.Optimum_lv + Crop.P_st.Optimum_st)/VegetativeMass;
@@ -361,7 +362,7 @@ void NutritionINDX()
     float tiny=0.001;
     Crop.N_st.Indx = limit(tiny,1.0, ((N_Veg -N_res)/notnul(N_opt_veg - N_res)));
     Crop.P_st.Indx = limit(tiny,1.0, ((P_Veg -P_res)/notnul(P_opt_veg - P_res)));
-    Crop.K_st.Indx = limit(tiny,1.0, ((N_Veg -K_res)/notnul(K_opt_veg - K_res)));
+    Crop.K_st.Indx = limit(tiny,1.0, ((K_Veg -K_res)/notnul(K_opt_veg - K_res)));
     
     Crop.NPK_Indx = (Crop.N_st.Indx < Crop.P_st.Indx) ? Crop.N_st.Indx : Crop.P_st.Indx;
     Crop.NPK_Indx = (Crop.NPK_Indx < Crop.K_st.Indx) ? Crop.NPK_Indx : Crop.K_st.Indx;
@@ -438,8 +439,8 @@ void InitializeNutrients()
     SoilNtrs.st_P_tot = Afgen(P_Fert_table, &Day) * Afgen(P_Uptake_frac, &Day);
     SoilNtrs.st_K_tot = Afgen(K_Fert_table, &Day) * Afgen(K_Uptake_frac, &Day);
 
-    SoilNtrs.st_N_mins = Site.N_Mins.;
-    SoilNtrs.st_P_mins = Site.P_Mins.;
+    SoilNtrs.st_N_mins = Site.N_Mins;
+    SoilNtrs.st_P_mins = Site.P_Mins;
     SoilNtrs.st_K_mins = Site.K_Mins;
     
     /* Set the crop nutrient rates to zero */
@@ -567,13 +568,13 @@ void IntegrationNutrients()
 }
 
 
-float  NutrientStress()
+void  NutrientStress()
 {
     /* Establish the optimum nutrient concentrations in the crop organs */
     NutrientOptimum();
     
     /* Calculate the nutrition index */
-    return NutritionINDX();
+    NutritionINDX();
     
 }
 

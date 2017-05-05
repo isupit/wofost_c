@@ -19,7 +19,7 @@ int GetManagement()
  i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF && i < 12 ) 
   {
-    if (!strcmp(word, SiteParam[i])) {
+    if (!strcmp(word, ManageParam[i])) {
         while ((c=fgetc(fq)) !='=');
 	fscanf(fq,"%f",  &Variable[i]);
 
@@ -35,7 +35,7 @@ int GetManagement()
   i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF) 
   {
-    if (!strcmp(word, SiteParam2[i])) {
+    if (!strcmp(word, ManageParam2[i])) {
         Table = start = malloc(sizeof(AFGEN));
 	fscanf(fq,"%s %f %s  %f", x, &Table->x, xx, &Table->y);
         Table->next = NULL;				     

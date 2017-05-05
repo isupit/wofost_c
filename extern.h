@@ -22,6 +22,7 @@ extern void NutrientPartioning();
 extern void NutrientRates();
 extern void NutrientOptimum();
 extern void NutrientDemand();
+extern void NutrientStress();
 extern void SoilNutrients();
 extern void Translocation();
 extern void RateCalcultionNutrients();

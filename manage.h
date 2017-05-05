@@ -1,4 +1,4 @@
-char *SiteParam[]={ "NMINS",
+char *ManageParam[]={ "NMINS",
                    "RTNMINS",
 		   "PMINS",
 		   "RTPMINS",
@@ -7,7 +7,7 @@ char *SiteParam[]={ "NMINS",
                    "NULL"
 		   };
 
-char *SiteParam2[]={
+char *ManageParam2[]={
                     "FERNTAB",
                     "FERPTAB",
                     "FERKTAB",

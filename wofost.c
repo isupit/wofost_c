@@ -246,13 +246,13 @@ int main(void)
     Astro();
     CalcPenman();
 
-    RateCalculationCrop();
     RateCalulationWatBal();
     RateCalcultionNutrients();
+    RateCalculationCrop();
     
-    IntegrationCrop();
     IntegrationWatBal();
     IntegrationNutrients();
+    IntegrationCrop();
     
     LAI              = LeaveAreaIndex();
     DevelopmentStage = GetDevelopmentStage();

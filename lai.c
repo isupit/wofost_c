@@ -15,10 +15,9 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
   Green *New=NULL;
   Green *LeaveProperties=NULL;
   
-  /* Stress: either nutrient shortage or water shortage */
-  Stress = min(Crop.NutrientStress, WatBal.WaterStress);
- 
-  SpecLeafArea = Afgen(SpecificLeaveArea, &DevelopmentStage);
+
+  /* Specific Leaf area(m2/g), as dependent on NPK stress */
+  SpecLeafArea = Afgen(SpecificLeaveArea, &DevelopmentStage)* exp(-NutrientStessSLA * (1.-Crop.NPK_Indx));
 
  /* Leave area not to exceed exponential growth */
   if (LAIExp < 6 && NewLeaves > 0.) 
@@ -26,11 +25,11 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
       GrowthExpLAI = LAIExp*RelIncreaseLAI*max(0.,Temp - TempBaseLeaves);
       if (DevelopmentStage < 0.2 && LAI < 0.75)
       {
-        Stress = Stress *exp(-NutrientStressLAI * (1.0 - Crop.NPK_Indx));
+        Stress = WatBal.WaterStress * exp(-NitrogenStressLAI * (1. - Crop.N_st.Indx));
       }
       
       /* Correction for nutrient stress */
-      GrowthExpLAI = GrowthExpLAI* Stress;
+      GrowthExpLAI = GrowthExpLAI * Stress;
     
       /* Source limited leaf area increase */
       GrowthSourceLimited = NewLeaves* Afgen(SpecificLeaveArea, &DevelopmentStage);
