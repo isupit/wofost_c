@@ -52,8 +52,8 @@ int CalcPenman()
             
     /* Measured vapour pressure not to exceed saturated vapour pressure */
 
-    SaturatedVap  = 6.10588 * exp (17.32491*Tmpa/(Tmpa+238.102));
-    delta         = 238.102*17.32491*SaturatedVap/pow((Tmpa +238.102),2);
+    SaturatedVap  = 6.10588 * exp(17.32491 * Tmpa/(Tmpa+238.102));
+    delta         = 238.102 * 17.32491 * SaturatedVap/pow((Tmpa +238.102),2);
     VapourP       = min(Vapour[Day],SaturatedVap);
 
     /* The expression n/N (RelLSSD) from the Penman formula is estimated   */
@@ -83,5 +83,5 @@ int CalcPenman()
     Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
     Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
 
-      return 1;
+    return 1;
 }

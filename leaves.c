@@ -20,10 +20,11 @@ float DyingLeaves()
   Death       = max(Death1, Death2);  
   
   /* Death rate increase due to nutrient shortage */
-  Death =+ Crop.st.leaves * DyingLeaves_NPK_Stress * (1. - Crop.NPK_Indx);
+  Death += Crop.st.leaves * DyingLeaves_NPK_Stress * (1. - Crop.NPK_Indx);
   
   DeathStress = Death;
 
+  /* Oldest leave classes are at the beginning of the list */
   while(Death > Crop.LeaveProperties->weight && Crop.LeaveProperties != NULL)
     { Death                = Death - Crop.LeaveProperties->weight;
       wipe                 = Crop.LeaveProperties; 

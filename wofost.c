@@ -35,22 +35,22 @@ void IntegrationCrop()
     Crop.LeaveProperties = LeaveProperties;	 
            
     /* Actual N amount in various living organs and total living N amount(kg N ha-1) */
-    Crop.N_st.leaves  =+ Crop.N_rt.leaves;
-    Crop.N_st.stems   =+ Crop.N_rt.stems;
-    Crop.N_st.roots   =+ Crop.N_rt.roots;
-    Crop.N_st.storage =+ Crop.N_rt.storage;
+    Crop.N_st.leaves  += Crop.N_rt.leaves;
+    Crop.N_st.stems   += Crop.N_rt.stems;
+    Crop.N_st.roots   += Crop.N_rt.roots;
+    Crop.N_st.storage += Crop.N_rt.storage;
     
     /* Actual P amount in various living organs and total living P amount(kg N ha-1) */
-    Crop.P_st.leaves  =+ Crop.P_rt.leaves;
-    Crop.P_st.stems   =+ Crop.P_rt.stems;
-    Crop.P_st.roots   =+ Crop.P_rt.roots;
-    Crop.P_st.storage =+ Crop.P_rt.storage;
+    Crop.P_st.leaves  += Crop.P_rt.leaves;
+    Crop.P_st.stems   += Crop.P_rt.stems;
+    Crop.P_st.roots   += Crop.P_rt.roots;
+    Crop.P_st.storage += Crop.P_rt.storage;
     
     /* Actual K amount in various living organs and total living k amount(kg N ha-1) */
-    Crop.K_st.leaves  =+ Crop.K_rt.leaves;
-    Crop.K_st.stems   =+ Crop.K_rt.stems;
-    Crop.K_st.roots   =+ Crop.K_rt.roots;
-    Crop.K_st.storage =+ Crop.K_rt.storage;
+    Crop.K_st.leaves  += Crop.K_rt.leaves;
+    Crop.K_st.stems   += Crop.K_rt.stems;
+    Crop.K_st.roots   += Crop.K_rt.roots;
+    Crop.K_st.storage += Crop.K_rt.storage;
 
 }       	     
 
@@ -61,8 +61,8 @@ float Conversion(float NetAssimilation)
 	fr    = Afgen(Roots, &DevelopmentStage);
 	root  = fr/ConversionRoots;
 	shoots =  Afgen(Stems, &DevelopmentStage)/ConversionStems;
-	shoots =+ Afgen(Leaves, &DevelopmentStage)/ConversionLeaves;	
-	shoots =+ Afgen(Storage, &DevelopmentStage)/ConversionStorage;
+	shoots += Afgen(Leaves, &DevelopmentStage)/ConversionLeaves;	
+	shoots += Afgen(Storage, &DevelopmentStage)/ConversionStorage;
 	
 	/* conversion */
 	return NetAssimilation/(shoots*(1-fr)+root);
@@ -123,11 +123,11 @@ float RespirationRef(float TotalAssimilation)
       float TempRef = 25.;
 
       respiration  = RelRespiLeaves*Crop.st.leaves;
-      respiration  =+ RelRespiStorage*Crop.st.storage;
-      respiration  =+ RelRespiRoots*Crop.st.roots;	
-      respiration  =+ RelRespiStems*Crop.st.stems;
-      respiration  = respiration * Afgen(FactorSenescence, &DevelopmentStage);
-      respiration  = respiration * pow(Q10, 0.1*(Temp-TempRef));
+      respiration  += RelRespiStorage*Crop.st.storage;
+      respiration  += RelRespiRoots*Crop.st.roots;	
+      respiration  += RelRespiStems*Crop.st.stems;
+      respiration  *= Afgen(FactorSenescence, &DevelopmentStage);
+      respiration  *= pow(Q10, 0.1*(Temp-TempRef));
       
       return (min(respiration, TotalAssimilation));
 }

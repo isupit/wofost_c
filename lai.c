@@ -17,15 +17,21 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
   
 
   /* Specific Leaf area(m2/g), as dependent on NPK stress */
-  SpecLeafArea = Afgen(SpecificLeaveArea, &DevelopmentStage)* exp(-NutrientStessSLA * (1.-Crop.NPK_Indx));
+  SpecLeafArea = Afgen(SpecificLeaveArea, &DevelopmentStage) * 
+          exp(-NutrientStessSLA * (1.-Crop.NPK_Indx));
 
  /* Leave area not to exceed exponential growth */
   if (LAIExp < 6 && NewLeaves > 0.) 
   {
-      GrowthExpLAI = LAIExp*RelIncreaseLAI*max(0.,Temp - TempBaseLeaves);
+      /* Growth during juvenile stage */
+      GrowthExpLAI = LAIExp * RelIncreaseLAI * max(0.,Temp - TempBaseLeaves);
       if (DevelopmentStage < 0.2 && LAI < 0.75)
       {
         Stress = WatBal.WaterStress * exp(-NitrogenStressLAI * (1. - Crop.N_st.Indx));
+      }
+      else
+      {
+          Stress = 1.;
       }
       
       /* Correction for nutrient stress */
@@ -38,7 +44,10 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
       SpecLeafArea = min(GrowthExpLAI, GrowthSourceLimited)/NewLeaves;
  }
  else
-    GrowthExpLAI = 0.;
+ {
+      GrowthExpLAI = 0.;
+ }
+    
         
   New         = malloc(sizeof(Green));
   New->weight = NewLeaves;
