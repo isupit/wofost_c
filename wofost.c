@@ -8,17 +8,16 @@
 #include "dynamic.h"
 #include "extern.h"
 
-
 void IntegrationCrop()	    
 {
     float PhysAgeing;
     Green *LeaveProperties;
     
-    Crop.st.roots    = + Crop.rt.roots;
-    Crop.st.stems    = + Crop.rt.stems;
-    Crop.st.leaves   = + Crop.rt.leaves;
-    Crop.st.storage  = + Crop.rt.storage;
-    Crop.st.LAIExp   = + Crop.rt.LAIExp;
+    Crop.st.roots    += Crop.rt.roots;
+    Crop.st.stems    += Crop.rt.stems;
+    Crop.st.leaves   += Crop.rt.leaves;
+    Crop.st.storage  += Crop.rt.storage;
+    Crop.st.LAIExp   += Crop.rt.LAIExp;
 
     /* Establish the age increase */
     PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
@@ -193,6 +192,9 @@ void RateCalculationCrop()
        /* Assimilation */
        GrossAssimilation = DailyTotalAssimilation(Astro());
        
+       /* Establish WatBal.WaterStress */
+       EvapTra();
+       
        /* Stress: either nutrient shortage or water shortage */
        Stress = min(Crop.NutrientStress, WatBal.WaterStress);
 
@@ -231,9 +233,8 @@ int main(void)
   
   while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) 
   {
-   
     Temp = 0.5*(Tmax[Day] + Tmin[Day]);
-    DayTemp    = 0.5*(Tmax[Day] + Temp);
+    DayTemp = 0.5*(Tmax[Day] + Temp);
     
     printf("\n%4d", Day); 
     printf(" Stems: %7.0f", Crop.st.stems);

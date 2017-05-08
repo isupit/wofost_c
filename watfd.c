@@ -45,6 +45,9 @@ void InitializeWatBal()
     WatBal.st.Transpiration     = 0.;
     WatBal.st.WaterRootExt      = 0.;
     
+    /* Assume no water stress at initialization */
+    WatBal.WaterStress = 1.;
+    
     /* Check initial soil moisture. It cannot be larger than the              */
     /* saturated soil moisture SoilMoistureSAT or smaller than SoilMoistureWP */
     if (Site.MaxInitSoilM<= WatBal.ct.MoistureWP)  

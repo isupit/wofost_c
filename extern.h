@@ -45,3 +45,4 @@ extern int FillAfgenTables();
 extern void InitializeWatBal();
 extern void RateCalulationWatBal();
 extern void IntegrationWatBal();
+extern void EvapTra();

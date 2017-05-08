@@ -13,7 +13,8 @@ char *ManageParam2[]={
                     "FERKTAB",
                     "NRFTAB",
                     "PRFTAB",
-                    "NRFTAB",
+                    "KRFTAB",
+                    "IRRTAB",
                     "NULL"
 		    };
 

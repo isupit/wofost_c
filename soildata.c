@@ -50,15 +50,15 @@ int GetSoilData()
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    AfgenTable[i] = *start;
+	    AfgenTable[i + 18] = start;
 	i++; 
        }      
   }
 
   if (i!= NR_TABLES_SOIL) return 0;
  
-  *VolumetricSoilMoisture    = AfgenTable[18];
-  *HydraulicConducitiy       = AfgenTable[19];
+  VolumetricSoilMoisture    = AfgenTable[18];
+  HydraulicConducitiy       = AfgenTable[19];
   
 
 return 1;

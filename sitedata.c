@@ -49,14 +49,14 @@ int GetSiteData()
 	    
 	    while ((c=fgetc(fq)) !='\n' || (c=fgetc(fq)) != EOF );
 	    }
-	    AfgenTable[i] = *start;
+	    AfgenTable[i + 20] = start;
 	i++; 
        }      
   }
 
   if (i!= NR_TABLES_SITE) return 0;
    
-  *NotInfTB         = AfgenTable[20];
+  NotInfTB         = AfgenTable[20];
 
 return 1;
 }

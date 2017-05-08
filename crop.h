@@ -30,40 +30,40 @@ char *CropParam[]={"TBASEM",
 		   "RDI",
 		   "RRI",
 		   "RDMCR",
-                   "RDRNS"  
-                    "DVSNLT" 
-                    "DVSNT"  
-                    "FNTRT"  
-                    "FRNX"   
-                    "FRPX"   
-                    "FRKX"   
-                    "LRNR"   
-                    "LSNR"   
-                    "LRPR"   
-                    "LSPR"   
-                    "LRKR"   
-                    "LSKR"   
-                    "NLAI"   
-                    "NLUE"   
-                    "NMAXSO" 
-                    "PMAXSO" 
-                    "KMAXSO" 
-                    "NPART"  
-                    "NSLA"   
-                    "RNFLV"  
-                    "RNFST"  
-                    "RNFRT"  
-                    "RPFLV"  
-                    "RPFST"  
-                    "RPFRT"  
-                    "RKFLV"  
-                    "RKFST"  
-                    "RKFRT"  
-                    "TCNT"   
-                    "TCPT"   
-                    "TCKT"   
-                    "NFIXF"  
-                    "NULL"
+                   "RDRNS",  
+                   "DVSNLT", 
+                   "DVSNT",  
+                   "FNTRT",  
+                   "FRNX",   
+                   "FRPX",   
+                   "FRKX",   
+                   "LRNR",   
+                   "LSNR",   
+                   "LRPR",   
+                   "LSPR",   
+                   "LRKR",   
+                   "LSKR",   
+                   "NLAI",   
+                   "NLUE",   
+                   "NMAXSO", 
+                   "PMAXSO", 
+                   "KMAXSO", 
+                   "NPART",  
+                   "NSLA",   
+                   "RNFLV",  
+                   "RNFST",  
+                   "RNFRT",  
+                   "RPFLV",  
+                   "RPFST",  
+                   "RPFRT",  
+                   "RKFLV",  
+                   "RKFST",  
+                   "RKFRT",  
+                   "TCNT",   
+                   "TCPT",   
+                   "TCKT",   
+                   "NFIXF",  
+                   "NULL"
 		   };
 		   
 char *CropParam2[]={
@@ -84,7 +84,7 @@ char *CropParam2[]={
 		    "RDRSTB",
                     "NMXLV",
                     "PMXLV",
-                    "PMXLV",
+                    "KMXLV",
                     "NULL"
 		    };
 

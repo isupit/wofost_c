@@ -27,7 +27,7 @@ void Clean()
     
   for (i = 0; i < NUMBER_OF_TABLES; i++)
   {
-    *table = AfgenTable[i];  
+    table = AfgenTable[i];  
     while (table->next)
     {
       base  = table;
