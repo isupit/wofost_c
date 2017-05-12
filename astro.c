@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "astro.h"
 #include "dynamic.h"
@@ -49,7 +50,7 @@ int Astro()
      if (AtmosphTransm < 0.07)  
         FractionDiffuseRad = 1.0;
      
-     DiffRadPP = 0.5*FractionDiffuseRad*AtmosphTransm*SolarConstant;
-    
-return 1;
+     DiffRadPP = 0.5 * FractionDiffuseRad * AtmosphTransm * SolarConstant;
+
+     return 1;
 }

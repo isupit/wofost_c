@@ -10,14 +10,14 @@
 #include "wofost.h"
 
 #define PSYCON  0.67    /* psychrometric instrument constant (mbar/Celsius-1)*/
-#define REFCFW  0.05    /* albedo for a water surface, */
-#define REFCFS  0.15    /* albedo for a soil surface  */
-#define REFCFC  0.25    /* albedo for a  canopy */
-#define LHVAP   2.45e6  /* latent heat of evaporation of water (J/kg=J/mm) */
+#define REFCFW  0.05    /* albedo for a water surface                        */
+#define REFCFS  0.15    /* albedo for a soil surface                         */
+#define REFCFC  0.25    /* albedo for a  canopy                              */
+#define LHVAP   2.45e6  /* latent heat of evaporation of water (J/kg=J/mm)   */
 #define STBC    4.9e3   /* Stefan Boltzmann constant (J/m2/d/K4) */
 
 
-int CalcPenman()
+void CalcPenman()
 {
     float RelSunShineDuration;
     float Tmpa;
@@ -32,9 +32,9 @@ int CalcPenman()
     float Rnw, Rns, Rnc;
     float VapourP, SaturatedVap;
             
-    /* Preparatory calculations mean daily temperature and temperature 
-       difference (Celsius) coefficient Bu in wind function, dependent on 
-       temperature difference */
+    /* Preparatory calculations mean daily temperature and temperature    */
+    /* difference (Celsius) coefficient Bu in wind function, dependent on */ 
+    /* temperature difference                                             */
     
     Tmpa  = (Tmin[Day] + Tmax[Day])/2.;
     Tdif  = Tmax[Day] - Tmin[Day];
@@ -82,6 +82,4 @@ int CalcPenman()
     Penman.E0  = max(0., (delta*Rnw + Gamma*Ea)/(delta + Gamma));
     Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
     Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
-
-    return 1;
 }

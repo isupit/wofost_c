@@ -34,6 +34,7 @@ void Clean()
       table = table->next; 
       free(base);
     }
+    
     free(table);
     //*AfgenTable[i] = NULL;
   }

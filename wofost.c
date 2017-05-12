@@ -50,7 +50,6 @@ void IntegrationCrop()
     Crop.K_st.stems   += Crop.K_rt.stems;
     Crop.K_st.roots   += Crop.K_rt.roots;
     Crop.K_st.storage += Crop.K_rt.storage;
-
 }       	     
 
 float Conversion(float NetAssimilation)
@@ -91,7 +90,7 @@ void Growth(float NewPlantMaterial)
         
         Fraction_lv = flv * factor;
         Fraction_ro = Afgen(Roots, &DevelopmentStage);
-        Fraction_st = Afgen(Stems, &DevelopmentStage) - flv - Fraction_lv;
+        Fraction_st = Afgen(Stems, &DevelopmentStage) + flv - Fraction_lv;
         Fraction_so = Afgen(Storage, &DevelopmentStage);
     }
                 
@@ -190,13 +189,14 @@ void RateCalculationCrop()
        Crop.rt.LAIExp  = 0.;      
       
        /* Assimilation */
-       GrossAssimilation = DailyTotalAssimilation(Astro());
+       GrossAssimilation = DailyTotalAssimilation();
        
        /* Establish WatBal.WaterStress */
        EvapTra();
        
        /* Stress: either nutrient shortage or water shortage */
        Stress = min(Crop.NutrientStress, WatBal.WaterStress);
+       //Stress = 1.;
 
        /* Correction for low minimum temperatures and stress factors */
        TotalAssimilation = Stress * Correct(GrossAssimilation);       
@@ -211,12 +211,12 @@ void RateCalculationCrop()
        Growth(GrossGrowth);
        
              
-       printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f", GrossGrowth, Maintenance, TotalAssimilation);
+       printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f RtSt: %5.1f", GrossGrowth, Maintenance, TotalAssimilation, Crop.rt.stems );
 }
 
 int main(void)
 {
-  int  Emergence, EndDay = 240;
+  int  Emergence, EndDay = 242;
   
   Emergence = 1;
 

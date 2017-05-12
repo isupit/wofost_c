@@ -61,7 +61,7 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
 }
 
 
-float DailyTotalAssimilation(int astro)
+float DailyTotalAssimilation()
 {
   int i;
   float KDiffuse, EFF;
