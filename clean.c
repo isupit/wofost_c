@@ -13,30 +13,34 @@ void Clean()
   {
       LeaveProperties = Crop.LeaveProperties;
       Crop.LeaveProperties = Crop.LeaveProperties->next; 
+      
+      LeaveProperties = NULL;
       free(LeaveProperties);
   }
         
-  /* Free last element in the list */
+  /* Free the last node */
+  Crop.LeaveProperties = NULL;
   free(Crop.LeaveProperties);
   
-  Crop.LeaveProperties = NULL;
   
-  /* Clean Afgen Tables*/
-  AFGEN *table = NULL;
-  AFGEN *base  = NULL;  
+  /* Define temporary node */
+  AFGEN *head  = NULL;  
     
   for (i = 0; i < NUMBER_OF_TABLES; i++)
   {
-    table = AfgenTable[i];  
-    while (table->next)
-    {
-      base  = table;
-      table = table->next; 
-      free(base);
-    }
-    
-    free(table);
-    //*AfgenTable[i] = NULL;
+      while (AfgenTable[i]->next)
+      {
+          head = AfgenTable[i];
+          AfgenTable[i] = AfgenTable[i]->next;
+          
+          /* free and clearing the node */
+          head = NULL;
+          free(head);
+      }
+      
+      /* free and clearing the last node */
+      AfgenTable[i] = NULL;
+      free(AfgenTable[i]);
   }
   
 }

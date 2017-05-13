@@ -49,20 +49,20 @@ int GetManagement()
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    AfgenTable[i + 22] = start;
+	    AfgenTable[i + 21] = start;
 	i++; 
        }      
   }
 
   if (i!= NR_TABLES_MANAGEMENT) return 0;
  
-  N_Fert_table   = AfgenTable[22];
-  P_Fert_table   = AfgenTable[23];
-  K_Fert_table   = AfgenTable[24];
-  N_Uptake_frac  = AfgenTable[25];
-  P_Uptake_frac  = AfgenTable[26];
-  K_Uptake_frac  = AfgenTable[27];
-  Irrigation     = AfgenTable[28];
+  N_Fert_table   = AfgenTable[21];
+  P_Fert_table   = AfgenTable[22];
+  K_Fert_table   = AfgenTable[23];
+  N_Uptake_frac  = AfgenTable[24];
+  P_Uptake_frac  = AfgenTable[25];
+  K_Uptake_frac  = AfgenTable[26];
+  Irrigation     = AfgenTable[27];
   
 
 return 1;

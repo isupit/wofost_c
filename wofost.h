@@ -9,7 +9,7 @@
 #define NR_TABLES_SOIL          2
 #define NR_VARIABLES_MANAGEMENT 6
 #define NR_TABLES_MANAGEMENT    7
-#define NUMBER_OF_TABLES        29
+#define NUMBER_OF_TABLES        28
 
 typedef struct TABLE {
 	     float x;
@@ -17,7 +17,7 @@ typedef struct TABLE {
 	     struct TABLE *next;
 	     } AFGEN;
 
-AFGEN *AfgenTable[29];
+AFGEN *AfgenTable[28];
 
 typedef struct SITE {
    float AngstA;
