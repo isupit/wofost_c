@@ -5,10 +5,8 @@
 #include <math.h>
 #include "penman.h"
 #include "wofost.h"
-#include "mmla.h"
-#include "dynamic.h"
+#include "extern.h"
 
-extern float LeaveAreaIndex();
 
 float sweaf(){
     float sweaf; 

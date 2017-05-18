@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "dynamic.h"
-#include "mmla.h"
+#include "extern.h"
 #include "wofost.h"
 #include "penman.h"
+
+
 
 float DyingLeaves()
 {
@@ -36,7 +37,7 @@ float DyingLeaves()
   DeathAge = 0;
   while(Crop.LeaveProperties != NULL && Crop.LeaveProperties->age > LifeSpan)
      {wipe                   = Crop.LeaveProperties; 
-      DeathAge               = DeathAge + Crop.LeaveProperties->weight;
+      DeathAge              += Crop.LeaveProperties->weight;
       Crop.LeaveProperties   = Crop.LeaveProperties->next; 
       free(wipe);}
 

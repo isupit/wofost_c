@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "mmla.h"
-#include "dynamic.h"
+#include "extern.h"
 #include "wofost.h"
 
 float LeaveGrowth(float LAIExp, float NewLeaves)

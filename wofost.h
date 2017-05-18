@@ -100,7 +100,7 @@ typedef struct SOIL {
     } Soil;
     
 Soil WatBal;
-extern void NutrientStress();
+
 typedef struct MINERALS {
     float st_N_tot;
     float st_P_tot;

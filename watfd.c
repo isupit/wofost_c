@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "dynamic.h"
-#include "mmla.h"
+#include "extern.h"
 #include "penman.h"
 #include "wofost.h"
 
