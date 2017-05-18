@@ -16,7 +16,7 @@ extern float insw(float x1, float x2, float x3);
 
 /* Crop growth */
 extern int Astro();
-extern int CalcPenman();
+extern void CalcPenman();
 
 extern void Clean();
 extern void RateCalculationCrop();
@@ -27,7 +27,7 @@ extern void InitializeCrop(int Emergence);
 extern float GetDevelopmentStage();
 extern float DailyTotalAssimilation();
 extern float DyingLeaves();
-extern float InstantAssimilation();
+extern float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB, float PARDiffuse, float PARDirect);
 extern float LeaveGrowth(float LAIExp, float Newleaves);
 extern float LeaveAreaIndex();
 extern float Correct(float GrossAssimilation);

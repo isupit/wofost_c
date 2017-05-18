@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "mmla.h"
-#include "dynamic.h"
 #include "wofost.h"
 #include "extern.h"
 
+/* -----------------------------------------------------------------------*/
+/*  function LeaveAreaIndex()                                             */
+/*  Purpose: Calculation of the LAI of the LeaveProperties ha ha-1 struct */
+/* -----------------------------------------------------------------------*/
 float LeaveAreaIndex()
 {
   float LAISum = 0.;
@@ -15,7 +17,7 @@ float LeaveAreaIndex()
   
   /* Loop until the last element in the list */
   while (Crop.LeaveProperties) {
-    LAISum = LAISum + Crop.LeaveProperties->weight*Crop.LeaveProperties->area;
+    LAISum += Crop.LeaveProperties->weight*Crop.LeaveProperties->area;
     Crop.LeaveProperties = Crop.LeaveProperties->next;
   }
   

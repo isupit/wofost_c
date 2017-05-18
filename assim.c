@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "astro.h"
-#include "dynamic.h"
+#include "extern.h"
 #include "wofost.h"
 
 #define  ANGLE  -4.0

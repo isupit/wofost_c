@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <math.h>
 #include "astro.h"
+#include "extern.h"
 #include "penman.h"
-#include "dynamic.h"
 #include "wofost.h"
 
 #define PSYCON  0.67    /* psychrometric instrument constant (mbar/Celsius-1)*/

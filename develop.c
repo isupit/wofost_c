@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "astro.h"
-#include "dynamic.h"  
+#include "extern.h"
 #include "wofost.h"
 
 float GetDevelopmentStage(void)
