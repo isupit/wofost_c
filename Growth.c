@@ -1,16 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include <float.h>
 #include <math.h>
 #include "wofost.h"
 #include "extern.h"
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ---------------------------------------------------------------------------*/
+/*  function Growth(float NewPlantMaterial)n                                  */
+/*  Purpose: Establish growth rates of the plant organs (kg ha-1 d-1) and     */
+/*  rooting depth (cm)                                                        */
+/* ---------------------------------------------------------------------------*/
 
 void Growth(float NewPlantMaterial)
 {
@@ -56,6 +54,6 @@ void Growth(float NewPlantMaterial)
     Crop.rt.leaves  = Crop.rt.leaves -  Crop.drt.leaves;
 	
     Crop.RootDepth_prev = Crop.RootDepth;
-    Crop.RootDepth = min(Crop.MaxRootingDepth-Crop.RootDepth,
+    Crop.RootDepth = min(Crop.MaxRootingDepth - Crop.RootDepth,
                 MaxIncreaseRoot*Step);
 }	

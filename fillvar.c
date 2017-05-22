@@ -50,9 +50,10 @@ CropGroupNumber          = Variable[27];
 Airducts                 = Variable[28];
 
 /** Rooting **/
-InitRootingDepth         = Variable[29];
-MaxIncreaseRoot          = Variable[30];
-MaxRootingDepth          = Variable[31];
+/** Convert cm to mm */
+InitRootingDepth         = 10. * Variable[29];
+MaxIncreaseRoot          = 10. * Variable[30];
+MaxRootingDepth          = 10. * Variable[31];
 
 /** Nutrients  **/
 DyingLeaves_NPK_Stress   = Variable[32];

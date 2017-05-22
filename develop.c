@@ -3,6 +3,12 @@
 #include "extern.h"
 #include "wofost.h"
 
+/* ----------------------------------------------------------------------------*/
+/*  function GetDevelopmentStage()                                             */
+/*  Purpose: Calculation of the development stage as function of the effective */
+/*  daily temperature                                                          */
+/*-----------------------------------------------------------------------------*/
+
 float GetDevelopmentStage(void)
 {
   float DevelopmentRate;

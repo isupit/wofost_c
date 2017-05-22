@@ -9,6 +9,11 @@
 #define  PI     3.1415926
 #define  RAD	0.0174533
 
+/* ---------------------------------------------------------------------*/
+/*  function Astro()                                                    */
+/*  Purpose: Calculation of the astronomical parameters used in Wofost  */
+/* ---------------------------------------------------------------------*/
+
 int Astro()
 {
     float Declination, SolarConstant, AOB, DSinB;

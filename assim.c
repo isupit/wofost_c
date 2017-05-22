@@ -54,10 +54,10 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
     AssimTotal = FractionSunlitLeaves*AssimSunlitLeaves+(1. - FractionSunlitLeaves)*AssimShadedLeaves;
 
 /*  Integration */
-    GrossCO2 = GrossCO2 + AssimTotal * WGauss[i];
+    GrossCO2 += AssimTotal * WGauss[i];
 }
-    GrossCO2 = GrossCO2*LAI;
-    return (GrossCO2);     
+    
+    return (GrossCO2*LAI);     
 }
 
 
@@ -98,7 +98,10 @@ float Correct(float Assimilation)
   Counter = 0;
   PreviousDay = Day;
   while (PreviousDay >= 0 && Counter < 7)
-    {TminLowAvg = TminLowAvg + Tmin[PreviousDay--]; Counter++;}
+  {
+    TminLowAvg += Tmin[PreviousDay--]; 
+    Counter++;
+  }
     
   TminLowAvg = TminLowAvg/Counter;
   return (Assimilation*Afgen(FactorGrossAssimTemp, &TminLowAvg)*30./44.);

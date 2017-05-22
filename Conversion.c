@@ -1,15 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include <float.h>
-#include <math.h>
 #include "wofost.h"
 #include "extern.h"
 
-/* ---------------------------------------------------------------------------*/
-/*  function Conversion                                                       */
-/*  Purpose: Convert the net assimilation  into plant matter                  */
-/* ---------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------------*/
+/*  function Conversion                                                              */
+/*  Purpose: Convert the net assimilation products into plant dry matter kg ha-1 d-1 */
+/* ----------------------------------------------------------------------------------*/
 
 float Conversion(float NetAssimilation)
 {

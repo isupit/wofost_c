@@ -16,6 +16,12 @@
 #define LHVAP   2.45e6  /* latent heat of evaporation of water (J/kg=J/mm)   */
 #define STBC    4.9e3   /* Stefan Boltzmann constant (J/m2/d/K4) */
 
+/* ---------------------------------------------------------------------*/
+/*  function CalcPenman()                                               */
+/*  Purpose: Calculation of ETO evapotranspiration     mm d-1           */
+/*                          ESO soil evaporation       mm d-1           */
+/*                          EO  open water evaporation mm d-1           */
+/* ---------------------------------------------------------------------*/
 
 void CalcPenman()
 {
