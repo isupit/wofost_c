@@ -251,8 +251,8 @@ AFGEN *Irrigation;
 /** Meteorological Variables  **/
 int Station, Year;
 float Longitude, Latitude, Altitude;
-float Tmin[366], Tmax[366], Radiation[366], Rain[366];
-float Windspeed[366], Vapour[366];
+float Tmin[367], Tmax[367], Radiation[367], Rain[367];
+float Windspeed[367], Vapour[367];
 
 /* Time step */
 float Step;

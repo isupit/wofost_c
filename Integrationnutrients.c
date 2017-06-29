@@ -7,12 +7,13 @@
 /*  function IntegrationNutrients()                                      */
 /*  Purpose: Integration of the soil and crop nutrient rates  kg ha-1    */
 /* ----------------------------------------------------------------------*/      
+
 void IntegrationNutrients()
 {   
     /* Integration of the total of soil N,P,K */
-    SoilNtrs.st_N_tot += SoilNtrs.rt_N_tot;
-    SoilNtrs.st_P_tot += SoilNtrs.rt_P_tot;
-    SoilNtrs.st_K_tot += SoilNtrs.rt_K_tot;
+    SoilNtrs.st_N_tot = max(0., SoilNtrs.st_N_tot + SoilNtrs.rt_N_tot);
+    SoilNtrs.st_P_tot = max(0., SoilNtrs.st_P_tot + SoilNtrs.rt_P_tot);
+    SoilNtrs.st_K_tot = max(0., SoilNtrs.st_K_tot + SoilNtrs.rt_K_tot);
     
     /* Integration of the total N,P,K soil mineralization */
     SoilNtrs.st_N_mins += SoilNtrs.rt_N_mins;
@@ -47,5 +48,7 @@ void IntegrationNutrients()
     Crop.K_st.death_lv += Crop.K_rt.death_lv;
     Crop.K_st.death_st += Crop.K_rt.death_st;
     Crop.K_st.death_ro += Crop.K_rt.death_ro;
+    
+    //printf("  SoilNtrs.rt_N_tot: %5.1f SoilNtrs.rt_P_tot: %5.1f SoilNtrs.rt_K_tot: %5.1f", SoilNtrs.rt_N_tot,SoilNtrs.rt_P_tot, SoilNtrs.rt_K_tot);
    
 }

@@ -6,11 +6,12 @@
 #include "wofost.h"
 #include "extern.h"
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ---------------------------------------------------------------------------*/
+/*  function RateCalculationCrop()                                            */
+/*  Purpose: Calculate the net amount of assimilates that is available for    */
+/*  crop growth and subsequently establish the crop growth rates for the      */
+/*  plant organs (kg ha-1 d-1).                                               */
+/* ---------------------------------------------------------------------------*/
 
 void RateCalculationCrop()
 {
@@ -47,5 +48,5 @@ void RateCalculationCrop()
        /* Growth of root, stems, leaves and storage organs */
        Growth(GrossGrowth);
            
-       printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f RtSt: %5.1f", GrossGrowth, Maintenance, TotalAssimilation, Crop.rt.stems );
+       //printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f RtSt: %5.1f", GrossGrowth, Maintenance, TotalAssimilation, Crop.rt.stems );
 }

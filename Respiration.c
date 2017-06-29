@@ -6,12 +6,11 @@
 #include "wofost.h"
 #include "extern.h"
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ---------------------------------------------------------------------------*/
+/*  function RespirationRef(float TotalAssimilation)                          */
+/*  Purpose: Calculation of the crop respiration rate (kg ha-1 d-1). Note     */
+/*  hat the respiration rate can not exceed the total assimilation rate.      */
+/* ---------------------------------------------------------------------------*/
 
 float RespirationRef(float TotalAssimilation)
 {

@@ -5,7 +5,7 @@
 #include "extern.h"
 
 /* ---------------------------------------------------------------------------*/
-/*  function Growth(float NewPlantMaterial)n                                  */
+/*  function Growth(float NewPlantMaterial)                                   */
 /*  Purpose: Establish growth rates of the plant organs (kg ha-1 d-1) and     */
 /*  rooting depth (cm)                                                        */
 /* ---------------------------------------------------------------------------*/

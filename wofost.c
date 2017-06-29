@@ -10,6 +10,7 @@ int main(void)
   int  Emergence, EndDay = 242;
   
   Emergence = 1;
+  Step = 1.;
 
   GetCropData(); 
   GetMeteoData();
@@ -17,7 +18,7 @@ int main(void)
   GetSiteData();
   GetManagement();
 
-  Day = 0;
+  Day = 1;
   InitializeCrop(Emergence); 
   InitializeWatBal();
   InitializeNutrients();

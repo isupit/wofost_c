@@ -8,6 +8,7 @@
 /*  Purpose: To calculate nutrient loss rate of dying of roots, stems leaves  */
 /*           and storage organs (kg N ha-1 d-1)                               */
 /* ---------------------------------------------------------------------------*/     
+
 void NutrientLoss() 
 {         
     Crop.N_rt.death_lv = N_ResidualFrac_ro  * Crop.drt.leaves;

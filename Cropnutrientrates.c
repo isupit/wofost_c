@@ -9,6 +9,7 @@
 /*  Purpose: To calculate nutrient changes (i.e. rates) in the plant          */
 /*           organs (kg N,P,K ha-1 d-1)                                       */
 /* ---------------------------------------------------------------------------*/
+
 void CropNutrientRates()
 {   
    Crop.N_rt.leaves  = Crop.N_rt.Uptake_lv - Crop.N_rt.Transloc_lv - Crop.N_rt.death_lv;

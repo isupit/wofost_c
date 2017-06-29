@@ -13,6 +13,13 @@ float XGauss[] ={0.1127017, 0.5000000, 0.8872983};
 float WGauss[] ={0.2777778, 0.4444444, 0.2777778};
 
 
+/* ----------------------------------------------------------------------------*/
+/*  function nstantAssimilation(float KDiffuse, float EFF, float AssimMax,     */
+/*                            float SinB, float PARDiffuse, float PARDirect)   */ 
+/*  Purpose: Calculation of the instant Assimilation rate as a function of     */
+/*  radiation using the three point Gaussian integration method.               */
+/*-----------------------------------------------------------------------------*/
+
 float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB, 
         float PARDiffuse, float PARDirect)
 {
