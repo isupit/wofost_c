@@ -25,6 +25,7 @@
 
 void CalcPenman()
 {
+    float correction;
     float RelSunShineDuration;
     float Tmpa;
     float Tdif;
@@ -35,8 +36,11 @@ void CalcPenman()
     float Eac;
     float delta;
     float RB;
-    float Rnw, Rns, Rnc;
-    float VapourP, SaturatedVap;
+    float Rnw; 
+    float Rns; 
+    float Rnc;
+    float VapourP; 
+    float SaturatedVap;
             
     /* Preparatory calculations mean daily temperature and temperature    */
     /* difference (Celsius) coefficient Bu in wind function, dependent on */ 
@@ -71,21 +75,35 @@ void CalcPenman()
 
     /* Terms in Penman formula, for water, soil and canopy            */
     /* Net outgoing long-wave radiation (J/m2/d) acc. to Brunt (1932) */
-    RB  = STBC*pow((Tmpa+273.),4)*(0.56-0.079*sqrt(VapourP))*
-              (0.1+0.9*RelSunShineDuration);
+    RB  = STBC * pow((Tmpa+273.),4) * (0.56-0.079 * sqrt(VapourP)) *
+              (0.1 + 0.9 * RelSunShineDuration);
 
     /* Net absorbed radiation, expressed in mm/d */
-    Rnw = (Radiation[Day]*(1.-REFCFW)-RB)/LHVAP;
-    Rns = (Radiation[Day]*(1.-REFCFS)-RB)/LHVAP;
-    Rnc = (Radiation[Day]*(1.-REFCFC)-RB)/LHVAP;
+    Rnw = (Radiation[Day] * (1.-REFCFW)-RB)/LHVAP;
+    Rns = (Radiation[Day] * (1.-REFCFS)-RB)/LHVAP;
+    Rnc = (Radiation[Day] * (1.-REFCFC)-RB)/LHVAP;
 
     /* Evaporative demand of the atmosphere (mm/d)  */
     Ea  = 0.26 * max (0.,(SaturatedVap-VapourP)) * (0.5+BU * Windspeed[Day]);
     Eac = 0.26 * max (0.,(SaturatedVap-VapourP)) * (1.0+BU * Windspeed[Day]);
-
+   
     /* Penman formula (1948)                */
     /* Ensure reference evaporation >= 0.   */
     Penman.E0  = max(0., (delta*Rnw + Gamma*Ea)/(delta + Gamma));
     Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
     Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
+    
+    /* correction of potential evapo-transpiration for atmospheric     */
+    /* CO2 concentration                                               */
+    correction = 1.;
+    if (CO2 > 360. && CO2 <= 720.)
+    {
+      correction = 1. - 0.1 * (CO2 - 360.)/(720. - 360.);
+    }
+    else if (CO2 > 720.)
+    {
+      correction = 0.9;
+    }
+    
+    Penman.ETC = correction * Penman.ET0;
 }

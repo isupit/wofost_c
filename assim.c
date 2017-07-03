@@ -74,11 +74,24 @@ float DailyTotalAssimilation()
   float KDiffuse, EFF;
   float Hour, SinB, PAR, PARDiffuse, PARDirect, AssimMax; 
   float DailyTotalAssimilation = 0.;
-
+  float factor;
 
   KDiffuse = Afgen(KDiffuseTb, &DevelopmentStage);
+  
   EFF      = Afgen(EFFTb, &DayTemp);
-  AssimMax = Afgen(FactorAssimRateTemp, &DayTemp)*Afgen(MaxAssimRate, &DevelopmentStage);
+  
+  /* Correction for the atmospheric CO2 concentration */
+  if (CO2 > 360. && CO2 <= 720.)
+  {
+      EFF = EFF * (1 +0.11 * (CO2 - 360.)/(720. - 360.));
+  }
+  else if (CO2 > 720.)
+  {
+      EFF *=1.11;
+  }
+  
+  AssimMax = Afgen(FactorAssimRateTemp, &DayTemp) * 
+          Afgen(MaxAssimRate, &DevelopmentStage) * Afgen(FactorCO2, &CO2);
 
   if (AssimMax > 0. && LAI > 0.)
 {

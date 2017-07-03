@@ -4,6 +4,10 @@
 #include "wofost.h"
 #include "crop.h"
 
+/* ------------------------------------------------------------------------*/
+/*  function GetCropData()                                                 */
+/*  Purpose: Read the Wofost crop file and store the parameters and tables */
+/* ------------------------------------------------------------------------*/
 
 int GetCropData()
 {
@@ -64,16 +68,17 @@ int GetCropData()
   MaxAssimRate         = AfgenTable[5];
   FactorAssimRateTemp  = AfgenTable[6];
   FactorGrossAssimTemp = AfgenTable[7];
-  FactorSenescence     = AfgenTable[8];
-  Roots                = AfgenTable[9];
-  Leaves               = AfgenTable[10];
-  Stems                = AfgenTable[11];
-  Storage              = AfgenTable[12];
-  DeathRateStems       = AfgenTable[13];
-  DeathRateRoots       = AfgenTable[14]; 
-  N_MaxLeaves          = AfgenTable[15];
-  P_MaxLeaves          = AfgenTable[16];
-  K_MaxLeaves          = AfgenTable[17];
+  FactorCO2            = AfgenTable[8];
+  FactorSenescence     = AfgenTable[9];
+  Roots                = AfgenTable[10];
+  Leaves               = AfgenTable[11];
+  Stems                = AfgenTable[12];
+  Storage              = AfgenTable[13];
+  DeathRateStems       = AfgenTable[14];
+  DeathRateRoots       = AfgenTable[15]; 
+  N_MaxLeaves          = AfgenTable[16];
+  P_MaxLeaves          = AfgenTable[17];
+  K_MaxLeaves          = AfgenTable[18];
           
 return 1;
 }

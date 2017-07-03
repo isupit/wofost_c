@@ -66,6 +66,12 @@ TMPFTB   =   0.00,    0.01,     ! reduction factor of AMAX
             35.00,    0.00
 TMNFTB   =   0.00,    0.00,     ! red. factor of gross assim. rate
              3.00,    1.00      ! as function of low min. temp. [cel; -]
+             
+COTB       =  40., 0.00,
+             360.,  1.00,
+             720.,  1.35, 
+            1000.,  1.50,
+            2000.,  1.50
 
 ** conversion of assimilates into biomass
 CVL      =   0.685  ! efficiency of conversion into leaves [kg kg-1]

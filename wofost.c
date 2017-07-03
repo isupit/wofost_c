@@ -1,13 +1,21 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <float.h>
 #include "wofost.h"
 #include "extern.h"
 
 
-int main(void)
+int main(int argc,char *argv[])
 {
+   while(argc--)
+    {
+        printf("%s %d\n",argv[argc], strlen(argv[argc]));
+    } 
+    
+    
   int  Emergence, EndDay = 242;
+  char cropfile[100];
   
   Emergence = 1;
   Step = 1.;

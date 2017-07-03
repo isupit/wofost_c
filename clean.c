@@ -2,13 +2,18 @@
 #include <stdlib.h>
 #include "wofost.h"
 
+/* ---------------------------------------------------------------*/
+/*  function Clean()                                              */
+/*  Purpose: free all the allocated memory and set them to NULL   */
+/* ---------------------------------------------------------------*/ 
+
 void Clean()
 {
   int i;  
     
   Green *LeaveProperties = NULL;
   
-  /* Loop until the last element in the list */
+  /* Loop until the last element in the list and free each node */
   while (Crop.LeaveProperties->next)
   {
       LeaveProperties = Crop.LeaveProperties;

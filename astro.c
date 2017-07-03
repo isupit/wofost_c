@@ -16,7 +16,10 @@
 
 int Astro()
 {
-    float Declination, SolarConstant, AOB, DSinB;
+    float Declination;
+    float SolarConstant;
+    float AOB;
+    float DSinB;
     float FractionDiffuseRad;
     float AngotRadiation;
     

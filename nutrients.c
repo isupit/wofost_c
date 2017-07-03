@@ -28,8 +28,8 @@ void NutrientMax()
     Crop.P_st.Max_ro = P_MaxStems * Crop.P_st.Max_lv;
     
     /* Maximum K concentrations in stems and roots (kg K kg-1) */
-    Crop.K_st.Max_st = K_MaxRoots* Crop.K_st.Max_lv;
-    Crop.K_st.Max_ro = K_MaxStems* Crop.K_st.Max_lv;
+    Crop.K_st.Max_st = K_MaxRoots * Crop.K_st.Max_lv;
+    Crop.K_st.Max_ro = K_MaxStems * Crop.K_st.Max_lv;
 }
 
 

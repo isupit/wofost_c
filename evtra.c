@@ -10,9 +10,9 @@
 
 float sweaf(){
     float sweaf; 
-    sweaf = 1./(0.76 + 1.5 * Penman.ET0) - (5.-CropGroupNumber ) * 0.10;
+    sweaf = 1./(0.76 + 1.5 * Penman.ETC) - (5.-CropGroupNumber ) * 0.10;
     if  (CropGroupNumber < 3.) {
-        sweaf = sweaf + (Penman.ET0 - 0.6)/(CropGroupNumber *
+        sweaf = sweaf + (Penman.ETC - 0.6)/(CropGroupNumber *
                 (CropGroupNumber + 3.));
     }
     return limit(0.10, 0.95, sweaf);
@@ -34,7 +34,7 @@ void EvapTra() {
     Evtra.MaxEvapWater = Penman.E0 * exp(-0.75 * KDiffuse * Lai);
     Evtra.MaxEvapSoil  = max(0., Penman.ES0 * exp(-0.75 * KDiffuse * Lai));
     Evtra.MaxTranspiration = max(0.0001,  
-            Penman.ET0 * (1.-exp(-0.75 * KDiffuse * Lai)));
+            Penman.ETC * (1.-exp(-0.75 * KDiffuse * Lai)));
        
     SoilWatDepletion = sweaf(CropGroupNumber);
     CriticalSoilMoisture = (1. - SoilWatDepletion)*

@@ -9,6 +9,7 @@ char *SiteParam[]={ "IZT",
                    "NOTINF",
                    "SSI",
                    "SMLIM",
+                   "CO2",
                    "NULL"
 		   };
 

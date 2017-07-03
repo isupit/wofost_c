@@ -133,6 +133,8 @@ int FillSiteVariables(float *Variable) {
     Site.NotInfiltrating                 = Variable[8];
     Site.SurfaceStorage                  = Variable[9];
     Site.MaxInitSoilM                    = Variable[10];
+    
+    CO2 = Variable[11];
        
     for (i=0;i<=NR_VARIABLES_SITE;i++) {
         Variable[i]= 0.;

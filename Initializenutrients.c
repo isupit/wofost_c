@@ -10,6 +10,8 @@
 
 void InitializeNutrients()
 {
+    float day_fl;
+    
     /* Initial maximum N concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
     Crop.N_st.Max_lv = Afgen(N_MaxLeaves, &DevelopmentStage);
     Crop.N_st.Max_st  = N_MaxStems * Crop.N_st.Max_lv;
@@ -17,8 +19,8 @@ void InitializeNutrients()
         
     /* Initial maximum N concentration in plant organs [kg N ]           */
     Crop.N_st.leaves = Crop.N_st.Max_lv * Crop.st.leaves;
-    Crop.N_st.stems  = Crop.N_st.Max_st  * Crop.st.stems;
-    Crop.N_st.roots  = Crop.N_st.Max_ro  * Crop.st.roots;
+    Crop.N_st.stems  = Crop.N_st.Max_st * Crop.st.stems;
+    Crop.N_st.roots  = Crop.N_st.Max_ro * Crop.st.roots;
     Crop.N_st.storage = 0.;
        
     /* Initial maximum P concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
@@ -28,8 +30,8 @@ void InitializeNutrients()
            
     /* Initial maximum P concentration in plant organs [kg N ] */
     Crop.P_st.leaves = Crop.P_st.Max_lv * Crop.st.leaves;
-    Crop.P_st.stems  = Crop.P_st.Max_st  * Crop.st.stems;
-    Crop.P_st.roots  = Crop.P_st.Max_ro  * Crop.st.roots;
+    Crop.P_st.stems  = Crop.P_st.Max_st * Crop.st.stems;
+    Crop.P_st.roots  = Crop.P_st.Max_ro * Crop.st.roots;
     Crop.P_st.storage = 0.;
                   
     /* Initial maximum K concentration in plant organs per kg biomass [kg N kg-1 dry biomass]    */
@@ -39,8 +41,8 @@ void InitializeNutrients()
            
     /* Initial maximum k concentration in plant organs [kg N ] */
     Crop.K_st.leaves = Crop.K_st.Max_lv * Crop.st.leaves;
-    Crop.K_st.stems  = Crop.K_st.Max_st  * Crop.st.stems;
-    Crop.K_st.roots  = Crop.K_st.Max_ro  * Crop.st.roots;
+    Crop.K_st.stems  = Crop.K_st.Max_st * Crop.st.stems;
+    Crop.K_st.roots  = Crop.K_st.Max_ro * Crop.st.roots;
     Crop.K_st.storage = 0.;
     
     /* No nutrient losses at initialization */
@@ -65,10 +67,12 @@ void InitializeNutrients()
     SoilNtrs.rt_P_mins = 0.;
     SoilNtrs.rt_K_mins = 0.;
     
+    day_fl = (float)Day;
+    
      /* Set the soil nutrient states */
-    SoilNtrs.st_N_tot = Afgen(N_Fert_table, &Day) * Afgen(N_Uptake_frac, &Day);
-    SoilNtrs.st_P_tot = Afgen(P_Fert_table, &Day) * Afgen(P_Uptake_frac, &Day);
-    SoilNtrs.st_K_tot = Afgen(K_Fert_table, &Day) * Afgen(K_Uptake_frac, &Day);
+    SoilNtrs.st_N_tot = Afgen(N_Fert_table, &day_fl) * Afgen(N_Uptake_frac, &day_fl);
+    SoilNtrs.st_P_tot = Afgen(P_Fert_table, &day_fl) * Afgen(P_Uptake_frac, &day_fl);
+    SoilNtrs.st_K_tot = Afgen(K_Fert_table, &day_fl) * Afgen(K_Uptake_frac, &day_fl);
 
     SoilNtrs.st_N_mins = Site.N_Mins;
     SoilNtrs.st_P_mins = Site.P_Mins;

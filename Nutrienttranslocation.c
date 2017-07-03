@@ -10,9 +10,17 @@
 /* ---------------------------------------------------------------------------*/
 void NutrientTranslocation()                                                                                                       
 {
-     float Avail_N_lv, Avail_P_lv, Avail_K_lv;
-     float Avail_N_st, Avail_P_st, Avail_K_st;                                                                                                               
-     float Avail_N_rt, Avail_P_rt, Avail_K_rt; 
+     float Avail_N_lv;
+     float Avail_P_lv; 
+     float Avail_K_lv;
+     
+     float Avail_N_st;
+     float Avail_P_st; 
+     float Avail_K_st;      
+     
+     float Avail_N_rt; 
+     float Avail_P_rt; 
+     float Avail_K_rt; 
                                                                                                                       
     /* N amount available for translocation */                                                                                                              
     Avail_N_lv = max(0.,Crop.N_st.leaves - Crop.st.leaves * N_ResidualFrac_lv);

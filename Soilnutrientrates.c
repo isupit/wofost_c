@@ -38,5 +38,5 @@ void SoilNutrientRates()
     SoilNtrs.rt_N_tot = (N_fert / Step) - Crop.N_rt.Uptake  + SoilNtrs.rt_N_mins;
     SoilNtrs.rt_P_tot = (P_fert / Step) - Crop.P_rt.Uptake  + SoilNtrs.rt_P_mins;
     SoilNtrs.rt_K_tot = (K_fert / Step) - Crop.K_rt.Uptake  + SoilNtrs.rt_K_mins;
-    printf("  SoilNtrs.rt_N_tot: %5.1f SoilNtrs.rt_P_tot: %5.1f SoilNtrs.rt_K_tot: %5.1f", SoilNtrs.rt_N_tot, SoilNtrs.rt_P_tot, SoilNtrs.rt_K_tot);
+    printf("  SoilNtrs.rt_N_mins: %5.1f SoilNtrs.rt_P_mins: %5.1f SoilNtrs.rt_K_mins: %5.1f", SoilNtrs.rt_N_mins, SoilNtrs.rt_P_mins, SoilNtrs.rt_K_mins);
 }

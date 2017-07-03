@@ -2,14 +2,14 @@
 #define WOFOST_H
 
 #define NR_VARIABLES_CRP	65
-#define NR_TABLES_CRP   	18
-#define NR_VARIABLES_SITE       11
+#define NR_TABLES_CRP   	19
+#define NR_VARIABLES_SITE       12
 #define NR_TABLES_SITE          1
 #define NR_VARIABLES_SOIL       12
 #define NR_TABLES_SOIL          2
 #define NR_VARIABLES_MANAGEMENT 6
 #define NR_TABLES_MANAGEMENT    7
-#define NUMBER_OF_TABLES        28
+#define NUMBER_OF_TABLES        29
 
 typedef struct TABLE {
 	     float x;
@@ -222,7 +222,7 @@ Plant Crop;
 /* Tables for Crop */
 AFGEN *Roots, *Stems, *Leaves, *Storage;
 AFGEN *DeltaTempSum, *SpecificLeaveArea, *SpecificStemArea, *KDiffuseTb, *EFFTb;
-AFGEN *MaxAssimRate, *FactorAssimRateTemp, *FactorGrossAssimTemp; 
+AFGEN *MaxAssimRate, *FactorAssimRateTemp, *FactorGrossAssimTemp, *FactorCO2; 
 AFGEN *FactorSenescence, *DeathRateStems, *DeathRateRoots;
      
 /* Tables for Soil */
@@ -334,6 +334,8 @@ float InitAvailMoisture;
 float InitSoilMoisture;
 float DaysSinceLastRain;
 float MoistureLOW;
+
+float CO2;
 
 
 /** Nutrients **/

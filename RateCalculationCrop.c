@@ -16,7 +16,9 @@
 void RateCalculationCrop()
 {
        float TotalAssimilation;
-       float Maintenance, GrossAssimilation, GrossGrowth;
+       float Maintenance;
+       float GrossAssimilation;
+       float GrossGrowth;
        float Stress;
        
        /* Set rates to 0 */
@@ -34,8 +36,7 @@ void RateCalculationCrop()
        
        /* Stress: either nutrient shortage or water shortage */
        Stress = min(Crop.NutrientStress, WatBal.WaterStress);
-       //Stress = 1.;
-
+       
        /* Correction for low minimum temperatures and stress factors */
        TotalAssimilation = Stress * Correct(GrossAssimilation);       
 

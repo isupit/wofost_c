@@ -12,9 +12,14 @@
 
 void Growth(float NewPlantMaterial)
 {
-    float shoots, factor, flv;
-    float Fraction_ro, Fraction_lv, Fraction_st, Fraction_so;
-        
+    float shoots;
+    float factor;
+    float flv;
+    
+    float Fraction_ro;
+    float Fraction_lv;
+    float Fraction_st;
+    float Fraction_so;
         
     /* Water stress is more severe as compared to Nitrogen stress and */
     /* partitioning will follow the original assumptions of LINTUL2   */     
@@ -38,13 +43,13 @@ void Growth(float NewPlantMaterial)
         Fraction_so = Afgen(Storage, &DevelopmentStage);
     }
                 
-    Crop.drt.roots = Crop.st.roots*Afgen(DeathRateRoots, &DevelopmentStage);
-    Crop.rt.roots  = NewPlantMaterial*Fraction_ro - Crop.drt.roots;
+    Crop.drt.roots = Crop.st.roots * Afgen(DeathRateRoots, &DevelopmentStage);
+    Crop.rt.roots  = NewPlantMaterial * Fraction_ro - Crop.drt.roots;
 	
-    shoots         = NewPlantMaterial*(1-Fraction_ro);
+    shoots         = NewPlantMaterial * (1-Fraction_ro);
 	    
-    Crop.drt.stems = Crop.st.stems*Afgen(DeathRateStems, &DevelopmentStage);	
-    Crop.rt.stems  = shoots*Fraction_st - Crop.drt.stems;
+    Crop.drt.stems = Crop.st.stems * Afgen(DeathRateStems, &DevelopmentStage);	
+    Crop.rt.stems  = shoots * Fraction_st - Crop.drt.stems;
 	
     Crop.rt.storage = shoots * Fraction_so;
 	
