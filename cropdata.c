@@ -9,7 +9,7 @@
 /*  Purpose: Read the Wofost crop file and store the parameters and tables */
 /* ------------------------------------------------------------------------*/
 
-int GetCropData()
+int GetCropData(char *cropfile)
 {
   AFGEN *Table, *start;
   int i, c;
@@ -17,7 +17,7 @@ int GetCropData()
   char x[2], xx[2],  word[NR_VARIABLES_CRP];
   FILE *fq;
 
- if ((fq = fopen("data//wwh107.cab", "rt")) == NULL)
+ if ((fq = fopen(cropfile, "rt")) == NULL)
     {fprintf(stderr, "Cannot open input file.\n"); return 0;}
 
  i=0;

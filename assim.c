@@ -74,7 +74,6 @@ float DailyTotalAssimilation()
   float KDiffuse, EFF;
   float Hour, SinB, PAR, PARDiffuse, PARDirect, AssimMax; 
   float DailyTotalAssimilation = 0.;
-  float factor;
 
   KDiffuse = Afgen(KDiffuseTb, &DevelopmentStage);
   

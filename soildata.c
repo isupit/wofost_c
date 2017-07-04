@@ -5,7 +5,7 @@
 #include "soil.h"
 
 
-int GetSoilData()
+int GetSoilData(char *soilfile)
 {
   AFGEN *Table, *start;
   int i, c;
@@ -13,7 +13,7 @@ int GetSoilData()
   char x[2], xx[2],  word[100];
   FILE *fq;
 
- if ((fq = fopen("data//ec1.new", "rt")) == NULL)
+ if ((fq = fopen(soilfile, "rt")) == NULL)
     {fprintf(stderr, "Cannot open input file.\n"); return 0;}
 
  i=0;
@@ -50,15 +50,15 @@ int GetSoilData()
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    AfgenTable[i + 18] = start;
+	    AfgenTable[i + 19] = start;
 	i++; 
        }      
   }
 
   if (i!= NR_TABLES_SOIL) return 0;
  
-  VolumetricSoilMoisture    = AfgenTable[18];
-  HydraulicConducitiy       = AfgenTable[19];
+  VolumetricSoilMoisture = AfgenTable[19];
+  HydraulicConducitiy    = AfgenTable[20];
   
 
 return 1;

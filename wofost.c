@@ -8,23 +8,40 @@
 
 int main(int argc,char *argv[])
 {
-   while(argc--)
-    {
-        printf("%s %d\n",argv[argc], strlen(argv[argc]));
-    } 
-    
-    
-  int  Emergence, EndDay = 242;
-  char cropfile[100];
-  
+   int Emergence;
+   int EndDay = 242;
+   
+   char cropfile[100];
+   char soilfile[100];
+   char sitefile[100];
+   char management[100];
+
+   if (argc != 6) return 0;
+   if (strlen(argv[1]) + strlen(argv[2]) > 98) return 0;
+   if (strlen(argv[1]) + strlen(argv[3]) > 98) return 0;
+   if (strlen(argv[1]) + strlen(argv[4]) > 98) return 0;
+   if (strlen(argv[1]) + strlen(argv[5]) > 98) return 0;
+   
+   strcpy(cropfile,argv[1]);
+   strcat(cropfile,argv[2]);
+
+   strcpy(soilfile,argv[1]);
+   strcat(soilfile,argv[3]);
+   
+   strcpy(management,argv[1]);
+   strcat(management,argv[4]);
+   
+   strcpy(sitefile,argv[1]);
+   strcat(sitefile,argv[5]);
+             
   Emergence = 1;
   Step = 1.;
 
-  GetCropData(); 
+  GetCropData(cropfile); 
+  GetSoilData(soilfile);
+  GetSiteData(sitefile);
+  GetManagement(management);
   GetMeteoData();
-  GetSoilData();
-  GetSiteData();
-  GetManagement();
 
   Day = 1;
   InitializeCrop(Emergence); 

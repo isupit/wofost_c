@@ -4,7 +4,7 @@
 
 /* ---------------------------------------------------------------*/
 /*  function Clean()                                              */
-/*  Purpose: free all the allocated memory and set them to NULL   */
+/*  Purpose: free all the allocated memory and set nodes to NULL  */
 /* ---------------------------------------------------------------*/ 
 
 void Clean()
@@ -31,8 +31,8 @@ void Clean()
   /* Define temporary node */
   AFGEN *head  = NULL;  
     
-  for (i = 0; i < NUMBER_OF_TABLES; i++)
-  {
+  for (i = 0; i <= NUMBER_OF_TABLES; i++)
+  { 
       while (AfgenTable[i]->next)
       {
           head = AfgenTable[i];

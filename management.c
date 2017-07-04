@@ -4,7 +4,7 @@
 #include "wofost.h"
 #include "manage.h"
        
-int GetManagement()
+int GetManagement(char *management)
 {
   AFGEN *Table, *start;
   int i, c;
@@ -12,7 +12,7 @@ int GetManagement()
   char x[2], xx[2],  word[100];
   FILE *fq;
 
- if ((fq = fopen("data//manage.dat", "rt")) == NULL)
+ if ((fq = fopen(management, "rt")) == NULL)
     {fprintf(stderr, "Cannot open input file.\n"); return 0;}
 
  i=0;
@@ -21,7 +21,6 @@ int GetManagement()
     if (!strcmp(word, ManageParam[i])) {
         while ((c=fgetc(fq)) !='=');
 	fscanf(fq,"%f",  &Variable[i]);
-
 	i++; 
        }  
   }
@@ -49,20 +48,20 @@ int GetManagement()
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    AfgenTable[i + 21] = start;
+	    AfgenTable[i + 22] = start;
 	i++; 
        }      
   }
 
   if (i!= NR_TABLES_MANAGEMENT) return 0;
  
-  N_Fert_table   = AfgenTable[21];
-  P_Fert_table   = AfgenTable[22];
-  K_Fert_table   = AfgenTable[23];
-  N_Uptake_frac  = AfgenTable[24];
-  P_Uptake_frac  = AfgenTable[25];
-  K_Uptake_frac  = AfgenTable[26];
-  Irrigation     = AfgenTable[27];
+  N_Fert_table   = AfgenTable[22];
+  P_Fert_table   = AfgenTable[23];
+  K_Fert_table   = AfgenTable[24];
+  N_Uptake_frac  = AfgenTable[25];
+  P_Uptake_frac  = AfgenTable[26];
+  K_Uptake_frac  = AfgenTable[27];
+  Irrigation     = AfgenTable[28];
   
 
 return 1;

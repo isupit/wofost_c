@@ -5,7 +5,7 @@
 #include "site.h"
 
 
-int GetSiteData()
+int GetSiteData(char *sitefile)
 {
   AFGEN *Table, *start;
   int i, c;
@@ -13,7 +13,7 @@ int GetSiteData()
   char x[2], xx[2],  word[NR_VARIABLES_SITE];
   FILE *fq;
 
- if ((fq = fopen("data//wofost.sit", "rt")) == NULL)
+ if ((fq = fopen(sitefile, "rt")) == NULL)
     {fprintf(stderr, "Cannot open input file.\n"); return 0;}
 
  i=0;
@@ -49,14 +49,14 @@ int GetSiteData()
 	    
 	    while ((c=fgetc(fq)) !='\n' || (c=fgetc(fq)) != EOF );
 	    }
-	    AfgenTable[i + 20] = start;
+	    AfgenTable[i + 21] = start;
 	i++; 
        }      
   }
 
   if (i!= NR_TABLES_SITE) return 0;
    
-  NotInfTB         = AfgenTable[20];
+  NotInfTB         = AfgenTable[21];
 
 return 1;
 }
