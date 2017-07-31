@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
     int Emergence;
-    int EndDay = 242;
+    int CycleLength   = 240;
 
     char path[100];
     char cropfile[100];
@@ -51,14 +51,13 @@ int main(int argc, char *argv[]) {
     GetSoilData(soilfile);
     GetSiteData(sitefile);
     GetManagement(management);
-    GetMeteoData(path, dateString, station, &Day);
+    GetMeteoData(path, dateString, station);
 
-    Day = 1;
     InitializeCrop(Emergence);
     InitializeWatBal();
     InitializeNutrients();
-
-    while (DevelopmentStage <= DevelopStageHarvest && Day < EndDay) {
+    
+    while (DevelopmentStage <= DevelopStageHarvest && Day < CycleLength) {
         Temp = 0.5 * (Tmax[Day] + Tmin[Day]);
         DayTemp = 0.5 * (Tmax[Day] + Temp);
 
