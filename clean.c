@@ -19,8 +19,9 @@ void Clean()
       LeaveProperties = Crop.LeaveProperties;
       Crop.LeaveProperties = Crop.LeaveProperties->next; 
       
-      LeaveProperties = NULL;
       free(LeaveProperties);
+      LeaveProperties = NULL;
+      
   }
         
   /* Free the last node */
@@ -39,13 +40,14 @@ void Clean()
           AfgenTable[i] = AfgenTable[i]->next;
           
           /* free and clearing the node */
-          head = NULL;
           free(head);
+          head = NULL;
       }
       
       /* free and clearing the last node */
-      AfgenTable[i] = NULL;
       free(AfgenTable[i]);
+      AfgenTable[i] = NULL;
+      
   }
   
 }
