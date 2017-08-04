@@ -23,6 +23,7 @@ void InitializeCrop(int Emergence)
                     Temp-TempBaseEmergence);
 	     TempSum += DeltaTempSum;
 	     Day++;
+             simTime.tm_mday++;
 	     }
 	}	     
        
