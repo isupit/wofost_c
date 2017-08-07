@@ -60,9 +60,8 @@ int main(int argc, char *argv[]) {
     while (DevelopmentStage <= DevelopStageHarvest && Day < CycleLength) {
         Temp = 0.5 * (Tmax[Day] + Tmin[Day]);
         DayTemp = 0.5 * (Tmax[Day] + Temp);
-        
-        printf("\n%4d-%02d-%02d",simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday);
-        printf(" %4d", Day);
+
+        printf("\n%4d", Day);
         printf(" Stems: %7.0f", Crop.st.stems);
         printf(" Leaves: %7.0f", Crop.st.leaves);
         printf(" sto: %7.0f", Crop.st.storage);
@@ -84,8 +83,6 @@ int main(int argc, char *argv[]) {
         DevelopmentStage = GetDevelopmentStage();
 
         Day++;
-        simTime.tm_mday++;
-        mktime(&simTime);
     }
 
     Clean();
