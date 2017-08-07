@@ -4,6 +4,12 @@
 #include "extern.h"
 #include "wofost.h"
 
+/* ---------------------------------------------------------------------------*/
+/*  function LeaveGrowth()                                                    */
+/*  Purpose: Calculation of the daily leave growth (kg ha-1 d-1) and filling  */  
+/*           the linked list that contains these values                       */
+/* ---------------------------------------------------------------------------*/
+
 float LeaveGrowth(float LAIExp, float NewLeaves)
 {
   float GrowthExpLAI;
@@ -13,7 +19,6 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
   
   Green *New=NULL;
   Green *LeaveProperties=NULL;
-  
 
   /* Specific Leaf area(m2/g), as dependent on NPK stress */
   SpecLeafArea = Afgen(SpecificLeaveArea, &DevelopmentStage) * 

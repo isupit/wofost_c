@@ -3,10 +3,10 @@
 #include "wofost.h"
 #include "extern.h"
 
-/* -----------------------------------------------------------------------*/
-/*  function LeaveAreaIndex()                                             */
-/*  Purpose: Calculation of the LAI of the LeaveProperties ha ha-1 struct */
-/* -----------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------*/
+/*  function LeaveAreaIndex()                                               */
+/*  Purpose: Calculation of the LAI (ha ha-1) of the LeaveProperties struct */
+/* -------------------------------------------------------------------------*/
 float LeaveAreaIndex()
 {
     float LAISum = 0.;

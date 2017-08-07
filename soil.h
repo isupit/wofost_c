@@ -1,3 +1,6 @@
+#ifndef SOIL_H
+#define SOIL_H
+
 char *SoilParam[]={"SMW",
                    "SMFCF",
 		   "SM0",
@@ -21,3 +24,5 @@ char *SoilParam2[]={
 
 extern int FillSoilVariables();
 extern int FillAfgenTables();
+
+#endif //SOIL_H

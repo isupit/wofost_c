@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "wofost.h"
 
+/* ---------------------------------------------------------------------------*/
+/*  function FillCropVariables()                                              */ 
+/*  Purpose: To fill the crop parameters that are used  for the crop growth   */
+/*           simulation                                                       */
+/* ---------------------------------------------------------------------------*/
 
 int FillCropVariables(float *Variable)
 {

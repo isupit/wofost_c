@@ -49,9 +49,9 @@ void NutrientPartioning()
     /* P uptake per crop organ kg ha-1 d-1 */
     if (Total_P_demand > 0.001)
     {
-        Crop.P_rt.Uptake_lv = (Crop.P_rt.Demand_lv / Total_P_demand)* Crop.P_rt.Uptake;
-        Crop.P_rt.Uptake_st = (Crop.P_rt.Demand_st / Total_P_demand)* Crop.P_rt.Uptake;
-        Crop.P_rt.Uptake_ro = (Crop.P_rt.Demand_ro / Total_P_demand)* Crop.P_rt.Uptake; 
+        Crop.P_rt.Uptake_lv = (Crop.P_rt.Demand_lv / Total_P_demand) * Crop.P_rt.Uptake;
+        Crop.P_rt.Uptake_st = (Crop.P_rt.Demand_st / Total_P_demand) * Crop.P_rt.Uptake;
+        Crop.P_rt.Uptake_ro = (Crop.P_rt.Demand_ro / Total_P_demand) * Crop.P_rt.Uptake; 
     }
     else
     {
@@ -63,9 +63,9 @@ void NutrientPartioning()
    /* K uptake per crop organ kg ha-1 d-1*/
     if (Total_K_demand > 0.001)
     {
-        Crop.K_rt.Uptake_lv = (Crop.K_rt.Demand_lv / Total_K_demand)* Crop.K_rt.Uptake;
-        Crop.K_rt.Uptake_st = (Crop.K_rt.Demand_st / Total_K_demand)* Crop.K_rt.Uptake;
-        Crop.K_rt.Uptake_ro = (Crop.K_rt.Demand_ro / Total_K_demand)* Crop.K_rt.Uptake;   
+        Crop.K_rt.Uptake_lv = (Crop.K_rt.Demand_lv / Total_K_demand) * Crop.K_rt.Uptake;
+        Crop.K_rt.Uptake_st = (Crop.K_rt.Demand_st / Total_K_demand) * Crop.K_rt.Uptake;
+        Crop.K_rt.Uptake_ro = (Crop.K_rt.Demand_ro / Total_K_demand) * Crop.K_rt.Uptake;   
     }
     else
     {
