@@ -8,12 +8,6 @@
 #include "extern.h"
 
 
-/* -------------------------------------------------------------------------*/
-/*  function sweaf()                                                        */
-/*  Purpose: Calculation of the soil water depletion factor as function of  */
-/*           the corrected penman evapotranspiration                        */
-/* -------------------------------------------------------------------------*/
-
 float sweaf(){
     float sweaf; 
     sweaf = 1./(0.76 + 1.5 * Penman.ETC) - (5.-CropGroupNumber ) * 0.10;
@@ -23,17 +17,6 @@ float sweaf(){
     }
     return limit(0.10, 0.95, sweaf);
 }
-
-
-/* ---------------------------------------------------------------------*/
-/*  function EvapTra()                                                  */
-/*  Purpose: Calculation of the maximum open water evaporation (mm),    */
-/*           maximum soil evaporation (mm),                             */
-/*           maximum crop transpiration (mm)                            */
-/*           the corrected penman evapotranspiration,                   */
-/*           waterbalance waterstress and the                           */
-/*           waterbalance transpiration rate                            */
-/* ---------------------------------------------------------------------*/
 
 void EvapTra() {   
     float CriticalSoilMoisture;

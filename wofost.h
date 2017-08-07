@@ -374,5 +374,5 @@ float TCKT;
 float N_fixation;  
 
 
-#endif	// WOFOST_H
+#endif	// 
 
