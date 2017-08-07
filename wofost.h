@@ -1,3 +1,5 @@
+#include <time.h>
+
 #ifndef WOFOST_H
 #define WOFOST_H
 
@@ -217,6 +219,9 @@ typedef struct PLANT {
              Green *LeaveProperties;
 	     } Plant;
 Plant Crop;
+
+/* Simulation time */
+struct tm simTime;
 
 
 /* Tables for Crop */
