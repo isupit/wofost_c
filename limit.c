@@ -31,3 +31,16 @@ int leap_year(int year)
         return 365;
 }
 
+
+float min(float a, float b)
+{
+    if (a < b) return a;
+    else return b;
+   }
+
+
+float max(float a, float b)
+{
+    if (a > b) return a;
+    else return b;
+ }

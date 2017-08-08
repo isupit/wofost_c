@@ -1,3 +1,6 @@
+#ifndef SITE_H
+#define SITE_H
+
 char *SiteParam[]={ "IZT",
                    "IFUNRN",
 		   "IDRAIN",
@@ -20,3 +23,6 @@ char *SiteParam2[]={
 
 extern int FillSiteVariables();
 extern int FillAfgenTables();
+
+#endif	// SITE_H
+

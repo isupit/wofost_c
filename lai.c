@@ -4,6 +4,12 @@
 #include "extern.h"
 #include "wofost.h"
 
+/* ---------------------------------------------------------------------------*/
+/*  function LeaveGrowth(float LAIExp, float NewLeaves)                       */
+/*  Purpose: Calculation of the daily leaves growth rate, the results are     */
+/*           stored in the Crop.properties linked list                        */
+/* ---------------------------------------------------------------------------*/
+
 float LeaveGrowth(float LAIExp, float NewLeaves)
 {
   float GrowthExpLAI;

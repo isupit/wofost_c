@@ -1,4 +1,7 @@
 /* General global parameters */
+#ifndef EXTERN_H
+#define EXTERN_H
+
 int Day;
 float DevelopmentStage;
 float LAI;
@@ -71,3 +74,6 @@ extern void InitializeWatBal();
 extern void RateCalulationWatBal();
 extern void IntegrationWatBal();
 extern void EvapTra();
+
+#endif	// EXTERN_H
+

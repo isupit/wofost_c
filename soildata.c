@@ -54,6 +54,8 @@ int GetSoilData(char *soilfile)
 	i++; 
        }      
   }
+  
+  fclose(fq);
 
   if (i!= NR_TABLES_SOIL) return 0;
  

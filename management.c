@@ -53,6 +53,8 @@ int GetManagement(char *management)
        }      
   }
 
+  fclose(fq);
+  
   if (i!= NR_TABLES_MANAGEMENT) return 0;
  
   N_Fert_table   = AfgenTable[22];

@@ -25,14 +25,14 @@ void Clean()
   }
         
   /* Free the last node */
-  Crop.LeaveProperties = NULL;
   free(Crop.LeaveProperties);
+  Crop.LeaveProperties = NULL;
   
   
   /* Define temporary node */
   AFGEN *head  = NULL;  
     
-  for (i = 0; i <= NUMBER_OF_TABLES; i++)
+  for (i = 0; i <= NUMBER_OF_TABLES -1; i++)
   { 
       while (AfgenTable[i]->next)
       {

@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "wofost.h"
 
+/* ---------------------------------------------------------------------------*/
+/*  function FillCropVariables(float *Variable)                               */
+/*  Purpose: Fill the crop parameters that are read by GetCropData()          */
+/* ---------------------------------------------------------------------------*/
 
 int FillCropVariables(float *Variable)
 {

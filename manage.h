@@ -1,3 +1,6 @@
+#ifndef MANAGE_H
+#define MANAGE_H
+
 char *ManageParam[]={ "NMINS",
                    "RTNMINS",
 		   "PMINS",
@@ -20,3 +23,5 @@ char *ManageParam2[]={
 
 extern int FillManageVariables();
 extern int FillAfgenTables();
+
+#endif //MANAGE_H

@@ -46,7 +46,8 @@ int GetCropData(char *cropfile)
 	while ((c=fgetc(fq)) !='\n');
 	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  {
 	    Table->next = malloc(sizeof(AFGEN));
-            Table = Table->next; Table->next = NULL;
+            Table = Table->next; 
+            Table->next = NULL;
 	    Table->x = XValue;
 	    Table->y = YValue;
 	    
@@ -57,6 +58,8 @@ int GetCropData(char *cropfile)
        }      
   }
 
+  fclose(fq);
+  
   if (i!= NR_TABLES_CRP) return 0;
  
   

@@ -53,6 +53,8 @@ int GetSiteData(char *sitefile)
 	i++; 
        }      
   }
+  
+  fclose(fq);
 
   if (i!= NR_TABLES_SITE) return 0;
    
