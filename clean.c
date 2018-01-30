@@ -32,7 +32,7 @@ void Clean()
   /* Define temporary node */
   AFGEN *head  = NULL;  
     
-  for (i = 0; i <= NUMBER_OF_TABLES -1; i++)
+  for (i = 0; i < NUMBER_OF_TABLES; i++)
   { 
       while (AfgenTable[i]->next)
       {
@@ -46,8 +46,6 @@ void Clean()
       
       /* free and clearing the last node */
       free(AfgenTable[i]);
-      AfgenTable[i] = NULL;
-      
+      AfgenTable[i] = NULL;  
   }
-  
 }

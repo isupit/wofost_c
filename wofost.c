@@ -15,8 +15,8 @@ int main(int argc, char *argv[]) {
     char soilfile[100];
     char sitefile[100];
     char management[100];
-    char dateString [14];
-    char station[14];
+    char dateString [100];
+    char station[100];
 
     if (argc != 8) return 0;
     if (strlen(argv[1]) + strlen(argv[2]) > 98) return 0;
@@ -26,22 +26,22 @@ int main(int argc, char *argv[]) {
     if (strlen(argv[6]) > 12) return 0;
     if (strlen(argv[7]) > 12) return 0;
 
-    strcpy(path, argv[1]);
+    strncpy(path, argv[1], 98);
     
-    strcpy(cropfile, argv[1]);
-    strcat(cropfile, argv[2]);
+    strncpy(cropfile, argv[1], 98);
+    strncat(cropfile, argv[2], 98);
 
-    strcpy(soilfile, argv[1]);
-    strcat(soilfile, argv[3]);
+    strncpy(soilfile, argv[1], 98);
+    strncat(soilfile, argv[3], 98);
 
-    strcpy(management, argv[1]);
-    strcat(management, argv[4]);
+    strncpy(management, argv[1], 98);
+    strncat(management, argv[4], 98);
 
-    strcpy(sitefile, argv[1]);
-    strcat(sitefile, argv[5]);
+    strncpy(sitefile, argv[1], 98);
+    strncat(sitefile, argv[5], 98);
 
-    strcpy(dateString, argv[6]);
-    strcpy(station, argv[7]);
+    strncpy(dateString, argv[6], 98);
+    strncpy(station, argv[7], 98);
     
     Emergence = 1;
     Step = 1.;
