@@ -6,9 +6,14 @@
 #include "extern.h"
 #include <time.h>
 
-int main(int argc, char *argv[]) {
+int main() {
+    FILE *ifp;
+    SimUnit *Grid = NULL;
+    SimUnit *start;
+       
     int Emergence;
-    int CycleLength   = 240;
+    int Start;
+/*   int CycleLength   = 240;*/
 
     char path[100];
     char cropfile[100];
@@ -17,80 +22,79 @@ int main(int argc, char *argv[]) {
     char management[100];
     char dateString [100];
     char station[100];
-
-    if (argc != 8) return 0;
-    if (strlen(argv[1]) + strlen(argv[2]) > 98) return 0;
-    if (strlen(argv[1]) + strlen(argv[3]) > 98) return 0;
-    if (strlen(argv[1]) + strlen(argv[4]) > 98) return 0;
-    if (strlen(argv[1]) + strlen(argv[5]) > 98) return 0;
-    if (strlen(argv[6]) > 12) return 0;
-    if (strlen(argv[7]) > 12) return 0;
-
-    strncpy(path, argv[1], 98);
+    char place[15];
     
-    strncpy(cropfile, argv[1], 98);
-    strncat(cropfile, argv[2], 98);
-
-    strncpy(soilfile, argv[1], 98);
-    strncat(soilfile, argv[3], 98);
-
-    strncpy(management, argv[1], 98);
-    strncat(management, argv[4], 98);
-
-    strncpy(sitefile, argv[1], 98);
-    strncat(sitefile, argv[5], 98);
-
-    strncpy(dateString, argv[6], 98);
-    strncpy(station, argv[7], 98);
-    
+    char cf[100], sf[100], mf[100], site[100];
+  
     Emergence = 1;
     Step = 1.;
     Day = 1;
     
-    GetCropData(cropfile);
-    GetSoilData(soilfile);
-    GetSiteData(sitefile);
-    GetManagement(management);
-    GetMeteoData(path, dateString, station);
-
-    InitializeCrop(Emergence);
-    InitializeWatBal();
-    InitializeNutrients();
     
-    while (DevelopmentStage <= DevelopStageHarvest && Day < CycleLength) {
-        Temp = 0.5 * (Tmax[Day] + Tmin[Day]);
-        DayTemp = 0.5 * (Tmax[Day] + Temp);
-        
-        printf("\n%4d-%02d-%02d",simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday);
-        printf(" %4d", Day);
-        printf(" Stems: %7.0f", Crop.st.stems);
-        printf(" Leaves: %7.0f", Crop.st.leaves);
-        printf(" sto: %7.0f", Crop.st.storage);
-        printf(" LAI: %7.2f", LAI);
-        printf(" dvs: %7.2f", DevelopmentStage);
+    ifp = fopen("list.txt", "r");
 
-        Astro();
-        CalcPenman();
-
-        RateCalulationWatBal();
-        RateCalcultionNutrients();
-        RateCalculationCrop();
-
-        IntegrationWatBal();
-        IntegrationNutrients();
-        IntegrationCrop();
-
-        LAI = LeaveAreaIndex();
-        DevelopmentStage = GetDevelopmentStage();
-
-        Day++;
-        simTime.tm_mday++;
-        mktime(&simTime);
+    if (ifp == NULL) {
+        fprintf(stderr, "Can't open input list.txt\n");
+        exit(1);
     }
+    
+    
+    while (fscanf(ifp,"%7s %10s %7s %12s %10s %10s %2s %d %d" ,
+            path, cf, sf, mf, site, dateString, place, &Start, &Emergence)
+            != EOF) {
+        
+        strncpy(cropfile, path, 98);
+        strncat(cropfile, cf, 98);
 
-    Clean();
+        strncpy(soilfile, path, 98);
+        strncat(soilfile, sf, 98);
 
+        strncpy(management, path, 98);
+        strncat(management, mf, 98);
 
+        strncpy(sitefile, path, 98);
+        strncat(sitefile, site, 98);
+
+        printf("path: %7s\n", path);
+        printf("cropfile: %10s\n",cropfile);
+        printf("soilfile: %7s\n",soilfile);
+        printf("management: %12s\n", management);
+        printf("sitefile: %10s\n", sitefile);
+        printf("dateString: %10s\n", dateString);
+        printf("place: %2s\n", place);
+        printf("Start: %2d\n", Start);
+        printf("Emergence: %2d\n", Emergence);
+        
+        if ( Grid == NULL) {
+            Grid = start = (SimUnit *) malloc(sizeof(SimUnit));
+            Grid->crp  = GetCropData(cropfile);
+            Grid->ste  = GetSiteData(sitefile);
+            Grid->mng  = GetManagement(management);        
+            /*Grid->soil = GetSoilData(soilfile);  */
+            Grid->next = NULL;        
+        }
+        else {
+            Grid->next = (SimUnit *) malloc(sizeof(SimUnit));
+            Grid = Grid->next;
+            Grid->crp  = GetCropData(cropfile);
+            Grid->ste  = GetSiteData(sitefile);
+            Grid->mng  = GetManagement(management);
+            /*Grid->soil = GetSoilData(soilfile);  */
+            
+            Grid->next = NULL;
+        }
+    }
+    
+    /* Go back to the beginning of the list */
+    Grid = start;
+    
+    
+ /*   GetSoilData(soilfile);
+ *   GetSiteData(sitefile);
+ *   GetManagement(management);
+ *   GetMeteoData(path, dateString, station);
+ */
+    
     return 0;
 }
 

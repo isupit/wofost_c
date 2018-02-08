@@ -1,4 +1,6 @@
 /* General global parameters */
+#include "wofost.h"
+
 #ifndef EXTERN_H
 #define EXTERN_H
 
@@ -57,16 +59,17 @@ extern void RateCalcultionNutrients();
 
 /* Read data */
 extern int GetAfgenTables();
-extern int GetCropData();
 extern int GetMeteoData();
 extern int GetSoilData();
-extern int GetSiteData();
-extern int GetManagement();
-extern int FillCropVariables();
 extern int FillSoilVariables();
-extern int FillManageVariables();
-extern int FillSiteVariables();
 extern int FillAfgenTables();
+
+extern Plant GetCropData();
+extern Plant FillCropVariables();
+extern Field GetSiteData();
+extern Field FillSiteVariables();
+extern Management GetManagement();
+extern Management FillManageVariables();
 
 
 /* Water balance */

@@ -17,12 +17,12 @@ float RespirationRef(float TotalAssimilation)
       float respiration; 
       float TempRef = 25.;
 
-      respiration  = RelRespiLeaves * Crop.st.leaves;
-      respiration  += RelRespiStorage * Crop.st.storage;
-      respiration  += RelRespiRoots * Crop.st.roots;	
-      respiration  += RelRespiStems * Crop.st.stems;
-      respiration  *= Afgen(FactorSenescence, &DevelopmentStage);
-      respiration  *= pow(Q10, 0.1 * (Temp-TempRef));
+      respiration  = Crop.prm.RelRespiLeaves * Crop.st.leaves;
+      respiration  += Crop.prm.RelRespiStorage * Crop.st.storage;
+      respiration  += Crop.prm.RelRespiRoots * Crop.st.roots;	
+      respiration  += Crop.prm.RelRespiStems * Crop.st.stems;
+      respiration  *= Afgen(Crop.prm.FactorSenescence, &DevelopmentStage);
+      respiration  *= pow(Crop.prm.Q10, 0.1 * (Temp-TempRef));
       
       return (min(respiration, TotalAssimilation));
 }

@@ -13,9 +13,9 @@ void InitializeNutrients()
     float day_fl;
     
     /* Initial maximum N concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
-    Crop.N_st.Max_lv = Afgen(N_MaxLeaves, &DevelopmentStage);
-    Crop.N_st.Max_st  = N_MaxStems * Crop.N_st.Max_lv;
-    Crop.N_st.Max_ro  = N_MaxRoots * Crop.N_st.Max_lv;
+    Crop.N_st.Max_lv = Afgen(Crop.prm.N_MaxLeaves, &DevelopmentStage);
+    Crop.N_st.Max_st  = Crop.prm.N_MaxStems * Crop.N_st.Max_lv;
+    Crop.N_st.Max_ro  = Crop.prm.N_MaxRoots * Crop.N_st.Max_lv;
         
     /* Initial maximum N concentration in plant organs [kg N ]           */
     Crop.N_st.leaves = Crop.N_st.Max_lv * Crop.st.leaves;
@@ -24,9 +24,9 @@ void InitializeNutrients()
     Crop.N_st.storage = 0.;
        
     /* Initial maximum P concentration in plant organs per kg biomass [kg N kg-1 dry biomass]   */
-    Crop.P_st.Max_lv = Afgen(P_MaxLeaves, &DevelopmentStage);
-    Crop.P_st.Max_st  = P_MaxStems * Crop.P_st.Max_lv;
-    Crop.P_st.Max_ro  = P_MaxRoots * Crop.P_st.Max_lv;
+    Crop.P_st.Max_lv = Afgen(Crop.prm.P_MaxLeaves, &DevelopmentStage);
+    Crop.P_st.Max_st  = Crop.prm.P_MaxStems * Crop.P_st.Max_lv;
+    Crop.P_st.Max_ro  = Crop.prm.P_MaxRoots * Crop.P_st.Max_lv;
            
     /* Initial maximum P concentration in plant organs [kg N ] */
     Crop.P_st.leaves = Crop.P_st.Max_lv * Crop.st.leaves;
@@ -35,9 +35,9 @@ void InitializeNutrients()
     Crop.P_st.storage = 0.;
                   
     /* Initial maximum K concentration in plant organs per kg biomass [kg N kg-1 dry biomass]    */
-    Crop.K_st.Max_lv = Afgen(K_MaxLeaves, &DevelopmentStage);
-    Crop.K_st.Max_st  = K_MaxStems * Crop.K_st.Max_lv;
-    Crop.K_st.Max_ro  = K_MaxRoots * Crop.K_st.Max_lv;
+    Crop.K_st.Max_lv = Afgen(Crop.prm.K_MaxLeaves, &DevelopmentStage);
+    Crop.K_st.Max_st  = Crop.prm.K_MaxStems * Crop.K_st.Max_lv;
+    Crop.K_st.Max_ro  = Crop.prm.K_MaxRoots * Crop.K_st.Max_lv;
            
     /* Initial maximum k concentration in plant organs [kg N ] */
     Crop.K_st.leaves = Crop.K_st.Max_lv * Crop.st.leaves;
@@ -70,13 +70,13 @@ void InitializeNutrients()
     day_fl = (float)Day;
     
      /* Set the soil nutrient states */
-    SoilNtrs.st_N_tot = Afgen(N_Fert_table, &day_fl) * Afgen(N_Uptake_frac, &day_fl);
-    SoilNtrs.st_P_tot = Afgen(P_Fert_table, &day_fl) * Afgen(P_Uptake_frac, &day_fl);
-    SoilNtrs.st_K_tot = Afgen(K_Fert_table, &day_fl) * Afgen(K_Uptake_frac, &day_fl);
+    SoilNtrs.st_N_tot = Afgen(Mng.N_Fert_table, &day_fl) * Afgen(Mng.N_Uptake_frac, &day_fl);
+    SoilNtrs.st_P_tot = Afgen(Mng.P_Fert_table, &day_fl) * Afgen(Mng.P_Uptake_frac, &day_fl);
+    SoilNtrs.st_K_tot = Afgen(Mng.K_Fert_table, &day_fl) * Afgen(Mng.K_Uptake_frac, &day_fl);
 
-    SoilNtrs.st_N_mins = Site.N_Mins;
-    SoilNtrs.st_P_mins = Site.P_Mins;
-    SoilNtrs.st_K_mins = Site.K_Mins;
+    SoilNtrs.st_N_mins = Mng.N_Mins;
+    SoilNtrs.st_P_mins = Mng.P_Mins;
+    SoilNtrs.st_K_mins = Mng.K_Mins;
     
     /* Set the crop nutrient rates to zero */
     Crop.N_rt.Uptake = 0.;

@@ -14,14 +14,14 @@ float DyingLeaves()
 
   /* Dying rate of leaves due to water stress or high LAI */
     
-  CriticalLAI = 3.2/Afgen(KDiffuseTb, &DevelopmentStage);
+  CriticalLAI = 3.2/Afgen(Crop.prm.KDiffuseTb, &DevelopmentStage);
   Death1      = Crop.st.leaves *(1. - WatBal.rt.Transpiration / 
-                Evtra.MaxTranspiration)*MaxRelDeathRate ;
+                Evtra.MaxTranspiration) * Crop.prm.MaxRelDeathRate ;
   Death2      = Crop.st.leaves * limit(0.,0.03, 0.03*(LAI-CriticalLAI)/CriticalLAI);
   Death       = max(Death1, Death2);  
   
   /* Death rate increase due to nutrient shortage */
-  Death += Crop.st.leaves * DyingLeaves_NPK_Stress * (1. - Crop.NPK_Indx);
+  Death += Crop.st.leaves * Crop.prm.DyingLeaves_NPK_Stress * (1. - Crop.NPK_Indx);
   
   DeathStress = Death;
 
@@ -35,7 +35,7 @@ float DyingLeaves()
   Crop.LeaveProperties->weight = Crop.LeaveProperties->weight - Death;
 
   DeathAge = 0;
-  while(Crop.LeaveProperties != NULL && Crop.LeaveProperties->age > LifeSpan)
+  while(Crop.LeaveProperties != NULL && Crop.LeaveProperties->age > Crop.prm.LifeSpan)
      {wipe                   = Crop.LeaveProperties; 
       DeathAge              += Crop.LeaveProperties->weight;
       Crop.LeaveProperties   = Crop.LeaveProperties->next; 

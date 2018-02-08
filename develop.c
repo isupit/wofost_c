@@ -15,15 +15,15 @@ float GetDevelopmentStage(void)
   
   if (DevelopmentStage  < 1.)
     {
-    DevelopmentRate = Afgen(DeltaTempSum, &Temp)/TempSum1;
-    if (IdentifyAnthesis == 1 || IdentifyAnthesis == 2) DevelopmentRate = DevelopmentRate*
-	  limit(0., 1., (PARDaylength-CriticalDaylength)/(OptimumDaylength-CriticalDaylength));
+    DevelopmentRate = Afgen(Crop.prm.DeltaTempSum, &Temp)/Crop.prm.TempSum1;
+    if (Crop.prm.IdentifyAnthesis == 1 || Crop.prm.IdentifyAnthesis == 2) DevelopmentRate = DevelopmentRate *
+	  limit(0., 1., (PARDaylength-Crop.prm.CriticalDaylength)/(Crop.prm.OptimumDaylength-Crop.prm.CriticalDaylength));
     
     /* adjustment of development stage */
     if (DevelopmentRate + DevelopmentStage >= 1. ) return 1.;
     }
   else 
-       DevelopmentRate = Afgen(DeltaTempSum, &Temp)/TempSum2;  
+       DevelopmentRate = Afgen(Crop.prm.DeltaTempSum, &Temp)/Crop.prm.TempSum2;  
 
   return (DevelopmentStage + DevelopmentRate);
 

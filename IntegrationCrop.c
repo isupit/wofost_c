@@ -22,7 +22,7 @@ void IntegrationCrop()
     Crop.st.LAIExp   += Crop.rt.LAIExp;
 
     /* Establish the age increase */
-    PhysAgeing = max(0., (Temp - TempBaseLeaves)/(35.- TempBaseLeaves));
+    PhysAgeing = max(0., (Temp - Crop.prm.TempBaseLeaves)/(35.- Crop.prm.TempBaseLeaves));
     
     /* Store the initial address */
     LeaveProperties = Crop.LeaveProperties;

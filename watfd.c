@@ -58,7 +58,7 @@ void InitializeWatBal()
     WatBal.st.SurfaceStorage = Site.SurfaceStorage;
     
     /* Initial soil moisture for a rice crop */
-    if (Airducts) Site.MaxInitSoilM = WatBal.ct.MoistureSAT; 
+    if (Crop.prm.Airducts) Site.MaxInitSoilM = WatBal.ct.MoistureSAT; 
         WatBal.st.Moisture = limit(WatBal.ct.MoistureWP, Site.MaxInitSoilM, 
             WatBal.ct.MoistureWP + Site.InitSoilMoisture/Crop.RootDepth);
     
@@ -141,7 +141,7 @@ void RateCalulationWatBal() {
             (WatBal.st.MoistureLOW - WELOW)/Step + Perc1);
     
     /* For rice water losses are limited to K0/20 */
-    if (Airducts) 
+    if (Crop.prm.Airducts) 
         WatBal.rt.Loss = min(WatBal.rt.Loss, 0.05*WatBal.ct.K0);
     
     /* Percolation not to exceed uptake capacity of subsoil */

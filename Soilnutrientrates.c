@@ -16,11 +16,11 @@ void SoilNutrientRates()
     
     float day_fl;
     
-    if (DevelopmentStage > 0. && DevelopmentStage <= DevelopmentStageNLimit)
+    if (DevelopmentStage > 0. && DevelopmentStage <= Crop.prm.DevelopmentStageNLimit)
     {
-        SoilNtrs.rt_N_mins = min(Site.N_Mins * Site.NRecoveryFrac, SoilNtrs.st_N_tot); 
-        SoilNtrs.rt_P_mins = min(Site.P_Mins * Site.PRecoveryFrac, SoilNtrs.st_P_tot); 
-        SoilNtrs.rt_K_mins = min(Site.K_Mins * Site.KRecoveryFrac, SoilNtrs.st_K_tot); 
+        SoilNtrs.rt_N_mins = min(Mng.N_Mins * Mng.NRecoveryFrac, SoilNtrs.st_N_tot); 
+        SoilNtrs.rt_P_mins = min(Mng.P_Mins * Mng.PRecoveryFrac, SoilNtrs.st_P_tot); 
+        SoilNtrs.rt_K_mins = min(Mng.K_Mins * Mng.KRecoveryFrac, SoilNtrs.st_K_tot); 
     }
     else
     {
@@ -31,9 +31,9 @@ void SoilNutrientRates()
     
     day_fl = (float)Day;
     
-    N_fert = Afgen(N_Fert_table, &day_fl) * Afgen(N_Uptake_frac, &day_fl);
-    P_fert = Afgen(P_Fert_table, &day_fl) * Afgen(P_Uptake_frac, &day_fl);
-    K_fert = Afgen(K_Fert_table, &day_fl) * Afgen(K_Uptake_frac, &day_fl);
+    N_fert = Afgen(Mng.N_Fert_table, &day_fl) * Afgen(Mng.N_Uptake_frac, &day_fl);
+    P_fert = Afgen(Mng.P_Fert_table, &day_fl) * Afgen(Mng.P_Uptake_frac, &day_fl);
+    K_fert = Afgen(Mng.K_Fert_table, &day_fl) * Afgen(Mng.K_Uptake_frac, &day_fl);
     
     SoilNtrs.rt_N_tot = (N_fert / Step) - Crop.N_rt.Uptake  + SoilNtrs.rt_N_mins;
     SoilNtrs.rt_P_tot = (P_fert / Step) - Crop.P_rt.Uptake  + SoilNtrs.rt_P_mins;

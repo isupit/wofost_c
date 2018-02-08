@@ -22,15 +22,15 @@ void NutrientPartioning()
     Total_P_demand = Crop.P_rt.Demand_lv + Crop.P_rt.Demand_st + Crop.P_rt.Demand_ro;
     Total_K_demand = Crop.K_rt.Demand_lv + Crop.K_rt.Demand_st + Crop.K_rt.Demand_ro;
     
-    NutrientLimit = insw(DevelopmentStage - DevelopmentStageNLimit , 
+    NutrientLimit = insw(DevelopmentStage - Crop.prm.DevelopmentStageNLimit , 
             insw(WatBal.rt.Transpiration/Evtra.MaxTranspiration -0.01,0.,1.) , 0.0);
     
     /* Nutrient uptake cannot be larger than the availability and is larger or equal to zero */
-    Crop.N_rt.Uptake = min((1.-N_fixation)*Total_N_demand, SoilNtrs.st_N_tot)* NutrientLimit/Step;
+    Crop.N_rt.Uptake = min((1.-Crop.prm.N_fixation)*Total_N_demand, SoilNtrs.st_N_tot)* NutrientLimit/Step;
     Crop.P_rt.Uptake = min(Total_P_demand, SoilNtrs.st_P_mins) * NutrientLimit/Step;
     Crop.K_rt.Uptake = min(Total_K_demand, SoilNtrs.st_K_mins) * NutrientLimit/Step;
     
-    N_Fix_rt= max(0.,Crop.N_rt.Uptake * N_fixation / max(0.02, 1.-N_fixation));
+    N_Fix_rt= max(0.,Crop.N_rt.Uptake * Crop.prm.N_fixation / max(0.02, 1.-Crop.prm.N_fixation));
    
     /* N uptake per crop organ kg ha-1 d-1*/
     if (Total_N_demand > 0.001)

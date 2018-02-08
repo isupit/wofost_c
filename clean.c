@@ -21,7 +21,6 @@ void Clean()
       
       free(LeaveProperties);
       LeaveProperties = NULL;
-      
   }
         
   /* Free the last node */

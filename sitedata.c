@@ -5,36 +5,42 @@
 #include "site.h"
 
 
-int GetSiteData(char *sitefile)
+Field GetSiteData(char *sitefile)
 {
   AFGEN *Table, *start;
+  Field *SITE = NULL;
+  
   int i, c;
   float Variable[NR_VARIABLES_SITE], XValue, YValue;
   char x[2], xx[2],  word[NR_VARIABLES_SITE];
   FILE *fq;
 
- if ((fq = fopen(sitefile, "rt")) == NULL)
-    {fprintf(stderr, "Cannot open input file.\n"); return 0;}
+ if ((fq = fopen(sitefile, "rt")) == NULL) {
+     fprintf(stderr, "Cannot open input file.\n"); 
+     exit(0);
+ }
 
  i=0;
-  while ((c=fscanf(fq,"%s",word)) != EOF) 
-  {
-    if (!strcmp(word, SiteParam[i])) {
-        while ((c=fgetc(fq)) !='=');
+ while ((c=fscanf(fq,"%s",word)) != EOF) {
+   if (!strcmp(word, SiteParam[i])) {
+       while ((c=fgetc(fq)) !='=');
 	fscanf(fq,"%f",  &Variable[i]);
 
 	i++; 
-       }  
-  }
+      }  
+ }
 
-  if (i!=NR_VARIABLES_SITE) return 0;
+  if (i != NR_VARIABLES_SITE) {
+      fprintf(stderr, "Something wrong with the Site variables.\n");
+      exit(0);
+  }
   rewind(fq);  
-  FillSiteVariables(Variable);
+
+  FillSiteVariables(SITE = malloc(sizeof(Field)), Variable);
  
 
   i=0;
-  while ((c=fscanf(fq,"%s",word)) != EOF) 
-  {
+  while ((c=fscanf(fq,"%s",word)) != EOF) {
     if (!strcmp(word, SiteParam2[i])) {
         Table = start = malloc(sizeof(AFGEN));
 	fscanf(fq,"%s %f %s  %f", x, &Table->x, xx, &Table->y);
@@ -49,17 +55,21 @@ int GetSiteData(char *sitefile)
 	    
 	    while ((c=fgetc(fq)) !='\n' || (c=fgetc(fq)) != EOF );
 	    }
-	    AfgenTable[i + 21] = start;
+	    AfgenTable[i + 23] = start;
 	i++; 
        }      
   }
   
   fclose(fq);
 
-  if (i!= NR_TABLES_SITE) return 0;
+  if (i != NR_TABLES_SITE)
+  {
+    fprintf(stderr, "Something wrong with the Site tables.\n"); 
+    exit(0);
+  } 
    
-  NotInfTB         = AfgenTable[21];
+  SITE->NotInfTB = AfgenTable[23];
 
-return 1;
+return *SITE;
 }
 

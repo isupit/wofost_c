@@ -71,26 +71,21 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
 float DailyTotalAssimilation()
 {
   int i;
-  float KDiffuse, EFF;
+  float KDiffuse, EFF, Factor;
   float Hour, SinB, PAR, PARDiffuse, PARDirect, AssimMax; 
   float DailyTotalAssimilation = 0.;
 
-  KDiffuse = Afgen(KDiffuseTb, &DevelopmentStage);
+  KDiffuse = Afgen(Crop.prm.KDiffuseTb, &DevelopmentStage);
   
-  EFF      = Afgen(EFFTb, &DayTemp);
+  EFF      = Afgen(Crop.prm.EFFTb, &DayTemp);
+  Factor   = Afgen(Crop.prm.CO2EFFTB, &CO2);
   
   /* Correction for the atmospheric CO2 concentration */
-  if (CO2 > 360. && CO2 <= 720.)
-  {
-      EFF = EFF * (1 +0.11 * (CO2 - 360.)/(720. - 360.));
-  }
-  else if (CO2 > 720.)
-  {
-      EFF *=1.11;
-  }
+  EFF      = EFF * Factor ;
   
-  AssimMax = Afgen(FactorAssimRateTemp, &DayTemp) * 
-          Afgen(MaxAssimRate, &DevelopmentStage) * Afgen(FactorCO2, &CO2);
+  AssimMax = Afgen(Crop.prm.FactorAssimRateTemp, &DayTemp) * 
+             Afgen(Crop.prm.MaxAssimRate, &DevelopmentStage) * 
+             Afgen(Crop.prm.CO2AMAXTB, &CO2);
 
   if (AssimMax > 0. && LAI > 0.)
 {
@@ -123,5 +118,5 @@ float Correct(float Assimilation)
   }
     
   TminLowAvg = TminLowAvg/Counter;
-  return (Assimilation*Afgen(FactorGrossAssimTemp, &TminLowAvg)*30./44.);
+  return (Assimilation*Afgen(Crop.prm.FactorGrossAssimTemp, &TminLowAvg)*30./44.);
 }

@@ -26,11 +26,11 @@ void CropNutrientRates()
    
    
     /* Rate of N,P,K uptake in storage organs (kg N,P,K ha-1 d-1) */
-    if (DevelopmentStage <  DevelopmentStageNT)
+    if (DevelopmentStage <  Crop.prm.DevelopmentStageNT)
     {
-        Crop.N_rt.storage = min(Crop.N_rt.Demand_so, Crop.N_rt.Transloc/TCNT);
-        Crop.P_rt.storage = min(Crop.P_rt.Demand_so, Crop.P_rt.Transloc/TCPT);
-        Crop.K_rt.storage = min(Crop.K_rt.Demand_so, Crop.K_rt.Transloc/TCKT); 
+        Crop.N_rt.storage = min(Crop.N_rt.Demand_so, Crop.N_rt.Transloc/Crop.prm.TCNT);
+        Crop.P_rt.storage = min(Crop.P_rt.Demand_so, Crop.P_rt.Transloc/Crop.prm.TCPT);
+        Crop.K_rt.storage = min(Crop.K_rt.Demand_so, Crop.K_rt.Transloc/Crop.prm.TCKT); 
     }
     else
     {

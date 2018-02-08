@@ -6,100 +6,100 @@
 /*  Purpose: Fill the crop parameters that are read by GetCropData()          */
 /* ---------------------------------------------------------------------------*/
 
-int FillCropVariables(float *Variable)
+Plant FillCropVariables(Plant *CROP, float *Variable)
 {
     int i;
-TempBaseEmergence        = Variable[0];
-TempEffMax               = Variable[1];
-TSumEmergence            = Variable[2];                      	     
+    CROP->prm.TempBaseEmergence        = Variable[0];
+    CROP->prm.TempEffMax               = Variable[1];
+    CROP->prm.TSumEmergence            = Variable[2];                      	     
 
-/**  Phenology  **/
-IdentifyAnthesis         = (int) Variable[3]; 
-OptimumDaylength         = Variable[4];	            
-CriticalDaylength        = Variable[5];
-TempSum1                 = Variable[6];       
-TempSum2                 = Variable[7]; 
-InitialDVS		 = Variable[8];
-DevelopStageHarvest      = Variable[9];
+    /**  Phenology  **/
+    CROP->prm.IdentifyAnthesis         = (int) Variable[3]; 
+    CROP->prm.OptimumDaylength         = Variable[4];	            
+    CROP->prm.CriticalDaylength        = Variable[5];
+    CROP->prm.TempSum1                 = Variable[6];       
+    CROP->prm.TempSum2                 = Variable[7]; 
+    CROP->prm.InitialDVS               = Variable[8];
+    CROP->prm.DevelopStageHarvest      = Variable[9];
 
-/** Initial Values  **/
-InitialDryWeight         = Variable[10];
-LAIEmergence             = Variable[11];
-RelIncreaseLAI           = Variable[12];
+    /** Initial Values  **/
+    CROP->prm.InitialDryWeight         = Variable[10];
+    CROP->prm.LAIEmergence             = Variable[11];
+    CROP->prm.RelIncreaseLAI           = Variable[12];
 
-/**  Green Area  **/
-SpecificPodArea          = Variable[13];
-LifeSpan                 = Variable[14];
-TempBaseLeaves           = Variable[15];
+    /**  Green Area  **/
+    CROP->prm.SpecificPodArea          = Variable[13];
+    CROP->prm.LifeSpan                 = Variable[14];
+    CROP->prm.TempBaseLeaves           = Variable[15];
 
-/** Conversion assimilates into biomass **/
-ConversionLeaves         = Variable[16];
-ConversionStorage        = Variable[17];
-ConversionRoots          = Variable[18];
-ConversionStems          = Variable[19];
+    /** Conversion assimilates into biomass **/
+    CROP->prm.ConversionLeaves         = Variable[16];
+    CROP->prm.ConversionStorage        = Variable[17];
+    CROP->prm.ConversionRoots          = Variable[18];
+    CROP->prm.ConversionStems          = Variable[19];
 
-/** Maintenance Respiration **/
-Q10                      = Variable[20];
-RelRespiLeaves           = Variable[21];
-RelRespiStorage          = Variable[22];
-RelRespiRoots            = Variable[23];
-RelRespiStems            = Variable[24];
+    /** Maintenance Respiration **/
+    CROP->prm.Q10                      = Variable[20];
+    CROP->prm.RelRespiLeaves           = Variable[21];
+    CROP->prm.RelRespiStorage          = Variable[22];
+    CROP->prm.RelRespiRoots            = Variable[23];
+    CROP->prm.RelRespiStems            = Variable[24];
 
-/** Death Rates  **/
-MaxRelDeathRate          = Variable[25];
+    /** Death Rates  **/
+    CROP->prm.MaxRelDeathRate          = Variable[25];
 
-/** Water Use  **/
-CorrectionTransp         = Variable[26];
-CropGroupNumber          = Variable[27];
-Airducts                 = Variable[28];
+    /** Water Use  **/
+    CROP->prm.CorrectionTransp         = Variable[26];
+    CROP->prm.CropGroupNumber          = Variable[27];
+    CROP->prm.Airducts                 = Variable[28];
 
-/** Rooting **/
-/** Convert cm to mm */
-InitRootingDepth         = 10. * Variable[29];
-MaxIncreaseRoot          = 10. * Variable[30];
-MaxRootingDepth          = 10. * Variable[31];
+    /** Rooting **/
+    /** Convert cm to mm */
+    CROP->prm.InitRootingDepth         = 10. * Variable[29];
+    CROP->prm.MaxIncreaseRoot          = 10. * Variable[30];
+    CROP->prm.MaxRootingDepth          = 10. * Variable[31];
 
-/** Nutrients  **/
-DyingLeaves_NPK_Stress   = Variable[32];
-DevelopmentStageNLimit   = Variable[33];
-DevelopmentStageNT       = Variable[34];
-FracTranslocRoots        = Variable[35];
-Opt_N_Frac               = Variable[36];
-Opt_P_Frac               = Variable[37];
-Opt_K_Frac               = Variable[38];
-N_MaxRoots               = Variable[39];
-N_MaxStems               = Variable[40];
-P_MaxRoots               = Variable[41];
-P_MaxStems               = Variable[42];
-K_MaxRoots               = Variable[43];
-K_MaxStems               = Variable[44];
-NitrogenStressLAI        = Variable[45];                	     
-NLUE                     = Variable[46];
-Max_N_storage            = Variable[47];
-Max_P_storage            = Variable[48];
-Max_K_storage            = Variable[49];
-N_lv_partitioning        = Variable[50];
-NutrientStessSLA         = Variable[51];
-N_ResidualFrac_lv        = Variable[52];
-N_ResidualFrac_st        = Variable[53];
-N_ResidualFrac_ro        = Variable[54];
-P_ResidualFrac_lv        = Variable[55];
-P_ResidualFrac_st        = Variable[56];
-P_ResidualFrac_ro        = Variable[57]; 
-K_ResidualFrac_lv        = Variable[58];
-K_ResidualFrac_st        = Variable[59];
-K_ResidualFrac_ro        = Variable[60];
-TCNT                     = Variable[61];
-TCPT                     = Variable[62];
-TCKT                     = Variable[63];
-N_fixation               = Variable[64];
+    /** Nutrients  **/
+    CROP->prm.DyingLeaves_NPK_Stress   = Variable[32];
+    CROP->prm.DevelopmentStageNLimit   = Variable[33];
+    CROP->prm.DevelopmentStageNT       = Variable[34];
+    CROP->prm.FracTranslocRoots        = Variable[35];
+    CROP->prm.Opt_N_Frac               = Variable[36];
+    CROP->prm.Opt_P_Frac               = Variable[37];
+    CROP->prm.Opt_K_Frac               = Variable[38];
+    CROP->prm.N_MaxRoots               = Variable[39];
+    CROP->prm.N_MaxStems               = Variable[40];
+    CROP->prm.P_MaxRoots               = Variable[41];
+    CROP->prm.P_MaxStems               = Variable[42];
+    CROP->prm.K_MaxRoots               = Variable[43];
+    CROP->prm.K_MaxStems               = Variable[44];
+    CROP->prm.NitrogenStressLAI        = Variable[45];                	     
+    CROP->prm.NLUE                     = Variable[46];
+    CROP->prm.Max_N_storage            = Variable[47];
+    CROP->prm.Max_P_storage            = Variable[48];
+    CROP->prm.Max_K_storage            = Variable[49];
+    CROP->prm.N_lv_partitioning        = Variable[50];
+    CROP->prm.NutrientStessSLA         = Variable[51];
+    CROP->prm.N_ResidualFrac_lv        = Variable[52];
+    CROP->prm.N_ResidualFrac_st        = Variable[53];
+    CROP->prm.N_ResidualFrac_ro        = Variable[54];
+    CROP->prm.P_ResidualFrac_lv        = Variable[55];
+    CROP->prm.P_ResidualFrac_st        = Variable[56];
+    CROP->prm.P_ResidualFrac_ro        = Variable[57]; 
+    CROP->prm.K_ResidualFrac_lv        = Variable[58];
+    CROP->prm.K_ResidualFrac_st        = Variable[59];
+    CROP->prm.K_ResidualFrac_ro        = Variable[60];
+    CROP->prm.TCNT                     = Variable[61];
+    CROP->prm.TCPT                     = Variable[62];
+    CROP->prm.TCKT                     = Variable[63];
+    CROP->prm.N_fixation               = Variable[64];
 
 
-for (i=0;i<=NR_VARIABLES_CRP;i++) {
+    for (i=0;i<=NR_VARIABLES_CRP;i++) {
     Variable[i] = 0.;
-}
+    }
 
- return 1;
+ return *CROP;
 }
 
 int FillSoilVariables(float *Variable) {
@@ -123,20 +123,20 @@ int FillSoilVariables(float *Variable) {
     return 1;
 }
 
-int FillSiteVariables(float *Variable) {
+Field FillSiteVariables(Field *SITE, float *Variable) {
     int i;
    
-    Site.FlagGroundWater                 = Variable[0];
-    Site.InfRainDependent                = Variable[1];
-    Site.FlagDrains                      = Variable[2];
-    Site.MaxSurfaceStorage               = Variable[3];
-    Site.InitSoilMoisture                = Variable[4];
-    Site.GroundwaterDepth                = Variable[5];
-    Site.DD                              = Variable[6];
-    Site.SoilLimRootDepth                = Variable[7];
-    Site.NotInfiltrating                 = Variable[8];
-    Site.SurfaceStorage                  = Variable[9];
-    Site.MaxInitSoilM                    = Variable[10];
+    SITE->FlagGroundWater                 = Variable[0];
+    SITE->InfRainDependent                = Variable[1];
+    SITE->FlagDrains                      = Variable[2];
+    SITE->MaxSurfaceStorage               = Variable[3];
+    SITE->InitSoilMoisture                = Variable[4];
+    SITE->GroundwaterDepth                = Variable[5];
+    SITE->DD                              = Variable[6];
+    SITE->SoilLimRootDepth                = Variable[7];
+    SITE->NotInfiltrating                 = Variable[8];
+    SITE->SurfaceStorage                  = Variable[9];
+    SITE->MaxInitSoilM                    = Variable[10];
     
     CO2 = Variable[11];
        
@@ -144,22 +144,22 @@ int FillSiteVariables(float *Variable) {
         Variable[i]= 0.;
     }
     
-    return 1;
+    return *SITE;
 }
 
-int FillManageVariables(float *Variable) {
+Management FillManageVariables(Management *MNG, float *Variable) {
     int i;
     
-    Site.N_Mins                          = Variable[0];
-    Site.NRecoveryFrac                   = Variable[1];
-    Site.P_Mins                          = Variable[2];
-    Site.PRecoveryFrac                   = Variable[3];
-    Site.K_Mins                          = Variable[4];
-    Site.KRecoveryFrac                   = Variable[5];
+    MNG->N_Mins                          = Variable[0];
+    MNG->NRecoveryFrac                   = Variable[1];
+    MNG->P_Mins                          = Variable[2];
+    MNG->PRecoveryFrac                   = Variable[3];
+    MNG->K_Mins                          = Variable[4];
+    MNG->KRecoveryFrac                   = Variable[5];
     
     for (i=0;i<=NR_VARIABLES_MANAGEMENT;i++) {
         Variable[i]= 0.;
     }
     
-    return 1;
+    return *MNG;
 }

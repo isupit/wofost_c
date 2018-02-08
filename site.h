@@ -21,7 +21,7 @@ char *SiteParam2[]={
                     "NULL"
 		    };
 
-extern int FillSiteVariables();
+extern Field FillSiteVariables();
 extern int FillAfgenTables();
 
 #endif	// SITE_H

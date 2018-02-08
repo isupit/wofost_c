@@ -25,7 +25,6 @@
 
 void CalcPenman()
 {
-    float correction;
     float RelSunShineDuration;
     float Tmpa;
     float Tdif;
@@ -93,17 +92,4 @@ void CalcPenman()
     Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
     Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
     
-    /* correction of potential evapo-transpiration for atmospheric     */
-    /* CO2 concentration                                               */
-    correction = 1.;
-    if (CO2 > 360. && CO2 <= 720.)
-    {
-      correction = 1. - 0.1 * (CO2 - 360.)/(720. - 360.);
-    }
-    else if (CO2 > 720.)
-    {
-      correction = 0.9;
-    }
-    
-    Penman.ETC = correction * Penman.ET0;
 }
