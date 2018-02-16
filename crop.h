@@ -75,12 +75,9 @@ char *CropParam2[]={
                     "AMAXTB",
 		    "TMPFTB",
 		    "TMNFTB",
-                    
-                    
-                    "CO2AMAXTB"
-                    "CO2EFFTB"
-                    "CO2TRATB"
-                    
+                    "CO2AMAXTB",
+                    "CO2EFFTB",
+                    "CO2TRATB",
                     "RFSETB",
 		    "FRTB",
                     "FLTB",

@@ -102,17 +102,17 @@ Plant FillCropVariables(Plant *CROP, float *Variable)
  return *CROP;
 }
 
-int FillSoilVariables(float *Variable) {
+Soil FillSoilVariables(Soil *SOIL, float *Variable) {
     int i;
     
-    WatBal.ct.MoistureWP       = Variable[0];
-    WatBal.ct.MoistureFC       = Variable[1];
-    WatBal.ct.MoistureSAT      = Variable[2];
-    WatBal.ct.CriticalSoilAirC = Variable[3];
-
-    WatBal.ct.MaxPercolRTZ     = Variable[5];
-    WatBal.ct.MaxPercolSubS    = Variable[6];
-    WatBal.ct.K0               = Variable[4];
+    SOIL.ct.MoistureWP       = Variable[0];
+    SOIL.ct.MoistureFC       = Variable[1];
+    SOIL.ct.MoistureSAT      = Variable[2];
+    SOIL.ct.CriticalSoilAirC = Variable[3];
+    SOIL.ct.K0               = Variable[4];
+    SOIL.ct.MaxPercolRTZ     = Variable[5];
+    SOIL.ct.MaxPercolSubS    = Variable[6];
+    
     
     /* No workability parameters will be used in this version */
     
@@ -120,7 +120,7 @@ int FillSoilVariables(float *Variable) {
         Variable[i]= 0.;
     }
     
-    return 1;
+    return *SOIL;
 }
 
 Field FillSiteVariables(Field *SITE, float *Variable) {

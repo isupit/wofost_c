@@ -4,7 +4,7 @@
 #define WOFOST_H
 
 #define NR_VARIABLES_CRP	64
-#define NR_TABLES_CRP   	19
+#define NR_TABLES_CRP   	21
 #define NR_VARIABLES_SITE       12
 #define NR_TABLES_SITE          1
 #define NR_VARIABLES_SOIL       12
@@ -229,6 +229,11 @@ typedef struct SOIL {
         float SoilMaxRootingDepth;
         float WaterStress;
         float SoilMoisture;
+        
+        /* Tables for Soil */
+        AFGEN *VolumetricSoilMoisture;
+        AFGEN *HydraulicConductivity; /* currently not used */
+        
         Constants ct;
         States st;
         Rates rt;
@@ -359,10 +364,6 @@ Plant Crop;
 /* Simulation time */
 struct tm simTime;
 
-
-/* Tables for Soil */
-AFGEN *VolumetricSoilMoisture;
-AFGEN *HydraulicConductivity; /* currently not used */
 
 typedef struct SIMUNIT {
         Plant crp;

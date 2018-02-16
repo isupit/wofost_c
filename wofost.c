@@ -9,7 +9,7 @@
 int main() {
     FILE *ifp;
     SimUnit *Grid = NULL;
-    SimUnit *start;
+    SimUnit *start = NULL;
        
     int Emergence;
     int Start;
@@ -21,7 +21,7 @@ int main() {
     char sitefile[100];
     char management[100];
     char dateString [100];
-    char station[100];
+ //   char station[100];
     char place[15];
     
     char cf[100], sf[100], mf[100], site[100];
@@ -65,12 +65,12 @@ int main() {
         printf("Start: %2d\n", Start);
         printf("Emergence: %2d\n", Emergence);
         
-        if ( Grid == NULL) {
+        if ( start == NULL) {
             Grid = start = (SimUnit *) malloc(sizeof(SimUnit));
             Grid->crp  = GetCropData(cropfile);
             Grid->ste  = GetSiteData(sitefile);
             Grid->mng  = GetManagement(management);        
-            /*Grid->soil = GetSoilData(soilfile);  */
+            Grid->soil = GetSoilData(soilfile); 
             Grid->next = NULL;        
         }
         else {
@@ -79,7 +79,7 @@ int main() {
             Grid->crp  = GetCropData(cropfile);
             Grid->ste  = GetSiteData(sitefile);
             Grid->mng  = GetManagement(management);
-            /*Grid->soil = GetSoilData(soilfile);  */
+            Grid->soil = GetSoilData(soilfile);
             
             Grid->next = NULL;
         }

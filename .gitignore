@@ -2,4 +2,6 @@ wofost
 data/run.var
 nbproject
 list.txt
+*.o
+*.core
 

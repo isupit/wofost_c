@@ -71,7 +71,7 @@ Plant GetCropData(char *cropfile)
   
   if (i!= NR_TABLES_CRP) 
   {
-    fprintf(stderr, "Something wrong with the Crop parameters.\n"); 
+    fprintf(stderr, "Something wrong with the Crop tables.\n"); 
     exit(0);
   } 
   

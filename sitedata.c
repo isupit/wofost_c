@@ -22,8 +22,9 @@ Field GetSiteData(char *sitefile)
 
  i=0;
  while ((c=fscanf(fq,"%s",word)) != EOF) {
-   if (!strcmp(word, SiteParam[i])) {
-       while ((c=fgetc(fq)) !='=');
+    if (!strcmp(word, SiteParam[i])) {
+        while ((c=fgetc(fq)) !='=');
+        
 	fscanf(fq,"%f",  &Variable[i]);
 
 	i++; 

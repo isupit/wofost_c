@@ -5,7 +5,7 @@
 #include "soil.h"
 
 
-int GetSoilData(char *soilfile)
+Soil GetSoilData(char *soilfile)
 {
   AFGEN *Table, *start;
   int i, c;
@@ -27,21 +27,28 @@ int GetSoilData(char *soilfile)
        }  
   }
 
-  if (i != NR_VARIABLES_SOIL) return 0;
+ if (i != NR_VARIABLES_SOIL) 
+ {
+    fprintf(stderr, "Something wrong with the Soil variables.\n"); 
+    exit(0);
+ }
+ 
   rewind(fq);  
-  FillSoilVariables(Variable);
+  FillSoilVariables(SOIL = malloc(sizeof(Soil)), Variable);
  
 
   i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF) 
   {
-    if (!strcmp(word, SoilParam2[i])) {
+    if (!strcmp(word, SoilParam2[i])) 
+    {
         Table = start = malloc(sizeof(AFGEN));
 	fscanf(fq,"%s %f %s  %f", x, &Table->x, xx, &Table->y);
         Table->next = NULL;				     
 			       
 	while ((c=fgetc(fq)) !='\n');
-	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  {
+	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  
+        {
 	    Table->next = malloc(sizeof(AFGEN));
             Table = Table->next; 
             Table->next = NULL;
@@ -57,12 +64,16 @@ int GetSoilData(char *soilfile)
   
   fclose(fq);
 
-  if (i!= NR_TABLES_SOIL) return 0;
+ if (i!= NR_TABLES_SOIL) 
+ {
+    fprintf(stderr, "Something wrong with the Soil tables.\n"); 
+    exit(0);
+ }
  
-  VolumetricSoilMoisture = AfgenTable[21];
-  HydraulicConductivity  = AfgenTable[22];
+  SOIL->VolumetricSoilMoisture = AfgenTable[21];
+  SOIL->HydraulicConductivity  = AfgenTable[22];
   
 
-return 1;
+return *SOIL;
 }
 
