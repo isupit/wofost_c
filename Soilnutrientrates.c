@@ -16,7 +16,7 @@ void SoilNutrientRates()
     
     float day_fl;
     
-    if (DevelopmentStage > 0. && DevelopmentStage <= Crop.prm.DevelopmentStageNLimit)
+    if (Crop.DevelopmentStage > 0. && Crop.DevelopmentStage <= Crop.prm.DevelopmentStageNLimit)
     {
         SoilNtrs.rt_N_mins = min(Mng.N_Mins * Mng.NRecoveryFrac, SoilNtrs.st_N_tot); 
         SoilNtrs.rt_P_mins = min(Mng.P_Mins * Mng.PRecoveryFrac, SoilNtrs.st_P_tot); 

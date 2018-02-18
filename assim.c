@@ -75,7 +75,7 @@ float DailyTotalAssimilation()
   float Hour, SinB, PAR, PARDiffuse, PARDirect, AssimMax; 
   float DailyTotalAssimilation = 0.;
 
-  KDiffuse = Afgen(Crop.prm.KDiffuseTb, &DevelopmentStage);
+  KDiffuse = Afgen(Crop.prm.KDiffuseTb, &(Crop.DevelopmentStage));
   
   EFF      = Afgen(Crop.prm.EFFTb, &DayTemp);
   Factor   = Afgen(Crop.prm.CO2EFFTB, &CO2);
@@ -84,7 +84,7 @@ float DailyTotalAssimilation()
   EFF      = EFF * Factor ;
   
   AssimMax = Afgen(Crop.prm.FactorAssimRateTemp, &DayTemp) * 
-             Afgen(Crop.prm.MaxAssimRate, &DevelopmentStage) * 
+             Afgen(Crop.prm.MaxAssimRate, &(Crop.DevelopmentStage)) * 
              Afgen(Crop.prm.CO2AMAXTB, &CO2);
 
   if (AssimMax > 0. && LAI > 0.)

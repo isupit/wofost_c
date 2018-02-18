@@ -15,9 +15,9 @@ void NutrientMax()
     /* Maximum N,P,K concentration in the leaves, from which the */
     /* N,P,K concentration in the stems and roots is derived     */
     /* as a function of development stage (kg N kg-1 DM)         */
-    Crop.N_st.Max_lv = Afgen(Crop.prm.N_MaxLeaves, &DevelopmentStage);
-    Crop.P_st.Max_lv = Afgen(Crop.prm.P_MaxLeaves, &DevelopmentStage);
-    Crop.K_st.Max_lv = Afgen(Crop.prm.K_MaxLeaves, &DevelopmentStage);
+    Crop.N_st.Max_lv = Afgen(Crop.prm.N_MaxLeaves, &(Crop.DevelopmentStage));
+    Crop.P_st.Max_lv = Afgen(Crop.prm.P_MaxLeaves, &(Crop.DevelopmentStage));
+    Crop.K_st.Max_lv = Afgen(Crop.prm.K_MaxLeaves, &(Crop.DevelopmentStage));
       
     /* Maximum N concentrations in stems and roots (kg N kg-1) */
     Crop.N_st.Max_st = Crop.prm.N_MaxRoots * Crop.N_st.Max_lv;

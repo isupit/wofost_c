@@ -8,13 +8,18 @@
 Soil GetSoilData(char *soilfile)
 {
   AFGEN *Table, *start;
+  Soil *SOIL = NULL;
+  
   int i, c;
   float Variable[100], XValue, YValue;
   char x[2], xx[2],  word[100];
   FILE *fq;
 
  if ((fq = fopen(soilfile, "rt")) == NULL)
-    {fprintf(stderr, "Cannot open input file.\n"); return 0;}
+ {
+     fprintf(stderr, "Cannot open input file.\n"); 
+     exit(0);
+ }
 
  i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF && i < 12 ) 

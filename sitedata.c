@@ -71,6 +71,6 @@ Field GetSiteData(char *sitefile)
    
   SITE->NotInfTB = AfgenTable[23];
 
-return *SITE;
+  return *SITE;
 }
 

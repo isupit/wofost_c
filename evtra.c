@@ -38,7 +38,7 @@ void EvapTra() {
     
     Lai = LeaveAreaIndex();
     
-    KDiffuse = Afgen(Crop.prm.KDiffuseTb, &DevelopmentStage);      
+    KDiffuse = Afgen(Crop.prm.KDiffuseTb, &(Crop.DevelopmentStage));      
     Evtra.MaxEvapWater = Penman.E0 * exp(-0.75 * KDiffuse * Lai);
     Evtra.MaxEvapSoil  = max(0., Penman.ES0 * exp(-0.75 * KDiffuse * Lai));
     Evtra.MaxTranspiration = max(0.0001,  

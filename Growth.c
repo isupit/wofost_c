@@ -27,28 +27,28 @@ void Growth(float NewPlantMaterial)
     if (WatBal.WaterStress < Crop.N_st.Indx)
     {
         factor = max(1., 1./(WatBal.WaterStress + 0.5));
-        Fraction_ro = min(0.6, Afgen(Crop.prm.Roots, &DevelopmentStage) * factor);
-        Fraction_lv = Afgen(Crop.prm.Leaves, &DevelopmentStage);
-        Fraction_st = Afgen(Crop.prm.Stems, &DevelopmentStage);
-        Fraction_so = Afgen(Crop.prm.Storage, &DevelopmentStage);
+        Fraction_ro = min(0.6, Afgen(Crop.prm.Roots, &(Crop.DevelopmentStage)) * factor);
+        Fraction_lv = Afgen(Crop.prm.Leaves, &(Crop.DevelopmentStage));
+        Fraction_st = Afgen(Crop.prm.Stems, &(Crop.DevelopmentStage));
+        Fraction_so = Afgen(Crop.prm.Storage, &(Crop.DevelopmentStage));
     }
     else
     {
-        flv = Afgen(Crop.prm.Leaves, &DevelopmentStage);
+        flv = Afgen(Crop.prm.Leaves, &(Crop.DevelopmentStage));
         factor = exp(-Crop.prm.N_lv_partitioning * ( 1. - Crop.N_st.Indx));
         
         Fraction_lv = flv * factor;
-        Fraction_ro = Afgen(Crop.prm.Roots, &DevelopmentStage);
-        Fraction_st = Afgen(Crop.prm.Stems, &DevelopmentStage) + flv - Fraction_lv;
-        Fraction_so = Afgen(Crop.prm.Storage, &DevelopmentStage);
+        Fraction_ro = Afgen(Crop.prm.Roots, &(Crop.DevelopmentStage));
+        Fraction_st = Afgen(Crop.prm.Stems, &(Crop.DevelopmentStage)) + flv - Fraction_lv;
+        Fraction_so = Afgen(Crop.prm.Storage, &(Crop.DevelopmentStage));
     }
                 
-    Crop.drt.roots = Crop.st.roots * Afgen(Crop.prm.DeathRateRoots, &DevelopmentStage);
+    Crop.drt.roots = Crop.st.roots * Afgen(Crop.prm.DeathRateRoots, &(Crop.DevelopmentStage));
     Crop.rt.roots  = NewPlantMaterial * Fraction_ro - Crop.drt.roots;
 	
     shoots         = NewPlantMaterial * (1-Fraction_ro);
 	    
-    Crop.drt.stems = Crop.st.stems * Afgen(Crop.prm.DeathRateStems, &DevelopmentStage);	
+    Crop.drt.stems = Crop.st.stems * Afgen(Crop.prm.DeathRateStems, &(Crop.DevelopmentStage));	
     Crop.rt.stems  = shoots * Fraction_st - Crop.drt.stems;
 	
     Crop.rt.storage = shoots * Fraction_so;

@@ -71,6 +71,8 @@ int main() {
             Grid->ste  = GetSiteData(sitefile);
             Grid->mng  = GetManagement(management);        
             Grid->soil = GetSoilData(soilfile); 
+            Grid->start = Start;
+            Grid->emergence = Emergence;
             Grid->next = NULL;        
         }
         else {
@@ -80,7 +82,8 @@ int main() {
             Grid->ste  = GetSiteData(sitefile);
             Grid->mng  = GetManagement(management);
             Grid->soil = GetSoilData(soilfile);
-            
+            Grid->start = Start;
+            Grid->emergence = Emergence;            
             Grid->next = NULL;
         }
     }

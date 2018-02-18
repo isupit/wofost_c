@@ -5,7 +5,6 @@
 #define EXTERN_H
 
 int Day;
-float DevelopmentStage;
 float LAI;
 float Temp;
 float DayTemp;
@@ -60,14 +59,14 @@ extern void RateCalcultionNutrients();
 /* Read data */
 extern int GetAfgenTables();
 extern int GetMeteoData();
-extern int GetSoilData();
-extern int FillSoilVariables();
 extern int FillAfgenTables();
 
 extern Plant GetCropData();
 extern Plant FillCropVariables();
 extern Field GetSiteData();
 extern Field FillSiteVariables();
+extern Soil  GetSoilData();
+extern Soil FillSoilVariables();
 extern Management GetManagement();
 extern Management FillManageVariables();
 

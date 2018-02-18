@@ -335,6 +335,7 @@ typedef struct GREEN {
 	} Green;
 
 typedef struct PLANT {
+        float DevelopmentStage;
         float RootDepth;
         float RootDepth_prev;
         float MaxRootingDepth;
@@ -370,6 +371,8 @@ typedef struct SIMUNIT {
         Field ste;
         Management mng;
         Soil  soil;
+        int start;
+        int emergence;
         struct SIMUNIT *next;
         } SimUnit;
  

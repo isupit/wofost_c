@@ -105,13 +105,13 @@ Plant FillCropVariables(Plant *CROP, float *Variable)
 Soil FillSoilVariables(Soil *SOIL, float *Variable) {
     int i;
     
-    SOIL.ct.MoistureWP       = Variable[0];
-    SOIL.ct.MoistureFC       = Variable[1];
-    SOIL.ct.MoistureSAT      = Variable[2];
-    SOIL.ct.CriticalSoilAirC = Variable[3];
-    SOIL.ct.K0               = Variable[4];
-    SOIL.ct.MaxPercolRTZ     = Variable[5];
-    SOIL.ct.MaxPercolSubS    = Variable[6];
+    SOIL->ct.MoistureWP       = Variable[0];
+    SOIL->ct.MoistureFC       = Variable[1];
+    SOIL->ct.MoistureSAT      = Variable[2];
+    SOIL->ct.CriticalSoilAirC = Variable[3];
+    SOIL->ct.K0               = Variable[4];
+    SOIL->ct.MaxPercolRTZ     = Variable[5];
+    SOIL->ct.MaxPercolSubS    = Variable[6];
     
     
     /* No workability parameters will be used in this version */
