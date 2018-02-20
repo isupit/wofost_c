@@ -30,7 +30,7 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
   {
       /* Growth during juvenile stage */
       GrowthExpLAI = LAIExp * Crop.prm.RelIncreaseLAI * max(0.,Temp - Crop.prm.TempBaseLeaves);
-      if (Crop.DevelopmentStage < 0.2 && LAI < 0.75)
+      if (Crop.DevelopmentStage < 0.2 && Crop.st.LAI < 0.75)
       {
         Stress = WatBal.WaterStress * exp(-Crop.prm.NitrogenStressLAI * (1. - Crop.N_st.Indx));
       }

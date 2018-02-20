@@ -29,21 +29,18 @@ float sweaf(){
 void EvapTra() {   
     float CriticalSoilMoisture;
     float KDiffuse;
-    float Lai;
     float MaxReductionOxygenStress;
     float MoistureStress;
     float OxygenStress;
     float SoilMoistureAeration;
     float SoilWatDepletion;
     
-    Lai = LeaveAreaIndex();
-    
     KDiffuse = Afgen(Crop.prm.KDiffuseTb, &(Crop.DevelopmentStage));      
-    Evtra.MaxEvapWater = Penman.E0 * exp(-0.75 * KDiffuse * Lai);
-    Evtra.MaxEvapSoil  = max(0., Penman.ES0 * exp(-0.75 * KDiffuse * Lai));
+    Evtra.MaxEvapWater = Penman.E0 * exp(-0.75 * KDiffuse * Crop.st.LAI);
+    Evtra.MaxEvapSoil  = max(0., Penman.ES0 * exp(-0.75 * KDiffuse * Crop.st.LAI));
     Evtra.MaxTranspiration = max(0.0001,  
                              Penman.ET0 * Afgen(Crop.prm.CO2TRATB, &CO2) *
-                             (1.-exp(-0.75 * KDiffuse * Lai)));
+                             (1.-exp(-0.75 * KDiffuse * Crop.st.LAI)));
        
     SoilWatDepletion = sweaf();
     CriticalSoilMoisture = (1. - SoilWatDepletion)*
@@ -53,7 +50,8 @@ void EvapTra() {
     MoistureStress = limit(0.,1.,(WatBal.st.Moisture - WatBal.ct.MoistureWP)/
             (CriticalSoilMoisture - WatBal.ct.MoistureWP));
     
-    if (!Crop.prm.Airducts) {
+    if (!Crop.prm.Airducts) 
+    {
         /* Critical soil moisture content for aeration */
         SoilMoistureAeration = WatBal.ct.MoistureSAT - WatBal.ct.CriticalSoilAirC;
         
@@ -61,7 +59,8 @@ void EvapTra() {
         if (WatBal.SoilMoisture >= SoilMoistureAeration) {
             Crop.DaysOxygenStress = min(Crop.DaysOxygenStress++, 4.);
         }
-        else {
+        else 
+        {
             Crop.DaysOxygenStress = 0.;
         }
         

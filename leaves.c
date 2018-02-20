@@ -17,7 +17,7 @@ float DyingLeaves()
   CriticalLAI = 3.2/Afgen(Crop.prm.KDiffuseTb, &(Crop.DevelopmentStage));
   Death1      = Crop.st.leaves *(1. - WatBal.rt.Transpiration / 
                 Evtra.MaxTranspiration) * Crop.prm.MaxRelDeathRate ;
-  Death2      = Crop.st.leaves * limit(0.,0.03, 0.03*(LAI-CriticalLAI)/CriticalLAI);
+  Death2      = Crop.st.leaves * limit(0.,0.03, 0.03*(Crop.st.LAI-CriticalLAI)/CriticalLAI);
   Death       = max(Death1, Death2);  
   
   /* Death rate increase due to nutrient shortage */

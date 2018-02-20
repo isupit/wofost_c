@@ -59,6 +59,6 @@ void Growth(float NewPlantMaterial)
     Crop.rt.leaves  = Crop.rt.leaves -  Crop.drt.leaves;
 	
     Crop.RootDepth_prev = Crop.RootDepth;
-    Crop.RootDepth = min(Crop.MaxRootingDepth - Crop.RootDepth,
+    Crop.RootDepth = min(Crop.prm.MaxRootingDepth - Crop.RootDepth,
                 Crop.prm.MaxIncreaseRoot*Step);
 }	

@@ -224,43 +224,6 @@ typedef struct RATES {
         float WaterRootExt;
         } Rates;
  
-typedef struct SOIL {
-        float DaysSinceLastRain;
-        float SoilMaxRootingDepth;
-        float WaterStress;
-        float SoilMoisture;
-        
-        /* Tables for Soil */
-        AFGEN *VolumetricSoilMoisture;
-        AFGEN *HydraulicConductivity; /* currently not used */
-        
-        Constants ct;
-        States st;
-        Rates rt;
-        } Soil;
-    
-Soil WatBal;
-
-typedef struct MINERALS {
-        float st_N_tot;
-        float st_P_tot;
-        float st_K_tot;
-
-        float st_N_mins;
-        float st_P_mins;
-        float st_K_mins;
-
-        float rt_N_tot;
-        float rt_P_tot;
-        float rt_K_tot;
-
-        float rt_N_mins;
-        float rt_P_mins;
-        float rt_K_mins;
-        } Minerals;
-
-Minerals SoilNtrs;
-
 typedef struct NUTRIENT_RATES {
         float roots;
         float stems;
@@ -316,6 +279,7 @@ typedef struct GROWTH_STATES {
         float roots;
         float stems;
         float leaves;
+        float LAI;
         float LAIExp;
         float storage;
         } growth_states;
@@ -335,13 +299,14 @@ typedef struct GREEN {
 	} Green;
 
 typedef struct PLANT {
+        int Emergence;
         float DevelopmentStage;
         float RootDepth;
         float RootDepth_prev;
-        float MaxRootingDepth;
         float NPK_Indx;
         float NutrientStress;
         float DaysOxygenStress;
+        float TSumEmergence;
         
         Parameters prm;
         
@@ -362,6 +327,43 @@ typedef struct PLANT {
         
 Plant Crop;
 
+typedef struct SOIL {
+        float DaysSinceLastRain;
+        float SoilMaxRootingDepth;
+        float WaterStress;
+        float SoilMoisture;
+        
+        /* Tables for Soil */
+        AFGEN *VolumetricSoilMoisture;
+        AFGEN *HydraulicConductivity; /* currently not used */
+        
+        Constants ct;
+        States st;
+        Rates rt;
+        } Soil;
+    
+Soil WatBal;
+
+typedef struct MINERALS {
+        float st_N_tot;
+        float st_P_tot;
+        float st_K_tot;
+
+        float st_N_mins;
+        float st_P_mins;
+        float st_K_mins;
+
+        float rt_N_tot;
+        float rt_P_tot;
+        float rt_K_tot;
+
+        float rt_N_mins;
+        float rt_P_mins;
+        float rt_K_mins;
+        } Minerals;
+
+Minerals SoilNtrs;
+
 /* Simulation time */
 struct tm simTime;
 
@@ -373,6 +375,8 @@ typedef struct SIMUNIT {
         Soil  soil;
         int start;
         int emergence;
+        int file;
+        char name[100]; 
         struct SIMUNIT *next;
         } SimUnit;
  
@@ -388,7 +392,6 @@ float Windspeed[367], Vapour[367];
 /* Time step */
 float Step;
 
-        
-        
+             
 #endif	// 
 

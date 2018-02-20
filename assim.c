@@ -39,11 +39,11 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
  GrossCO2  = 0.;
  for (i=0;i<3;i++)
  {
-      LAIC   = LAI*XGauss[i];
+      LAIC   = Crop.st.LAI*XGauss[i];
     /* Absorbed radiation */
     AbsorbedRadiationDiffuse = (1.-Reflection)*PARDiffuse*KDiffuse * exp(-KDiffuse *LAIC);
     AbsorbedRadiationTotal   = (1.-Reflection)*PARDirect*KDirectTl * exp(-KDirectTl *LAIC);
-    AbsorbedRadiationDirect  = (1.-ScatCoef)  *PARDirect*KDirectBl * exp(-KDirectBl*LAIC);
+    AbsorbedRadiationDirect  = (1.-ScatCoef)  *PARDirect*KDirectBl * exp(-KDirectBl *LAIC);
     
     /* Absorbed flux in W/m2 for shaded leaves and assimilation */
     AbsorbedShadedLeaves = AbsorbedRadiationDiffuse+ AbsorbedRadiationTotal - AbsorbedRadiationDirect;
@@ -64,7 +64,7 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
     GrossCO2 += AssimTotal * WGauss[i];
 }
     
-    return (GrossCO2*LAI);     
+    return (GrossCO2 * Crop.st.LAI);     
 }
 
 
@@ -87,7 +87,7 @@ float DailyTotalAssimilation()
              Afgen(Crop.prm.MaxAssimRate, &(Crop.DevelopmentStage)) * 
              Afgen(Crop.prm.CO2AMAXTB, &CO2);
 
-  if (AssimMax > 0. && LAI > 0.)
+  if (AssimMax > 0. && Crop.st.LAI > 0.)
 {
   for (i=0;i<3;i++)
     {

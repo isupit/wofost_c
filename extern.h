@@ -5,7 +5,6 @@
 #define EXTERN_H
 
 int Day;
-float LAI;
 float Temp;
 float DayTemp;
 
@@ -27,7 +26,7 @@ extern void Clean();
 extern void RateCalculationCrop();
 extern void Growth(float NewPlantMaterial);
 extern void IntegrationCrop();
-extern void InitializeCrop(int Emergence);
+extern void InitializeCrop(int *Emergence);
 
 extern float GetDevelopmentStage();
 extern float DailyTotalAssimilation();
