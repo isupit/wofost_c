@@ -63,6 +63,7 @@ void InitializeCrop(int *Emergence)
             
             
             Crop.Emergence = 1;
+            Crop.GrowthDay = 1;
             
             /* Initialize the water balance */
             InitializeWatBal();

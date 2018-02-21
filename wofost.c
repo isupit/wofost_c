@@ -24,6 +24,7 @@ int main() {
     char management[100];
     char dateString [100];
     char place[15];
+    char name[100];
     
     char cf[100], sf[100], mf[100], site[100];
   
@@ -107,21 +108,23 @@ int main() {
     
     /* open the output files */
     Grid = initial;
-    while (Grid->next)
+    while (Grid)
     {
-        file[Grid->file] = fopen(Grid->name, "r");
+        memcpy(name, Grid->name, strlen(Grid->name)-4);
+        file[Grid->file] = fopen(name, "w");
         Grid = Grid->next;
     }
     
     
     for (Day = 1; Day <365; Day++)
-    {
-        count = 0; 
-        
+    {        
         /* Go back to the beginning of the list */
         Grid = initial;
         
-        while (Grid->next);
+        Astro();
+        CalcPenman();
+        
+        while (Grid)
         {
             Crop      = Grid->crp;
             WatBal    = Grid->soil;
@@ -134,51 +137,49 @@ int main() {
             {
                 InitializeCrop(&Emergence);
             }
+            else if (Day >= Start && Crop.Emergence == 1)
+            {      
+                
+                if (Crop.DevelopmentStage <= Crop.prm.DevelopStageHarvest && Crop.GrowthDay < CycleLength) 
+                {
+                    Temp = 0.5 * (Tmax[Day] + Tmin[Day]);
+                    DayTemp = 0.5 * (Tmax[Day] + Temp);
 
-            if (Crop.DevelopmentStage <= Crop.prm.DevelopStageHarvest && Day < CycleLength) 
-            {
-                Temp = 0.5 * (Tmax[Day] + Tmin[Day]);
-                DayTemp = 0.5 * (Tmax[Day] + Temp);
+                    fprintf(file[count++],"\n%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f",
+                            simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
+                            Day,Crop.st.stems,Crop.st.leaves,Crop.st.storage,
+                            Crop.st.LAI,Crop.DevelopmentStage);
 
-                fprintf(file[count++],"\n%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f",
-                        simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
-                        Day,Crop.st.stems,Crop.st.leaves,Crop.st.storage,
-                        Crop.st.LAI,Crop.DevelopmentStage);
-               
+                    RateCalulationWatBal();
+                    RateCalcultionNutrients();
+                    RateCalculationCrop();
 
-                Astro();
-                CalcPenman();
+                    Crop.st.LAI = LeaveAreaIndex();
+                    Crop.DevelopmentStage = GetDevelopmentStage();
 
-                RateCalulationWatBal();
-                RateCalcultionNutrients();
-                RateCalculationCrop();
+                    IntegrationWatBal();
+                    IntegrationNutrients();
+                    IntegrationCrop();
 
-                Crop.st.LAI = LeaveAreaIndex();
-                Crop.DevelopmentStage = GetDevelopmentStage();
-
-                IntegrationWatBal();
-                IntegrationNutrients();
-                IntegrationCrop();
-
-                simTime.tm_mday++;
-                mktime(&simTime);
+                    simTime.tm_mday++;
+                    mktime(&simTime);
+                    
+                    Crop.GrowthDay++;
+                }
             }
-            Grid = Grid->next;
-        }
-    
-        /* Go back to the beginning of the list */
-        Grid  = initial;
-        
-        /* close the output files */
-        count = 0;
-        while (Grid->next)
-        {
-            fclose(file[count++]);
+            Grid->crp = Crop;
+            Grid->soil = WatBal;
             Grid = Grid->next;
         }
     }
     
-    
+  /* close the output files */
+ count = 0;
+ while (Grid->next)
+ {
+     fclose(file[count++]);
+     Grid = Grid->next;
+ }    
 //Clean();
 
 
