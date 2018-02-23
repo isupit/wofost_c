@@ -96,6 +96,8 @@ Plant GetCropData(char *cropfile)
   CROP->prm.N_MaxLeaves          = AfgenTable[18];
   CROP->prm.P_MaxLeaves          = AfgenTable[19];
   CROP->prm.K_MaxLeaves          = AfgenTable[20];
+  
+  CROP->Emergence = 0;
           
 return *CROP;
 }

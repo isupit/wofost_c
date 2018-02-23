@@ -8,6 +8,7 @@
 #define NR_VARIABLES_SITE       12
 #define NR_TABLES_SITE          1
 #define NR_VARIABLES_SOIL       12
+#define NR_VARIABLES_SOIL_USED  6
 #define NR_TABLES_SOIL          2
 #define NR_VARIABLES_MANAGEMENT 6
 #define NR_TABLES_MANAGEMENT    7

@@ -94,7 +94,7 @@ int main() {
             Grid->mng  = GetManagement(management);
             Grid->soil = GetSoilData(soilfile);
             Grid->start = Start;            // Start day (=daynumber)
-            Grid->file = count++;           // number of elements in Grid carousel
+            Grid->file  = count++;          // number of elements in Grid carousel
             strcpy(Grid->name,cf);          // Crop file name
             Grid->emergence = Emergence;    // Start the simulations at emergence (1) or at sowing (0)
             Grid->next = NULL;
@@ -138,11 +138,13 @@ int main() {
             Start     = Grid->start;
             Emergence = Grid->emergence;
 
+            
             if (Day >= Start && Crop.Emergence == 0)
             {
                 InitializeCrop(&Emergence);
             }
-            else if (Day >= Start && Crop.Emergence == 1)
+            
+            if (Day >= Start && Crop.Emergence == 1)
             {      
                 
                 if (Crop.DevelopmentStage <= Crop.prm.DevelopStageHarvest && Crop.GrowthDay < CycleLength) 
@@ -150,7 +152,7 @@ int main() {
                     Temp = 0.5 * (Tmax[Day] + Tmin[Day]);
                     DayTemp = 0.5 * (Tmax[Day] + Temp);
 
-                    fprintf(file[count++],"\n%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f",
+                    fprintf(file[Grid->file],"\n%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f",
                             simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
                             Day,Crop.st.stems,Crop.st.leaves,Crop.st.storage,
                             Crop.st.LAI,Crop.DevelopmentStage);
@@ -167,37 +169,34 @@ int main() {
                     IntegrationWatBal();
                     IntegrationNutrients();
                     IntegrationCrop();
-
-                    /* Update time */
-                    simTime.tm_mday++;
-                    mktime(&simTime);
                     
                     /* Update the number of days that the crop has grown*/
                     Crop.GrowthDay++;
                 }
             }
-            
+
             /* Store the daily calculations in the Grid structure */
             Grid->crp  = Crop;
             Grid->soil = WatBal;
+            Grid->ste  = Site;
             Grid = Grid->next;
         }
-    }
     
-  /* Finally, the output files have to be closed */
- count = 0;
- 
+    /* Update time */
+    simTime.tm_mday++;
+    mktime(&simTime);
+    
+    }
+     
  /* Go back to the beginning of the list */
  Grid = initial;
  while (Grid)
  {
-     fclose(file[count++]);
+     fclose(file[Grid->file]);
      Grid = Grid->next;
  }
 /* At last all used memory have to be freed */ 
 //Clean();
-
-
 
     return 0;
 }
