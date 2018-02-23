@@ -116,7 +116,7 @@ Soil FillSoilVariables(Soil *SOIL, float *Variable) {
     
     /* No workability parameters will be used in this version */
     
-    for (i=0;i<=NR_VARIABLES_SOIL;i++) {
+    for (i=0;i<=6;i++) {
         Variable[i]= 0.;
     }
     

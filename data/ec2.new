@@ -19,6 +19,7 @@ SMTAB    =  -1.000,   0.390,    ! vol. soil moisture content
              3.400,   0.134,
              4.204,   0.099,
              6.000,   0.090
+             
 SMW      =   0.099  !  soil moisture content at wilting point [cm3/cm3]
 SMFCF    =   0.272  !  soil moisture content at field capacity [cm3/cm3]
 SM0      =   0.390  !  soil moisture content at saturation [cm3/cm3]
