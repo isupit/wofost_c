@@ -9,27 +9,27 @@ FERNTAB =   0.,    0.0,  !  kg N/ha
             99.,   0.0,  ! as function of day number
             100.,  0.0, 
             101.,  0.0,
-            124.,  0.0,
-            125., 50.0,
-            126.,  0.0,
+            146.,  0.0,
+            147., 150.0,
+            148.,  0.0,
             200.,  0.0
 
 FERPTAB =   0.,    0.0,  !  kg N/ha
             99.,   0.0,  ! as function of day number
             100.,  0.0, 
             101.,  0.0,
-            124.,  0.0,
-            125., 10.0,
-            126.,  0.0,
+            146.,  0.0,
+            147., 150.0,
+            148.,  0.0,
             200.,  0.0
 
 FERKTAB =   0.,    0.0,  !  kg N/ha
             99.,   0.0,  ! as function of day number
             100.,  0.0, 
             101.,  0.0,
-            124.,  0.0,
-            125., 50.0,
-            126.,  0.0,
+            146.,  0.0,
+            147., 150.0,
+            148.,  0.0,
             200.,  0.0
 
 
@@ -45,13 +45,13 @@ KRFTAB  =     0.,  0.60,  !  kg K uptake by the crop per kg fertiliser-K applied
 
 
 * Soil N, P and K mineralization
-NMINS    =     35.  !  total mineral soil N available at start of growth period [kg N/ha]
+NMINS    =    200.  !  total mineral soil N available at start of growth period [kg N/ha]
 RTNMINS  =   0.025  ! fraction of soil mineral N coming available per day [day-1]
 
-PMINS   =       35.  !  total mineral soil P available at start of growth period [kg P/ha]
+PMINS   =     200.  !  total mineral soil P available at start of growth period [kg P/ha]
 RTPMINS  =   0.025  ! fraction of soil mineral P coming available per day [day-1]
 
-KMINS   =      35.  !  total mineral soil K available at start of growth period [kg N/ha]
+KMINS   =      200.  !  total mineral soil K available at start of growth period [kg N/ha]
 RTKMINS  =   0.025  ! fraction of soil mineral K coming available per day [day-1]
 
 

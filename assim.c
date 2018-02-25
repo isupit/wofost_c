@@ -70,36 +70,36 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
 
 float DailyTotalAssimilation()
 {
-  int i;
-  float KDiffuse, EFF, Factor;
-  float Hour, SinB, PAR, PARDiffuse, PARDirect, AssimMax; 
-  float DailyTotalAssimilation = 0.;
+    int i;
+    float KDiffuse, EFF, Factor;
+    float Hour, SinB, PAR, PARDiffuse, PARDirect, AssimMax; 
+    float DailyTotalAssimilation = 0.;
 
-  KDiffuse = Afgen(Crop.prm.KDiffuseTb, &(Crop.DevelopmentStage));
-  
-  EFF      = Afgen(Crop.prm.EFFTb, &DayTemp);
-  Factor   = Afgen(Crop.prm.CO2EFFTB, &CO2);
-  
-  /* Correction for the atmospheric CO2 concentration */
-  EFF      = EFF * Factor ;
-  
-  AssimMax = Afgen(Crop.prm.FactorAssimRateTemp, &DayTemp) * 
-             Afgen(Crop.prm.MaxAssimRate, &(Crop.DevelopmentStage)) * 
-             Afgen(Crop.prm.CO2AMAXTB, &CO2);
+    KDiffuse = Afgen(Crop.prm.KDiffuseTb, &(Crop.DevelopmentStage));
 
-  if (AssimMax > 0. && Crop.st.LAI > 0.)
-{
-  for (i=0;i<3;i++)
+    EFF      = Afgen(Crop.prm.EFFTb, &DayTemp);
+    Factor   = Afgen(Crop.prm.CO2EFFTB, &CO2);
+
+    /* Correction for the atmospheric CO2 concentration */
+    EFF      = EFF * Factor ;
+
+    AssimMax = Afgen(Crop.prm.FactorAssimRateTemp, &DayTemp) * 
+               Afgen(Crop.prm.MaxAssimRate, &(Crop.DevelopmentStage)) * 
+               Afgen(Crop.prm.CO2AMAXTB, &CO2);
+
+    if (AssimMax > 0. && Crop.st.LAI > 0.)
     {
-    Hour       = 12.0+0.5*Daylength*XGauss[i];
-    SinB       = max (0.,SinLD+CosLD*cos(2.*PI*(Hour+12.)/24.));
-    PAR        = 0.5*Radiation[Day]*SinB*(1.+0.4*SinB)/DSinBE;
-    PARDiffuse = min (PAR,SinB*DiffRadPP);
-    PARDirect  = PAR-PARDiffuse;
-    DailyTotalAssimilation = DailyTotalAssimilation + 
-        InstantAssimilation(KDiffuse,EFF,AssimMax,SinB,PARDiffuse,PARDirect) * WGauss[i];
-    }  
- }
+        for (i=0;i<3;i++)
+        {
+            Hour       = 12.0+0.5*Daylength*XGauss[i];
+            SinB       = max (0.,SinLD+CosLD*cos(2.*PI*(Hour+12.)/24.));
+            PAR        = 0.5*Radiation[Day]*SinB*(1.+0.4*SinB)/DSinBE;
+            PARDiffuse = min (PAR,SinB*DiffRadPP);
+            PARDirect  = PAR-PARDiffuse;
+            DailyTotalAssimilation = DailyTotalAssimilation + 
+                InstantAssimilation(KDiffuse,EFF,AssimMax,SinB,PARDiffuse,PARDirect) * WGauss[i];
+        }  
+    }
     return(DailyTotalAssimilation*Daylength);
 }
 
@@ -119,4 +119,5 @@ float Correct(float Assimilation)
     
   TminLowAvg = TminLowAvg/Counter;
   return (Assimilation*Afgen(Crop.prm.FactorGrossAssimTemp, &TminLowAvg)*30./44.);
+
 }

@@ -17,19 +17,19 @@ void InitializeCrop(int *Emergence)
         float DeltaTempSum;
          
         /*  Emergence has not taken place yet*/
-        if (!Emergence)
+        if (!*Emergence)
     	{
             DeltaTempSum = limit(0, Crop.prm.TempEffMax-Crop.prm.TempBaseEmergence, 
                     Temp-Crop.prm.TempBaseEmergence);
 	    Crop.TSumEmergence += DeltaTempSum;
-	    if (Crop.TSumEmergence < Crop.prm.TSumEmergence)
+	    if (Crop.TSumEmergence >= Crop.prm.TSumEmergence)
             {
                 *Emergence = 1;
 	    }
 	}	     
        
         /*  Emergence has occurred */
-        if (Emergence)
+        if (*Emergence)
         {
             /* Initialize the crop states */
             Crop.DevelopmentStage = Crop.prm.InitialDVS;
