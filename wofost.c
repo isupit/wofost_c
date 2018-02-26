@@ -9,9 +9,14 @@
 int main() {
     FILE *ifp;
     FILE **file;
+    
     SimUnit *Grid = NULL;
     SimUnit *initial = NULL;
-       
+    
+    AFGEN *AfgenTable[NUMBER_OF_TABLES], *head;
+    Green *LeaveProperties = NULL;
+    
+    int i;
     int Emergence;
     int Start;
     int CycleLength   = 240;
@@ -127,7 +132,7 @@ int main() {
         while (Grid)
         {
             /* Get data, states and rates from the Grid structure and */
-            /* put them on the place holders */
+            /* put them in the place holders */
             Crop      = Grid->crp;
             WatBal    = Grid->soil;
             Mng       = Grid->mng;
@@ -188,46 +193,76 @@ int main() {
      
  /* Go back to the beginning of the list */
  Grid = initial;
-//while (Grid)
-//{
-//   fclose(file[Grid->file]);
-//   free(Grid->crp->prm.DeltaTempSum);         
-//   free(Grid->crp->prm.SpecificLeaveArea);   
-//   free(Grid->crp->prm.SpecificStemArea);     
-//   free(Grid->crp->prm.KDiffuseTb);           
-//   free(Grid->crp->prm.EFFTb);                
-//   free(Grid->crp->prm.MaxAssimRate);         
-//   free(Grid->crp->prm.FactorAssimRateTemp);
-//   free(Grid->crp->prm.FactorGrossAssimTemp); 
-//   free(Grid->crp->prm.CO2AMAXTB);            
-//   free(Grid->crp->prm.CO2EFFTB);             
-//   free(Grid->crp->prm.CO2TRATB);             
-//   free(Grid->crp->prm.FactorSenescence);     
-//   free(Grid->crp->prm.Roots);                
-//   free(Grid->crp->prm.Leaves);               
-//   free(Grid->crp->prm.Stems);                
-//   free(Grid->crp->prm.Storage);              
-//   free(Grid->crp->prm.DeathRateStems);       
-//   free(Grid->crp->prm.DeathRateRoots);        
-//   free(Grid->crp->prm.N_MaxLeaves);          
-//   free(Grid->crp->prm.P_MaxLeaves);          
-//   free(Grid->crp->prm.K_MaxLeaves);    
-//   
-//   free(Grid->soil->VolumetricSoilMoisture);
-//   free(Grid->soil->HydraulicConductivity);
-//   
-//   free(Grid->mng->N_Fert_table);
-//   free(Grid->mng->P_Fert_table);
-//   free(Grid->mng->K_Fert_table);
-//   free(Grid->mng->N_Uptake_frac);
-//   free(Grid->mng->P_Uptake_frac);
-//   free(Grid->mng->K_Uptake_frac);
-//   free(Grid->mng->Irrigation);
-//   
-//   free(Grid->ste->NotInfTB);
-//    
-//    Grid = Grid->next;
-//}
+while (Grid)
+{
+    fclose(file[Grid->file]);
+    AfgenTable[0] = Grid->crp.prm.DeltaTempSum;
+    AfgenTable[1] = Grid->crp.prm.DeltaTempSum;         
+    AfgenTable[2] = Grid->crp.prm.SpecificLeaveArea;   
+    AfgenTable[3] = Grid->crp.prm.SpecificStemArea;     
+    AfgenTable[4] = Grid->crp.prm.KDiffuseTb;          
+    AfgenTable[5] = Grid->crp.prm.EFFTb;                
+    AfgenTable[6] = Grid->crp.prm.MaxAssimRate;        
+    AfgenTable[7] = Grid->crp.prm.FactorAssimRateTemp;
+    AfgenTable[8] = Grid->crp.prm.FactorGrossAssimTemp; 
+    AfgenTable[9] = Grid->crp.prm.CO2AMAXTB;            
+    AfgenTable[10] = Grid->crp.prm.CO2EFFTB;             
+    AfgenTable[11] = Grid->crp.prm.CO2TRATB;             
+    AfgenTable[12] = Grid->crp.prm.FactorSenescence;     
+    AfgenTable[13] = Grid->crp.prm.Roots;                
+    AfgenTable[14] = Grid->crp.prm.Leaves;               
+    AfgenTable[15] = Grid->crp.prm.Stems;                
+    AfgenTable[16] = Grid->crp.prm.Storage;              
+    AfgenTable[17] = Grid->crp.prm.DeathRateStems;       
+    AfgenTable[18] = Grid->crp.prm.DeathRateRoots;       
+    AfgenTable[19] = Grid->crp.prm.N_MaxLeaves;          
+    AfgenTable[20] = Grid->crp.prm.P_MaxLeaves;          
+    AfgenTable[21] = Grid->crp.prm.K_MaxLeaves;    
+    AfgenTable[22] = Grid->soil.VolumetricSoilMoisture;
+    AfgenTable[23] = Grid->soil.HydraulicConductivity;
+    AfgenTable[24] = Grid->mng.N_Fert_table;
+    AfgenTable[25] = Grid->mng.P_Fert_table;
+    AfgenTable[26] = Grid->mng.K_Fert_table;
+    AfgenTable[27] = Grid->mng.N_Uptake_frac;
+    AfgenTable[28] = Grid->mng.P_Uptake_frac;
+    AfgenTable[29] = Grid->mng.K_Uptake_frac;
+    AfgenTable[30] = Grid->mng.Irrigation;
+    AfgenTable[31] = Grid->ste.NotInfTB;
+    
+    for (i = 0; i < NUMBER_OF_TABLES; i++)
+    { 
+        while (AfgenTable[i]->next)
+        {
+            head = AfgenTable[i];
+            AfgenTable[i] = AfgenTable[i]->next;
+
+            /* free and clearing the node */
+            free(head);
+            head = NULL;
+        }
+
+        /* free and clearing the last node */
+        free(AfgenTable[i]);
+        AfgenTable[i] = NULL;  
+    }
+    
+
+    /* Loop until the last element in the list and free each node */
+    while (Grid->crp.LeaveProperties->next)
+    {
+        LeaveProperties = Grid->crp.LeaveProperties;
+        Grid->crp.LeaveProperties = Grid->crp.LeaveProperties->next; 
+
+        free(LeaveProperties);
+        LeaveProperties = NULL;
+    }
+
+    /* Free the last node */
+    free(Grid->crp.LeaveProperties);
+    Grid->crp.LeaveProperties = NULL;
+    
+    Grid = Grid->next;
+}
  
 /* At last all used memory have to be freed */ 
 //Clean();
