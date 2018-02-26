@@ -12,7 +12,7 @@
 
 Plant GetCropData(char *cropfile)
 {
-  AFGEN *Table, *start;
+  AFGEN *Table[NR_TABLES_CRP], *start;
   Plant *CROP = NULL;
   
   int i, c;
@@ -48,21 +48,22 @@ Plant GetCropData(char *cropfile)
   while ((c=fscanf(fq,"%s",word)) != EOF) 
   {
     if (!strcmp(word, CropParam2[i])) {
-        Table = start = malloc(sizeof(AFGEN));
-	fscanf(fq,"%s %f %s  %f", x, &Table->x, xx, &Table->y);
-        Table->next = NULL;				     
+        Table[i] = start= malloc(sizeof(AFGEN));
+	fscanf(fq,"%s %f %s  %f", x, &Table[i]->x, xx, &Table[i]->y);
+        Table[i]->next = NULL;				     
 			       
 	while ((c=fgetc(fq)) !='\n');
 	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  {
-	    Table->next = malloc(sizeof(AFGEN));
-            Table = Table->next; 
-            Table->next = NULL;
-	    Table->x = XValue;
-	    Table->y = YValue;
+	    Table[i]->next = malloc(sizeof(AFGEN));
+            Table[i] = Table[i]->next; 
+            Table[i]->next = NULL;
+	    Table[i]->x = XValue;
+	    Table[i]->y = YValue;
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    AfgenTable[i] = start;
+        /* Go back to beginning of the table */
+        Table[i] = start;
 	i++; 
        }      
   }
@@ -75,27 +76,27 @@ Plant GetCropData(char *cropfile)
     exit(0);
   } 
   
-  CROP->prm.DeltaTempSum         = AfgenTable[0];
-  CROP->prm.SpecificLeaveArea    = AfgenTable[1];
-  CROP->prm.SpecificStemArea     = AfgenTable[2];
-  CROP->prm.KDiffuseTb           = AfgenTable[3];
-  CROP->prm.EFFTb                = AfgenTable[4];
-  CROP->prm.MaxAssimRate         = AfgenTable[5];
-  CROP->prm.FactorAssimRateTemp  = AfgenTable[6];
-  CROP->prm.FactorGrossAssimTemp = AfgenTable[7];
-  CROP->prm.CO2AMAXTB            = AfgenTable[8];
-  CROP->prm.CO2EFFTB             = AfgenTable[9];
-  CROP->prm.CO2TRATB             = AfgenTable[10];
-  CROP->prm.FactorSenescence     = AfgenTable[11];
-  CROP->prm.Roots                = AfgenTable[12];
-  CROP->prm.Leaves               = AfgenTable[13];
-  CROP->prm.Stems                = AfgenTable[14];
-  CROP->prm.Storage              = AfgenTable[15];
-  CROP->prm.DeathRateStems       = AfgenTable[16];
-  CROP->prm.DeathRateRoots       = AfgenTable[17]; 
-  CROP->prm.N_MaxLeaves          = AfgenTable[18];
-  CROP->prm.P_MaxLeaves          = AfgenTable[19];
-  CROP->prm.K_MaxLeaves          = AfgenTable[20];
+  CROP->prm.DeltaTempSum         = Table[0];
+  CROP->prm.SpecificLeaveArea    = Table[1];
+  CROP->prm.SpecificStemArea     = Table[2];
+  CROP->prm.KDiffuseTb           = Table[3];
+  CROP->prm.EFFTb                = Table[4];
+  CROP->prm.MaxAssimRate         = Table[5];
+  CROP->prm.FactorAssimRateTemp  = Table[6];
+  CROP->prm.FactorGrossAssimTemp = Table[7];
+  CROP->prm.CO2AMAXTB            = Table[8];
+  CROP->prm.CO2EFFTB             = Table[9];
+  CROP->prm.CO2TRATB             = Table[10];
+  CROP->prm.FactorSenescence     = Table[11];
+  CROP->prm.Roots                = Table[12];
+  CROP->prm.Leaves               = Table[13];
+  CROP->prm.Stems                = Table[14];
+  CROP->prm.Storage              = Table[15];
+  CROP->prm.DeathRateStems       = Table[16];
+  CROP->prm.DeathRateRoots       = Table[17]; 
+  CROP->prm.N_MaxLeaves          = Table[18];
+  CROP->prm.P_MaxLeaves          = Table[19];
+  CROP->prm.K_MaxLeaves          = Table[20];
   
   CROP->Emergence = 0;
           

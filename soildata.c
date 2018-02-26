@@ -7,7 +7,7 @@
 
 Soil GetSoilData(char *soilfile)
 {
-  AFGEN *Table, *start;
+  AFGEN *Table[NR_TABLES_SOIL], *start;
   Soil *SOIL = NULL;
   
   int i, c;
@@ -47,22 +47,23 @@ Soil GetSoilData(char *soilfile)
   {
     if (!strcmp(word, SoilParam2[i])) 
     {
-        Table = start = malloc(sizeof(AFGEN));
-	fscanf(fq,"%s %f %s  %f", x, &Table->x, xx, &Table->y);
-        Table->next = NULL;				     
+        Table[i] = start= malloc(sizeof(AFGEN));
+	fscanf(fq,"%s %f %s  %f", x, &Table[i]->x, xx, &Table[i]->y);
+        Table[i]->next = NULL;				     
 			       
 	while ((c=fgetc(fq)) !='\n');
 	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  
         {
-	    Table->next = malloc(sizeof(AFGEN));
-            Table = Table->next; 
-            Table->next = NULL;
-	    Table->x = XValue;
-	    Table->y = YValue;
+	    Table[i]->next = malloc(sizeof(AFGEN));
+            Table[i] = Table[i]->next; 
+            Table[i]->next = NULL;
+	    Table[i]->x = XValue;
+	    Table[i]->y = YValue;
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    AfgenTable[i + 21] = start;
+        /* Go back to beginning of the table */
+        Table[i] = start;
 	i++; 
        }      
   }
@@ -75,8 +76,8 @@ Soil GetSoilData(char *soilfile)
     exit(0);
  }
  
-  SOIL->VolumetricSoilMoisture = AfgenTable[21];
-  SOIL->HydraulicConductivity  = AfgenTable[22];
+  SOIL->VolumetricSoilMoisture = Table[21];
+  SOIL->HydraulicConductivity  = Table[22];
   
 
 return *SOIL;

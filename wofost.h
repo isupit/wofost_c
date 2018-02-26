@@ -21,7 +21,7 @@ typedef struct TABLE {
 	struct TABLE *next;
 	} AFGEN;
 
-AFGEN *AfgenTable[30];
+//AFGEN *AfgenTable[30];
 
 typedef struct FIELD {
         float AngstA;

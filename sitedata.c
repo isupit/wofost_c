@@ -7,7 +7,7 @@
 
 Field GetSiteData(char *sitefile)
 {
-  AFGEN *Table, *start;
+  AFGEN *Table[NR_TABLES_SITE], *start;
   Field *SITE = NULL;
   
   int i, c;
@@ -43,20 +43,22 @@ Field GetSiteData(char *sitefile)
   i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF) {
     if (!strcmp(word, SiteParam2[i])) {
-        Table = start = malloc(sizeof(AFGEN));
-	fscanf(fq,"%s %f %s  %f", x, &Table->x, xx, &Table->y);
-        Table->next = NULL;				     
+        Table[i]= start= malloc(sizeof(AFGEN));
+	fscanf(fq,"%s %f %s  %f", x, &Table[i]->x, xx, &Table[i]->y);
+        Table[i]->next = NULL;				     
 			       
 	while ((c=fgetc(fq)) !='\n');
 	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0) {
- 	    Table->next = malloc(sizeof(AFGEN));
-            Table = Table->next; Table->next = NULL;
-	    Table->x = XValue;
-	    Table->y = YValue;
+ 	    Table[i]->next = malloc(sizeof(AFGEN));
+            Table[i] = Table[i]->next; 
+            Table[i]->next = NULL;
+	    Table[i]->x = XValue;
+	    Table[i]->y = YValue;
 	    
 	    while ((c=fgetc(fq)) !='\n' || (c=fgetc(fq)) != EOF );
 	    }
-	    AfgenTable[i + 23] = start;
+        /* Go back to beginning of the table */
+        Table[i] = start;        
 	i++; 
        }      
   }
@@ -69,7 +71,7 @@ Field GetSiteData(char *sitefile)
     exit(0);
   } 
    
-  SITE->NotInfTB = AfgenTable[23];
+  SITE->NotInfTB = Table[0];
 
   return *SITE;
 }

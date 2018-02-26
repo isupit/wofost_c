@@ -6,7 +6,7 @@
        
 Management GetManagement(char *management)
 {
-  AFGEN *Table, *start;
+  AFGEN *Table[NR_TABLES_MANAGEMENT], *start;
   Management *MNG = NULL;
   
   int i, c;
@@ -41,21 +41,22 @@ Management GetManagement(char *management)
   while ((c=fscanf(fq,"%s",word)) != EOF) 
   {
     if (!strcmp(word, ManageParam2[i])) {
-        Table = start = malloc(sizeof(AFGEN));
-	fscanf(fq,"%s %f %s  %f", x, &Table->x, xx, &Table->y);
-        Table->next = NULL;				     
+        Table[i] = start = malloc(sizeof(AFGEN));
+	fscanf(fq,"%s %f %s  %f", x, &Table[i]->x, xx, &Table[i]->y);
+        Table[i]->next = NULL;				     
 			       
 	while ((c=fgetc(fq)) !='\n');
 	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  {
-	    Table->next = malloc(sizeof(AFGEN));
-            Table = Table->next; 
-            Table->next = NULL;
-	    Table->x = XValue;
-	    Table->y = YValue;
+	    Table[i]->next = malloc(sizeof(AFGEN));
+            Table[i] = Table[i]->next; 
+            Table[i]->next = NULL;
+	    Table[i]->x = XValue;
+	    Table[i]->y = YValue;
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
-	    AfgenTable[i + 24] = start;
+        /* Go back to beginning of the table */
+        Table[i] = start;
 	i++; 
        }      
   }
@@ -68,13 +69,13 @@ Management GetManagement(char *management)
   }
       
  
-  MNG->N_Fert_table   = AfgenTable[24];
-  MNG->P_Fert_table   = AfgenTable[25];
-  MNG->K_Fert_table   = AfgenTable[26];
-  MNG->N_Uptake_frac  = AfgenTable[27];
-  MNG->P_Uptake_frac  = AfgenTable[28];
-  MNG->K_Uptake_frac  = AfgenTable[29];
-  MNG->Irrigation     = AfgenTable[30];
+  MNG->N_Fert_table   = Table[0];
+  MNG->P_Fert_table   = Table[1];
+  MNG->K_Fert_table   = Table[2];
+  MNG->N_Uptake_frac  = Table[3];
+  MNG->P_Uptake_frac  = Table[4];
+  MNG->K_Uptake_frac  = Table[5];
+  MNG->Irrigation     = Table[6];
   
   return *MNG;
   }

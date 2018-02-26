@@ -188,46 +188,46 @@ int main() {
      
  /* Go back to the beginning of the list */
  Grid = initial;
- while (Grid)
- {
-    fclose(file[Grid->file]);
-    free(Grid->crp->prm.DeltaTempSum);         
-    free(Grid->crp->prm.SpecificLeaveArea);   
-    free(Grid->crp->prm.SpecificStemArea);     
-    free(Grid->crp->prm.KDiffuseTb);           
-    free(Grid->crp->prm.EFFTb);                
-    free(Grid->crp->prm.MaxAssimRate);         
-    free(Grid->crp->prm.FactorAssimRateTemp);
-    free(Grid->crp->prm.FactorGrossAssimTemp); 
-    free(Grid->crp->prm.CO2AMAXTB);            
-    free(Grid->crp->prm.CO2EFFTB);             
-    free(Grid->crp->prm.CO2TRATB);             
-    free(Grid->crp->prm.FactorSenescence);     
-    free(Grid->crp->prm.Roots);                
-    free(Grid->crp->prm.Leaves);               
-    free(Grid->crp->prm.Stems);                
-    free(Grid->crp->prm.Storage);              
-    free(Grid->crp->prm.DeathRateStems);       
-    free(Grid->crp->prm.DeathRateRoots);        
-    free(Grid->crp->prm.N_MaxLeaves);          
-    free(Grid->crp->prm.P_MaxLeaves);          
-    free(Grid->crp->prm.K_MaxLeaves);    
-    
-    free(Grid->soil->VolumetricSoilMoisture);
-    free(Grid->soil->HydraulicConductivity);
-    
-    free(Grid->mng->N_Fert_table);
-    free(Grid->mng->P_Fert_table);
-    free(Grid->mng->K_Fert_table);
-    free(Grid->mng->N_Uptake_frac);
-    free(Grid->mng->P_Uptake_frac);
-    free(Grid->mng->K_Uptake_frac);
-    free(Grid->mng->Irrigation);
-    
-    free(Grid->ste->NotInfTB);
-     
-     Grid = Grid->next;
- }
+//while (Grid)
+//{
+//   fclose(file[Grid->file]);
+//   free(Grid->crp->prm.DeltaTempSum);         
+//   free(Grid->crp->prm.SpecificLeaveArea);   
+//   free(Grid->crp->prm.SpecificStemArea);     
+//   free(Grid->crp->prm.KDiffuseTb);           
+//   free(Grid->crp->prm.EFFTb);                
+//   free(Grid->crp->prm.MaxAssimRate);         
+//   free(Grid->crp->prm.FactorAssimRateTemp);
+//   free(Grid->crp->prm.FactorGrossAssimTemp); 
+//   free(Grid->crp->prm.CO2AMAXTB);            
+//   free(Grid->crp->prm.CO2EFFTB);             
+//   free(Grid->crp->prm.CO2TRATB);             
+//   free(Grid->crp->prm.FactorSenescence);     
+//   free(Grid->crp->prm.Roots);                
+//   free(Grid->crp->prm.Leaves);               
+//   free(Grid->crp->prm.Stems);                
+//   free(Grid->crp->prm.Storage);              
+//   free(Grid->crp->prm.DeathRateStems);       
+//   free(Grid->crp->prm.DeathRateRoots);        
+//   free(Grid->crp->prm.N_MaxLeaves);          
+//   free(Grid->crp->prm.P_MaxLeaves);          
+//   free(Grid->crp->prm.K_MaxLeaves);    
+//   
+//   free(Grid->soil->VolumetricSoilMoisture);
+//   free(Grid->soil->HydraulicConductivity);
+//   
+//   free(Grid->mng->N_Fert_table);
+//   free(Grid->mng->P_Fert_table);
+//   free(Grid->mng->K_Fert_table);
+//   free(Grid->mng->N_Uptake_frac);
+//   free(Grid->mng->P_Uptake_frac);
+//   free(Grid->mng->K_Uptake_frac);
+//   free(Grid->mng->Irrigation);
+//   
+//   free(Grid->ste->NotInfTB);
+//    
+//    Grid = Grid->next;
+//}
  
 /* At last all used memory have to be freed */ 
 //Clean();
