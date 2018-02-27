@@ -60,14 +60,14 @@ extern int GetAfgenTables();
 extern int GetMeteoData();
 extern int FillAfgenTables();
 
-extern Plant GetCropData();
-extern Plant FillCropVariables();
-extern Field GetSiteData();
-extern Field FillSiteVariables();
-extern Soil  GetSoilData();
-extern Soil FillSoilVariables();
-extern Management GetManagement();
-extern Management FillManageVariables();
+extern void GetCropData();
+extern void FillCropVariables();
+extern void GetSiteData();
+extern void FillSiteVariables();
+extern void  GetSoilData();
+extern void FillSoilVariables();
+extern void GetManagement();
+extern void FillManageVariables();
 
 
 /* Water balance */

@@ -91,5 +91,5 @@ char *CropParam2[]={
                     "NULL"
 		    };
 
-extern Plant FillCropVariables();
+extern void FillCropVariables();
 extern int FillAfgenTables();

@@ -5,10 +5,10 @@
 #include "site.h"
 
 
-Field GetSiteData(char *sitefile)
+void GetSiteData(Field *SITE, char *sitefile)
 {
   AFGEN *Table[NR_TABLES_SITE], *start;
-  Field *SITE = NULL;
+  //Field *SITE = NULL;
   
   int i, c;
   float Variable[NR_VARIABLES_SITE], XValue, YValue;
@@ -73,9 +73,6 @@ Field GetSiteData(char *sitefile)
   } 
    
   SITE->NotInfTB = Table[0];
-  
-  //free(SITE);
-
-  return *SITE;
+ 
 }
 

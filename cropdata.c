@@ -10,10 +10,10 @@
 /*  Purpose: Read the Wofost crop file and store the parameters and tables */
 /* ------------------------------------------------------------------------*/
 
-Plant GetCropData(char *cropfile)
+void GetCropData(Plant *CROP, char *cropfile)
 {
   AFGEN *Table[NR_TABLES_CRP], *start;
-  Plant *CROP = NULL;
+  //Plant *CROP = NULL;
   
   int i, c;
   float Variable[NR_VARIABLES_CRP], XValue, YValue;
@@ -42,7 +42,7 @@ Plant GetCropData(char *cropfile)
  
   rewind(fq);  
   
-  CROP = malloc(sizeof(Plant));
+  //CROP = malloc(sizeof(Plant));
   FillCropVariables(CROP, Variable);
 
   i=0;
@@ -101,8 +101,5 @@ Plant GetCropData(char *cropfile)
   
   CROP->Emergence = 0;
           
-  //free(CROP);
-  
-return *CROP;
 }
 

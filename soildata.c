@@ -5,10 +5,10 @@
 #include "soil.h"
 
 
-Soil GetSoilData(char *soilfile)
+void GetSoilData(Soil *SOIL, char *soilfile)
 {
   AFGEN *Table[NR_TABLES_SOIL], *start;
-  Soil *SOIL = NULL;
+  //Soil *SOIL = NULL;
   
   int i, c;
   float Variable[100], XValue, YValue;
@@ -81,8 +81,5 @@ Soil GetSoilData(char *soilfile)
   SOIL->VolumetricSoilMoisture = Table[0];
   SOIL->HydraulicConductivity  = Table[1];
   
-  //free(SOIL);
-  
-return *SOIL;
 }
 

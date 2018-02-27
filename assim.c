@@ -39,7 +39,7 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
  GrossCO2  = 0.;
  for (i=0;i<3;i++)
  {
-      LAIC   = Crop.st.LAI*XGauss[i];
+      LAIC   = Crop->st.LAI*XGauss[i];
     /* Absorbed radiation */
     AbsorbedRadiationDiffuse = (1.-Reflection)*PARDiffuse*KDiffuse * exp(-KDiffuse *LAIC);
     AbsorbedRadiationTotal   = (1.-Reflection)*PARDirect*KDirectTl * exp(-KDirectTl *LAIC);
@@ -64,7 +64,7 @@ float InstantAssimilation(float KDiffuse, float EFF, float AssimMax, float SinB,
     GrossCO2 += AssimTotal * WGauss[i];
 }
     
-    return (GrossCO2 * Crop.st.LAI);     
+    return (GrossCO2 * Crop->st.LAI);     
 }
 
 
@@ -75,19 +75,19 @@ float DailyTotalAssimilation()
     float Hour, SinB, PAR, PARDiffuse, PARDirect, AssimMax; 
     float DailyTotalAssimilation = 0.;
 
-    KDiffuse = Afgen(Crop.prm.KDiffuseTb, &(Crop.DevelopmentStage));
+    KDiffuse = Afgen(Crop->prm.KDiffuseTb, &(Crop->DevelopmentStage));
 
-    EFF      = Afgen(Crop.prm.EFFTb, &DayTemp);
-    Factor   = Afgen(Crop.prm.CO2EFFTB, &CO2);
+    EFF      = Afgen(Crop->prm.EFFTb, &DayTemp);
+    Factor   = Afgen(Crop->prm.CO2EFFTB, &CO2);
 
     /* Correction for the atmospheric CO2 concentration */
     EFF      = EFF * Factor ;
 
-    AssimMax = Afgen(Crop.prm.FactorAssimRateTemp, &DayTemp) * 
-               Afgen(Crop.prm.MaxAssimRate, &(Crop.DevelopmentStage)) * 
-               Afgen(Crop.prm.CO2AMAXTB, &CO2);
+    AssimMax = Afgen(Crop->prm.FactorAssimRateTemp, &DayTemp) * 
+               Afgen(Crop->prm.MaxAssimRate, &(Crop->DevelopmentStage)) * 
+               Afgen(Crop->prm.CO2AMAXTB, &CO2);
 
-    if (AssimMax > 0. && Crop.st.LAI > 0.)
+    if (AssimMax > 0. && Crop->st.LAI > 0.)
     {
         for (i=0;i<3;i++)
         {
@@ -118,6 +118,6 @@ float Correct(float Assimilation)
   }
     
   TminLowAvg = TminLowAvg/Counter;
-  return (Assimilation*Afgen(Crop.prm.FactorGrossAssimTemp, &TminLowAvg)*30./44.);
+  return (Assimilation*Afgen(Crop->prm.FactorGrossAssimTemp, &TminLowAvg)*30./44.);
 
 }

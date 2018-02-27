@@ -23,25 +23,7 @@ typedef struct TABLE {
 
 AFGEN *AfgenTable[NUMBER_OF_TABLES], *head;
 
-typedef struct FIELD {
-        float SoilName;
-        float FlagGroundWater;
-        float InfRainDependent;
-        float FlagDrains;
-        float MaxSurfaceStorage;     
-        float InitSoilMoisture;
-        float GroundwaterDepth;
-        float DD;
-        float SoilLimRootDepth;
-        float NotInfiltrating;
-        float SurfaceStorage;
-        float MaxInitSoilM;
-        
-        /** Table for the fraction of precipitation that does not infiltrate **/
-        AFGEN *NotInfTB;
-        } Field;
-Field Site;
-   
+
 typedef struct MANAGEMENT {
         /** Tables for fertilizer application and recovery fraction **/
         AFGEN *N_Fert_table;
@@ -59,7 +41,7 @@ typedef struct MANAGEMENT {
         float K_Mins; 
         float KRecoveryFrac;
         } Management;
-Management Mng;
+Management *Mng;
 
 typedef struct CONSTANTS {
         float MaxEvapWater;
@@ -325,7 +307,7 @@ typedef struct PLANT {
         Green *LeaveProperties;
 	} Plant;
         
-Plant Crop;
+Plant *Crop;
 
 typedef struct SOIL {
         float DaysSinceLastRain;
@@ -342,9 +324,24 @@ typedef struct SOIL {
         Rates rt;
         } Soil;
     
-Soil WatBal;
+Soil *WatBal;
 
-typedef struct MINERALS {
+typedef struct FIELD {
+        /* Water related parameters */
+        float SoilName;
+        float FlagGroundWater;
+        float InfRainDependent;
+        float FlagDrains;
+        float MaxSurfaceStorage;     
+        float InitSoilMoisture;
+        float GroundwaterDepth;
+        float DD;
+        float SoilLimRootDepth;
+        float NotInfiltrating;
+        float SurfaceStorage;
+        float MaxInitSoilM;
+        
+        /* Mineral states and rates */
         float st_N_tot;
         float st_P_tot;
         float st_K_tot;
@@ -360,19 +357,41 @@ typedef struct MINERALS {
         float rt_N_mins;
         float rt_P_mins;
         float rt_K_mins;
-        } Minerals;
+        
+        /** Table for the fraction of precipitation that does not infiltrate **/
+        AFGEN *NotInfTB;
+        } Field;
+Field *Site;
+   
+//typedef struct MINERALS {
+//        float st_N_tot;
+//        float st_P_tot;
+//        float st_K_tot;
+//
+//        float st_N_mins;
+//        float st_P_mins;
+//        float st_K_mins;
+//
+//        float rt_N_tot;
+//        float rt_P_tot;
+//        float rt_K_tot;
+//
+//        float rt_N_mins;
+//        float rt_P_mins;
+//        float rt_K_mins;
+//        } Minerals;
 
-Minerals SoilNtrs;
+//Minerals *SoilNtrs;
 
 /* Simulation time */
 struct tm simTime;
 
 
 typedef struct SIMUNIT {
-        Plant crp;
-        Field ste;
-        Management mng;
-        Soil  soil;
+        Plant *crp;
+        Field *ste;
+        Management *mng;
+        Soil  *soil;
         int start;
         int emergence;
         int file;

@@ -6,7 +6,7 @@
 /*  Purpose: Fill the crop parameters that are read by GetCropData()          */
 /* ---------------------------------------------------------------------------*/
 
-Plant FillCropVariables(Plant *CROP, float *Variable)
+void FillCropVariables(Plant *CROP, float *Variable)
 {
     int i;
     CROP->prm.TempBaseEmergence        = Variable[0];
@@ -98,11 +98,9 @@ Plant FillCropVariables(Plant *CROP, float *Variable)
     for (i=0;i<=NR_VARIABLES_CRP;i++) {
     Variable[i] = 0.;
     }
-
- return *CROP;
 }
 
-Soil FillSoilVariables(Soil *SOIL, float *Variable) {
+void FillSoilVariables(Soil *SOIL, float *Variable) {
     int i;
     
     SOIL->ct.MoistureWP       = Variable[0];
@@ -119,11 +117,9 @@ Soil FillSoilVariables(Soil *SOIL, float *Variable) {
     for (i=0;i<=NR_VARIABLES_SOIL_USED;i++) {
         Variable[i]= 0.;
     }
-    
-    return *SOIL;
 }
 
-Field FillSiteVariables(Field *SITE, float *Variable) {
+void FillSiteVariables(Field *SITE, float *Variable) {
     int i;
    
     SITE->FlagGroundWater                 = Variable[0];
@@ -143,11 +139,9 @@ Field FillSiteVariables(Field *SITE, float *Variable) {
     for (i=0;i<=NR_VARIABLES_SITE;i++) {
         Variable[i]= 0.;
     }
-    
-    return *SITE;
 }
 
-Management FillManageVariables(Management *MNG, float *Variable) {
+void FillManageVariables(Management *MNG, float *Variable) {
     int i;
     
     MNG->N_Mins                          = Variable[0];
@@ -160,6 +154,4 @@ Management FillManageVariables(Management *MNG, float *Variable) {
     for (i=0;i<=NR_VARIABLES_MANAGEMENT;i++) {
         Variable[i]= 0.;
     }
-    
-    return *MNG;
 }

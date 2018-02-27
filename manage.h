@@ -21,7 +21,7 @@ char *ManageParam2[]={
                     "NULL"
 		    };
 
-extern Management FillManageVariables();
+extern void FillManageVariables();
 extern int FillAfgenTables();
 
 #endif //MANAGE_H

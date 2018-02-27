@@ -22,11 +22,11 @@ void RateCalculationCrop()
        float Stress;
        
        /* Set rates to 0 */
-       Crop.rt.roots   = 0.;
-       Crop.rt.leaves  = 0.;
-       Crop.rt.stems   = 0.;
-       Crop.rt.storage = 0.;
-       Crop.rt.LAIExp  = 0.;      
+       Crop->rt.roots   = 0.;
+       Crop->rt.leaves  = 0.;
+       Crop->rt.stems   = 0.;
+       Crop->rt.storage = 0.;
+       Crop->rt.LAIExp  = 0.;      
       
        /* Assimilation */
        GrossAssimilation = DailyTotalAssimilation();
@@ -35,7 +35,7 @@ void RateCalculationCrop()
        EvapTra();
        
        /* Stress: either nutrient shortage or water shortage */
-       Stress = min(Crop.NutrientStress, WatBal.WaterStress);
+       Stress = min(Crop->NutrientStress, WatBal->WaterStress);
        
        /* Correction for low minimum temperatures and stress factors */
        TotalAssimilation = Stress * Correct(GrossAssimilation);       
@@ -49,5 +49,5 @@ void RateCalculationCrop()
        /* Growth of root, stems, leaves and storage organs */
        Growth(GrossGrowth);
            
-       //printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f RtSt: %5.1f", GrossGrowth, Maintenance, TotalAssimilation, Crop.rt.stems );
+       //printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f RtSt: %5.1f", GrossGrowth, Maintenance, TotalAssimilation, Crop->rt.stems );
 }

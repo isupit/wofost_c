@@ -4,10 +4,10 @@
 #include "wofost.h"
 #include "manage.h"
        
-Management GetManagement(char *management)
+void GetManagement(Management *MNG, char *management)
 {
   AFGEN *Table[NR_TABLES_MANAGEMENT], *start;
-  Management *MNG = NULL;
+  //Management *MNG = NULL;
   
   int i, c;
   float Variable[100], XValue, YValue;
@@ -35,7 +35,7 @@ Management GetManagement(char *management)
  
   rewind(fq);  
   
-  MNG = malloc(sizeof(Management));
+  //MNG = malloc(sizeof(Management));
   FillManageVariables(MNG, Variable);
  
 
@@ -79,7 +79,4 @@ Management GetManagement(char *management)
   MNG->K_Uptake_frac  = Table[5];
   MNG->Irrigation     = Table[6];
   
-  //free(MNG);
-  
-  return *MNG;
   }
