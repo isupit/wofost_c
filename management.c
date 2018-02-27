@@ -34,7 +34,9 @@ Management GetManagement(char *management)
   }
  
   rewind(fq);  
-  FillManageVariables(MNG = malloc(sizeof(Management)), Variable);
+  
+  MNG = malloc(sizeof(Management));
+  FillManageVariables(MNG, Variable);
  
 
   i=0;
@@ -76,6 +78,8 @@ Management GetManagement(char *management)
   MNG->P_Uptake_frac  = Table[4];
   MNG->K_Uptake_frac  = Table[5];
   MNG->Irrigation     = Table[6];
+  
+  //free(MNG);
   
   return *MNG;
   }

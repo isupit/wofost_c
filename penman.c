@@ -70,7 +70,7 @@ void CalcPenman()
     /* where RI/RA is the atmospheric transmission obtained by a CALL */
     /* to ASTRO: */
               
-    RelSunShineDuration = limit(0.,1.,(AtmosphTransm-(Site.AngstA))/(Site.AngstB));
+    RelSunShineDuration = limit(0.,1.,(AtmosphTransm-AngstA)/AngstB);
 
     /* Terms in Penman formula, for water, soil and canopy            */
     /* Net outgoing long-wave radiation (J/m2/d) acc. to Brunt (1932) */

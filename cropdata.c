@@ -41,8 +41,9 @@ Plant GetCropData(char *cropfile)
   }
  
   rewind(fq);  
-  FillCropVariables(CROP = malloc(sizeof(Plant)), Variable);
- 
+  
+  CROP = malloc(sizeof(Plant));
+  FillCropVariables(CROP, Variable);
 
   i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF) 
@@ -100,6 +101,8 @@ Plant GetCropData(char *cropfile)
   
   CROP->Emergence = 0;
           
+  //free(CROP);
+  
 return *CROP;
 }
 

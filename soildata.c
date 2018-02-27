@@ -39,7 +39,9 @@ Soil GetSoilData(char *soilfile)
  }
  
   rewind(fq);  
-  FillSoilVariables(SOIL = malloc(sizeof(Soil)), Variable);
+  
+  SOIL = malloc(sizeof(Soil));
+  FillSoilVariables(SOIL, Variable);
  
 
   i=0;
@@ -76,10 +78,11 @@ Soil GetSoilData(char *soilfile)
     exit(0);
  }
  
-  SOIL->VolumetricSoilMoisture = Table[21];
-  SOIL->HydraulicConductivity  = Table[22];
+  SOIL->VolumetricSoilMoisture = Table[0];
+  SOIL->HydraulicConductivity  = Table[1];
   
-
+  //free(SOIL);
+  
 return *SOIL;
 }
 

@@ -8,6 +8,7 @@
 
 float DyingLeaves()
 {
+  float tiny = 0.001;
   float Death, Death1, Death2, DeathStress, DeathAge;
   float CriticalLAI;
   Green *wipe;
@@ -25,6 +26,12 @@ float DyingLeaves()
   
   DeathStress = Death;
 
+  if (Death < tiny)
+  {
+      DeathStress = 0;
+      Death =0.;
+  }
+  
   /* Oldest leave classes are at the beginning of the list */
   while(Death > Crop.LeaveProperties->weight && Crop.LeaveProperties != NULL)
     { Death                = Death - Crop.LeaveProperties->weight;

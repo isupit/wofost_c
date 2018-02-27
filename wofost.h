@@ -21,11 +21,9 @@ typedef struct TABLE {
 	struct TABLE *next;
 	} AFGEN;
 
-
+AFGEN *AfgenTable[NUMBER_OF_TABLES], *head;
 
 typedef struct FIELD {
-        float AngstA;
-        float AngstB;
         float SoilName;
         float FlagGroundWater;
         float InfRainDependent;
@@ -387,6 +385,8 @@ float CO2;
 
 /** Meteorological Variables  **/
 int Station, Year;
+float AngstA;
+float AngstB;
 float Longitude, Latitude, Altitude;
 float Tmin[367], Tmax[367], Radiation[367], Rain[367];
 float Windspeed[367], Vapour[367];

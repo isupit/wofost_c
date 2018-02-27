@@ -37,7 +37,8 @@ Field GetSiteData(char *sitefile)
   }
   rewind(fq);  
 
-  FillSiteVariables(SITE = malloc(sizeof(Field)), Variable);
+  SITE = malloc(sizeof(Field));
+  FillSiteVariables(SITE, Variable);
  
 
   i=0;
@@ -72,6 +73,8 @@ Field GetSiteData(char *sitefile)
   } 
    
   SITE->NotInfTB = Table[0];
+  
+  //free(SITE);
 
   return *SITE;
 }
