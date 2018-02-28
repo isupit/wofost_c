@@ -8,7 +8,6 @@
 void GetSiteData(Field *SITE, char *sitefile)
 {
   AFGEN *Table[NR_TABLES_SITE], *start;
-  //Field *SITE = NULL;
   
   int i, c;
   float Variable[NR_VARIABLES_SITE], XValue, YValue;
@@ -37,7 +36,6 @@ void GetSiteData(Field *SITE, char *sitefile)
   }
   rewind(fq);  
 
-  SITE = malloc(sizeof(Field));
   FillSiteVariables(SITE, Variable);
  
 

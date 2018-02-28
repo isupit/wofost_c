@@ -8,7 +8,6 @@
 void GetSoilData(Soil *SOIL, char *soilfile)
 {
   AFGEN *Table[NR_TABLES_SOIL], *start;
-  //Soil *SOIL = NULL;
   
   int i, c;
   float Variable[100], XValue, YValue;
@@ -40,7 +39,6 @@ void GetSoilData(Soil *SOIL, char *soilfile)
  
   rewind(fq);  
   
-  SOIL = malloc(sizeof(Soil));
   FillSoilVariables(SOIL, Variable);
  
 

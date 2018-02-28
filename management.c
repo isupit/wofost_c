@@ -7,7 +7,6 @@
 void GetManagement(Management *MNG, char *management)
 {
   AFGEN *Table[NR_TABLES_MANAGEMENT], *start;
-  //Management *MNG = NULL;
   
   int i, c;
   float Variable[100], XValue, YValue;
@@ -35,7 +34,6 @@ void GetManagement(Management *MNG, char *management)
  
   rewind(fq);  
   
-  //MNG = malloc(sizeof(Management));
   FillManageVariables(MNG, Variable);
  
 

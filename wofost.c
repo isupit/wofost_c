@@ -13,6 +13,11 @@ int main() {
     SimUnit *Grid = NULL;
     SimUnit *initial = NULL;
     
+    //Plant *Grid->crp = NULL;
+    //Field *Grid->ste = NULL;
+    //Management *Grid->mng =NULL;
+    //Soil  *Grid->soil = NULL;
+    
     int Emergence;
     int Start;
     int CycleLength   = 240;
