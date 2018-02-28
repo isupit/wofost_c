@@ -28,9 +28,11 @@ void IntegrationCrop()
     LeaveProperties = Crop->LeaveProperties;
     
     /* Update the leave age for each age class */
-    while (Crop->LeaveProperties->next) {
-       Crop->LeaveProperties->age = Crop->LeaveProperties->age + PhysAgeing;
-    Crop->LeaveProperties      = Crop->LeaveProperties->next;}
+    while (Crop->LeaveProperties->next)
+    {
+        Crop->LeaveProperties->age = Crop->LeaveProperties->age + PhysAgeing;
+        Crop->LeaveProperties      = Crop->LeaveProperties->next;
+    }
   
     /* Return to beginning of the linked list */
     Crop->LeaveProperties = LeaveProperties;	 

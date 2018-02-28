@@ -53,7 +53,7 @@ typedef struct CONSTANTS {
         } Constants;
 
 typedef struct PARAMETERS {
-          /** Tables for Crop **/
+          /** Tables for the Crop simulations **/
         AFGEN *Roots;
         AFGEN *Stems;
         AFGEN *Leaves;
@@ -185,6 +185,7 @@ typedef struct STATES {
         float Transpiration;
         float WaterRootExt;
         } States;
+        
 
 typedef struct RATES {
         float EvapWater;
@@ -201,6 +202,7 @@ typedef struct RATES {
         float Transpiration;
         float WaterRootExt;
         } Rates;
+        
  
 typedef struct NUTRIENT_RATES {
         float roots;
@@ -223,6 +225,7 @@ typedef struct NUTRIENT_RATES {
         float death_st;
         float death_ro;
         } nutrient_rates;
+        
 
 typedef struct NUTRIENT_STATES {
         float roots;
@@ -244,6 +247,7 @@ typedef struct NUTRIENT_STATES {
         float death_st;
         float death_ro;
         } nutrient_states;
+        
 
 typedef struct GROWTH_RATES {
         float roots;
@@ -262,6 +266,7 @@ typedef struct GROWTH_STATES {
         float storage;
         } growth_states;
 
+        
 typedef struct DYING_RATES {
         float roots;
         float stems;
@@ -275,6 +280,7 @@ typedef struct GREEN {
 	float area;
 	struct GREEN *next;
 	} Green;
+        
 
 typedef struct PLANT {
         int Emergence;
@@ -302,9 +308,9 @@ typedef struct PLANT {
         nutrient_rates K_rt;            
         
         Green *LeaveProperties;
-	} Plant;
-        
-Plant *Crop;
+	} Plant;    
+Plant *Crop; /* Place holder for the current crop simulations */
+
 
 typedef struct SOIL {
         float DaysSinceLastRain;
@@ -320,8 +326,8 @@ typedef struct SOIL {
         States st;
         Rates rt;
         } Soil;
-    
-Soil *WatBal;
+Soil *WatBal; /* Place holder for the current water balance simulations */
+
 
 typedef struct FIELD {
         /* Water related parameters */
@@ -358,12 +364,14 @@ typedef struct FIELD {
         /** Table for the fraction of precipitation that does not infiltrate **/
         AFGEN *NotInfTB;
         } Field;
-Field *Site;
+Field *Site; /* Place holder for the current site simulations */
+
 
 /* Simulation time */
 struct tm simTime;
 
 
+/* Place holder for a simulation unit */
 typedef struct SIMUNIT {
         Plant *crp;
         Field *ste;

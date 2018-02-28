@@ -24,5 +24,6 @@ float RespirationRef(float TotalAssimilation)
       respiration  *= Afgen(Crop->prm.FactorSenescence, &(Crop->DevelopmentStage));
       respiration  *= pow(Crop->prm.Q10, 0.1 * (Temp-TempRef));
       
+      /* respiration can not exceed the assimilation */
       return (min(respiration, TotalAssimilation));
 }

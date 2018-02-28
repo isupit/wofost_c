@@ -16,9 +16,10 @@ float LeaveAreaIndex()
     LeaveProperties = Crop->LeaveProperties;
 
     /* Loop until the last element in the list */
-    while (Crop->LeaveProperties) {
-      LAISum += Crop->LeaveProperties->weight*Crop->LeaveProperties->area;
-      Crop->LeaveProperties = Crop->LeaveProperties->next;
+    while (Crop->LeaveProperties) 
+    {
+        LAISum += Crop->LeaveProperties->weight * Crop->LeaveProperties->area;
+        Crop->LeaveProperties = Crop->LeaveProperties->next;
     }
 
     /* Restore the initial address */

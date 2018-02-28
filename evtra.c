@@ -55,7 +55,7 @@ void EvapTra() {
         /* Critical soil moisture content for aeration */
         SoilMoistureAeration = WatBal->ct.MoistureSAT - WatBal->ct.CriticalSoilAirC;
         
-        /* Count days since start oxygen shortage (up to 4 days)*/
+        /* Count days since start oxygen shortage (up to 4 days) */
         if (WatBal->SoilMoisture >= SoilMoistureAeration) {
             Crop->DaysOxygenStress = min(Crop->DaysOxygenStress++, 4.);
         }

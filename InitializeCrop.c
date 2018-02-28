@@ -19,7 +19,7 @@ void InitializeCrop(int *Emergence)
         /*  Emergence has not taken place yet*/
         if (!*Emergence)
     	{
-            DeltaTempSum = limit(0, Crop->prm.TempEffMax-Crop->prm.TempBaseEmergence, 
+            DeltaTempSum = limit(0, Crop->prm.TempEffMax - Crop->prm.TempBaseEmergence, 
                     Temp-Crop->prm.TempBaseEmergence);
 	    Crop->TSumEmergence += DeltaTempSum;
 	    if (Crop->TSumEmergence >= Crop->prm.TSumEmergence)
@@ -54,14 +54,15 @@ void InitializeCrop(int *Emergence)
             Crop->st.LAI = Crop->prm.LAIEmergence + Crop->st.stems * 
                    Afgen(Crop->prm.SpecificStemArea, &(Crop->DevelopmentStage)) +
                    Crop->st.storage*Crop->prm.SpecificPodArea;
-
+            
+            /* Initialize the leaves */
             Crop->LeaveProperties         = malloc(sizeof (Green));
             Crop->LeaveProperties->age    = 0.;
             Crop->LeaveProperties->weight = Crop->st.leaves;
             Crop->LeaveProperties->area   = Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage));
             Crop->LeaveProperties->next   = NULL;
             
-            
+            /* Emergence true */
             Crop->Emergence = 1;
             Crop->GrowthDay = 1;
             

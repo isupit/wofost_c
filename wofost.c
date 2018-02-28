@@ -13,10 +13,10 @@ int main() {
     SimUnit *Grid = NULL;
     SimUnit *initial = NULL;
     
-    //Plant *Grid->crp = NULL;
-    //Field *Grid->ste = NULL;
-    //Management *Grid->mng =NULL;
-    //Soil  *Grid->soil = NULL;
+    //Plant *crp = NULL;
+    //Field *ste = NULL;
+    //Management *mng =NULL;
+    //Soil  *soil = NULL;
     
     int Emergence;
     int Start;
@@ -86,7 +86,7 @@ int main() {
             GetManagement(Grid->mng = malloc(sizeof(Management)), management);
             GetSoilData(Grid->soil  = malloc(sizeof(Soil)), soilfile);
             
-            Grid->start = Start;            // Start day (=daynumber)
+            Grid->start = Start;            // Start day (=day number)
             Grid->file  = count++;          // number of elements in Grid carousel
             strcpy(Grid->name,cf);          // Crop file name
             Grid->emergence = Emergence;    // Start the simulations at emergence (1) or at sowing (0)
