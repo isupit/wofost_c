@@ -3,7 +3,7 @@
 #ifndef WOFOST_H
 #define WOFOST_H
 
-#define NR_VARIABLES_CRP	64
+#define NR_VARIABLES_CRP	65
 #define NR_TABLES_CRP   	21
 #define NR_VARIABLES_SITE       12
 #define NR_TABLES_SITE          1
@@ -20,9 +20,6 @@ typedef struct TABLE {
 	float y;
 	struct TABLE *next;
 	} AFGEN;
-
-AFGEN *AfgenTable[NUMBER_OF_TABLES], *head;
-
 
 typedef struct MANAGEMENT {
         /** Tables for fertilizer application and recovery fraction **/
@@ -362,26 +359,6 @@ typedef struct FIELD {
         AFGEN *NotInfTB;
         } Field;
 Field *Site;
-   
-//typedef struct MINERALS {
-//        float st_N_tot;
-//        float st_P_tot;
-//        float st_K_tot;
-//
-//        float st_N_mins;
-//        float st_P_mins;
-//        float st_K_mins;
-//
-//        float rt_N_tot;
-//        float rt_P_tot;
-//        float rt_K_tot;
-//
-//        float rt_N_mins;
-//        float rt_P_mins;
-//        float rt_K_mins;
-//        } Minerals;
-
-//Minerals *SoilNtrs;
 
 /* Simulation time */
 struct tm simTime;

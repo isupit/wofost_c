@@ -62,7 +62,7 @@ char *CropParam[]={"TBASEM",
                    "TCNT",   
                    "TCPT",   
                    "TCKT",   
-                   "NFIXF_FR",  
+                   "NFIX_FR",  
                    "NULL"
 		   };
 		   
