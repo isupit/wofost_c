@@ -12,8 +12,10 @@ void InitializeWatBal()
     /* InitSoilMoisture is the initial (at emergence) amount of water in */
     /* excess of wilting point, but not exceeding field capacity    cm   */
     
-    /* Set the initial rates to zero */
+    /* Set the initial soil moisture content to zero */
+    WatBal->SoilMoisture = 0.;
     
+    /* Set the initial rates to zero */
     WatBal->rt.EvapWater         = 0.;
     WatBal->rt.EvapSoil          = 0.;   
     WatBal->rt.Infiltration      = 0.;

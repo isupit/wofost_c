@@ -99,6 +99,7 @@ void GetCropData(Plant *CROP, char *cropfile)
   CROP->prm.K_MaxLeaves          = Table[20];
   
   CROP->Emergence = 0;
+  CROP->TSumEmergence = 0.;
           
 }
 

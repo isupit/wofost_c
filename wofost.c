@@ -101,6 +101,7 @@ int main() {
     /* open the output files */
     while (Grid)
     {
+        memset(name,0,100);
         memcpy(name, Grid->name, strlen(Grid->name)-4);
         output[Grid->file] = fopen(name, "w");
         Grid = Grid->next;
