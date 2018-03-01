@@ -21,29 +21,37 @@ float DyingLeaves()
     /* Death rate increase due to nutrient shortage */
     Death += Crop->st.leaves * Crop->prm.DyingLeaves_NPK_Stress * (1. - Crop->NPK_Indx);
 
-    if (Death < tiny) DeathStress = 0;
+    if (Death < tiny) Death = 0;
         
     DeathStress = Death;
 
-    /* Oldest leave classes are at the beginning of the list */
-    while(Death > Crop->LeaveProperties->weight && Crop->LeaveProperties != NULL)
-    { 
-      Death                 = Death - Crop->LeaveProperties->weight;
-      wipe                  = Crop->LeaveProperties; 
-      Crop->LeaveProperties = Crop->LeaveProperties->next; 
-      free(wipe);
-    }
-
-    Crop->LeaveProperties->weight = Crop->LeaveProperties->weight - Death;
-
-    DeathAge = 0;
-    while(Crop->LeaveProperties != NULL && Crop->LeaveProperties->age > Crop->prm.LifeSpan)
+    if (Crop->LeaveProperties != NULL)
     {
-        wipe                   = Crop->LeaveProperties; 
-        DeathAge              += Crop->LeaveProperties->weight;
-        Crop->LeaveProperties  = Crop->LeaveProperties->next; 
-        free(wipe);
+        /* Oldest leave classes are at the beginning of the list */
+        while(Death > Crop->LeaveProperties->weight)
+        { 
+            Death                 = Death - Crop->LeaveProperties->weight;
+            wipe                  = Crop->LeaveProperties; 
+            Crop->LeaveProperties = Crop->LeaveProperties->next; 
+            free(wipe);
+        }
     }
 
+   
+    DeathAge = 0; // Amount of death leaves due to ageing
+    if (Crop->LeaveProperties != NULL)
+    {
+        Crop->LeaveProperties->weight = Crop->LeaveProperties->weight - Death;
+
+        while(Crop->LeaveProperties != NULL && Crop->LeaveProperties->age > Crop->prm.LifeSpan)
+        {
+            wipe                   = Crop->LeaveProperties; 
+            DeathAge              += Crop->LeaveProperties->weight;
+            Crop->LeaveProperties  = Crop->LeaveProperties->next; 
+            free(wipe);
+        }
+    }
+    
+    /* Return the amount of death leaves due to stress and due to ageing */
     return (DeathStress + DeathAge); 
 }

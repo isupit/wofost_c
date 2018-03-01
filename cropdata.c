@@ -13,7 +13,6 @@
 void GetCropData(Plant *CROP, char *cropfile)
 {
   AFGEN *Table[NR_TABLES_CRP], *start;
-  //Plant *CROP = NULL;
   
   int i, c;
   float Variable[NR_VARIABLES_CRP], XValue, YValue;

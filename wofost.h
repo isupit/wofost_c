@@ -383,7 +383,6 @@ typedef struct SIMUNIT {
         char name[100]; 
         struct SIMUNIT *next;
         } SimUnit;
- 
         
 float CO2;
 

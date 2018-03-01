@@ -8,16 +8,11 @@
 
 int main() {
     FILE *ifp;
-    FILE **file;
+    FILE **output;
     
     SimUnit *Grid = NULL;
     SimUnit *initial = NULL;
-    
-    //Plant *crp = NULL;
-    //Field *ste = NULL;
-    //Management *mng =NULL;
-    //Soil  *soil = NULL;
-    
+       
     int Emergence;
     int Start;
     int CycleLength   = 240;
@@ -101,13 +96,13 @@ int main() {
     GetMeteoData(path, dateString, place);
     
     /* allocate memory for the file pointers */
-    file = malloc(sizeof(*file) * --count);
+    output = malloc(sizeof(**output) * --count);
     
     /* open the output files */
     while (Grid)
     {
         memcpy(name, Grid->name, strlen(Grid->name)-4);
-        file[Grid->file] = fopen(name, "w");
+        output[Grid->file] = fopen(name, "w");
         Grid = Grid->next;
     }
     
@@ -133,7 +128,6 @@ int main() {
             Site      = Grid->ste;
             Start      = Grid->start;
             Emergence  = Grid->emergence;
-
             
             if (Day >= Start && Crop->Emergence == 0)
             {
@@ -158,7 +152,7 @@ int main() {
                     IntegrationNutrients();
                     IntegrationCrop();
                     
-                    fprintf(file[Grid->file],"\n%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f",
+                    fprintf(output[Grid->file],"%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f\n",
                         simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
                         Day,Crop->st.stems,Crop->st.leaves,Crop->st.storage,
                         Crop->st.LAI,Crop->DevelopmentStage);
@@ -187,10 +181,10 @@ int main() {
     /* Close the output files and free the allocated memory */
     while(Grid)
     {
-        fclose(file[Grid->file]);
+        fclose(output[Grid->file]);
         Grid = Grid->next;
     }
-    free(file);
+    free(output);
 
     /* Go back to the beginning of the list */
     Grid = initial;

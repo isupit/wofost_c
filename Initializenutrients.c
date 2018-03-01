@@ -16,6 +16,7 @@ void InitializeNutrients()
     Crop->N_st.Max_lv = Afgen(Crop->prm.N_MaxLeaves, &(Crop->DevelopmentStage));
     Crop->N_st.Max_st = Crop->prm.N_MaxStems * Crop->N_st.Max_lv;
     Crop->N_st.Max_ro = Crop->prm.N_MaxRoots * Crop->N_st.Max_lv;
+    Crop->N_st.Max_so = 0.;
         
     /* Initial maximum N concentration in plant organs [kg N ]           */
     Crop->N_st.leaves = Crop->N_st.Max_lv * Crop->st.leaves;
@@ -27,6 +28,7 @@ void InitializeNutrients()
     Crop->P_st.Max_lv = Afgen(Crop->prm.P_MaxLeaves, &(Crop->DevelopmentStage));
     Crop->P_st.Max_st  = Crop->prm.P_MaxStems * Crop->P_st.Max_lv;
     Crop->P_st.Max_ro  = Crop->prm.P_MaxRoots * Crop->P_st.Max_lv;
+    Crop->P_st.Max_so = 0.;
            
     /* Initial maximum P concentration in plant organs [kg N ] */
     Crop->P_st.leaves = Crop->P_st.Max_lv * Crop->st.leaves;
@@ -38,6 +40,7 @@ void InitializeNutrients()
     Crop->K_st.Max_lv = Afgen(Crop->prm.K_MaxLeaves, &(Crop->DevelopmentStage));
     Crop->K_st.Max_st  = Crop->prm.K_MaxStems * Crop->K_st.Max_lv;
     Crop->K_st.Max_ro  = Crop->prm.K_MaxRoots * Crop->K_st.Max_lv;
+    Crop->K_st.Max_so = 0.;
            
     /* Initial maximum k concentration in plant organs [kg N ] */
     Crop->K_st.leaves = Crop->K_st.Max_lv * Crop->st.leaves;
@@ -57,7 +60,59 @@ void InitializeNutrients()
     Crop->K_st.death_lv = 0.;
     Crop->K_st.death_st = 0.;
     Crop->K_st.death_ro = 0.;
-        
+    
+    /* No death rats at initialization */
+    Crop->N_rt.death_lv = 0.;
+    Crop->N_rt.death_st = 0.;
+    Crop->N_rt.death_ro = 0.;
+   
+    Crop->P_rt.death_lv = 0.;
+    Crop->P_rt.death_st = 0.;
+    Crop->P_rt.death_ro = 0.;
+  
+    Crop->K_rt.death_lv = 0.;
+    Crop->K_rt.death_st = 0.;
+    Crop->K_rt.death_ro = 0.;
+    
+    /* Set the initial demand rates */
+    Crop->N_rt.Demand_lv = 0.;
+    Crop->P_rt.Demand_lv = 0.;
+    Crop->K_rt.Demand_lv = 0.;
+
+    Crop->N_rt.Demand_st = 0.;
+    Crop->P_rt.Demand_st = 0.;
+    Crop->K_rt.Demand_st = 0.;
+ 
+    Crop->N_rt.Demand_ro = 0.;
+    Crop->P_rt.Demand_ro = 0.;
+    Crop->K_rt.Demand_ro = 0.;
+ 
+    Crop->N_rt.Demand_so = 0.;
+    Crop->P_rt.Demand_so = 0.;
+    Crop->K_rt.Demand_so = 0.;
+    
+    /* Set the initial translocation rates */
+    Crop->N_rt.Transloc = 0.;
+    Crop->P_rt.Transloc = 0.;
+    Crop->K_rt.Transloc = 0.;
+    
+    /* Set the initial uptake to zero*/
+    Crop->N_st.Uptake    = 0.;
+    Crop->N_st.Uptake_lv = 0.;
+    Crop->N_st.Uptake_st = 0.;
+    Crop->N_st.Uptake_ro = 0.;
+    
+    Crop->P_st.Uptake    = 0.;
+    Crop->P_st.Uptake_lv = 0.;
+    Crop->P_st.Uptake_st = 0.;
+    Crop->P_st.Uptake_ro = 0.;
+    
+    Crop->K_st.Uptake    = 0.;
+    Crop->K_st.Uptake_lv = 0.;
+    Crop->K_st.Uptake_st = 0.;
+    Crop->K_st.Uptake_ro = 0.;
+            
+            
     /* Set the soil nutrient rates to zero */
     Site->rt_N_tot = 0.;
     Site->rt_P_tot = 0.;
@@ -152,5 +207,9 @@ void InitializeNutrients()
     Crop->K_rt.death_lv = 0.;
     Crop->K_rt.death_st = 0.;
     Crop->K_rt.death_ro = 0.;
+    
+    /* Set the initial optimal leave concentrations to zero */
+    Crop->N_st.Optimum_lv = 0;
+    Crop->N_st.Optimum_st = 0;
     
 }     

@@ -62,9 +62,20 @@ void InitializeCrop(int *Emergence)
             Crop->LeaveProperties->area   = Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage));
             Crop->LeaveProperties->next   = NULL;
             
+            /* Crop death rates set to zero */
+            Crop->drt.leaves = 0.;
+            Crop->drt.roots  = 0.;
+            Crop-> drt.stems = 0.;
+            
             /* Emergence true */
             Crop->Emergence = 1;
             Crop->GrowthDay = 1;
+            
+            /* No initial nutrient stress */
+            Crop->NutrientStress = 1;
+            
+            /* No previous rooting depth */
+            Crop->RootDepth_prev = 0.;
             
             /* Initialize the water balance */
             InitializeWatBal();
