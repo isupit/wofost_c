@@ -89,19 +89,23 @@ int main() {
         }
     }
     
+    /* close the input file */
+    fclose(ifp);
+    
     /* Set Grid back to the initial address */
     Grid = initial;   
     
     /* Get the meteodata */
     GetMeteoData(path, dateString, place);
     
-    /* allocate memory for the file pointers */
+    /* Allocate memory for the file pointers */
     output = malloc(sizeof(**output) * --count);
     
     /* open the output files */
     while (Grid)
-    {
+    {   /* Make valgrind happy  */
         memset(name,0,100);
+        
         memcpy(name, Grid->name, strlen(Grid->name)-4);
         output[Grid->file] = fopen(name, "w");
         Grid = Grid->next;
