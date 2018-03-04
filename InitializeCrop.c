@@ -4,83 +4,91 @@
 #include "wofost.h"
 #include "extern.h"
 
-/* ---------------------------------------------------------------------------*/
-/*  function InitializeCrop                                                     */
-/*  Purpose: Set the initial crop state and leave variables, the water balance, */
-/*  and the nutrients-----------------------------------------------------------*/ 
 
-void InitializeCrop(int *Emergence)
+/*---------------------------------------------------*/
+/* function EmergenceCrop                            */
+/* Purpose: determine if crop emergence has occurred */
+/*---------------------------------------------------*/
+
+int EmergenceCrop(int Emergence)
 {
-        float FractionRoots;
-        float FractionShoots; 
-        float InitialShootWeight;
-        float DeltaTempSum;
-         
-        /*  Emergence has not taken place yet*/
-        if (!*Emergence)
-    	{
+
+    float DeltaTempSum;
+     
+    /*  Emergence has not taken place yet*/
+    if (!Emergence)
+	{
             DeltaTempSum = limit(0, Crop->prm.TempEffMax - Crop->prm.TempBaseEmergence, 
-                    Temp-Crop->prm.TempBaseEmergence);
+                Temp-Crop->prm.TempBaseEmergence);
 	    Crop->TSumEmergence += DeltaTempSum;
 	    if (Crop->TSumEmergence >= Crop->prm.TSumEmergence)
             {
-                *Emergence = 1;
+                Emergence = 1;
 	    }
-	}	     
-       
-        /*  Emergence has occurred */
-        if (*Emergence)
-        {
-            /* Initialize the crop states */
-            Crop->DevelopmentStage = Crop->prm.InitialDVS;
+	}
+    return Emergence;
+}
+    
 
-            FractionRoots      = Afgen(Crop->prm.Roots, &(Crop->DevelopmentStage));
-            FractionShoots     = 1 - FractionRoots;
-            InitialShootWeight = Crop->prm.InitialDryWeight * FractionShoots;
+/* ----------------------------------------------------------*/
+/*  function InitializeCrop                                  */
+/*  Purpose: Set the initial crop state and leave variables  */
+/*  ---------------------------------------------------------*/ 
 
-            Crop->st.roots     = Crop->prm.InitialDryWeight * FractionRoots;
-            Crop->RootDepth    = Crop->prm.InitRootingDepth;
-            Crop->st.stems     = InitialShootWeight * Afgen(Crop->prm.Stems, &(Crop->DevelopmentStage));                   
-            Crop->st.leaves    = InitialShootWeight * Afgen(Crop->prm.Leaves, &(Crop->DevelopmentStage));
-            Crop->st.storage   = InitialShootWeight * Afgen(Crop->prm.Storage, &(Crop->DevelopmentStage));
+void InitializeCrop()
+{ 
+    float FractionRoots;
+    float FractionShoots; 
+    float InitialShootWeight;
+   
+    /* Initialize the crop states */
+    Crop->DevelopmentStage = Crop->prm.InitialDVS;
 
-            Crop->prm.MaxRootingDepth = max(Crop->prm.InitRootingDepth, min(Crop->prm.MaxRootingDepth,
-                 Site->SoilLimRootDepth));
+    FractionRoots      = Afgen(Crop->prm.Roots, &(Crop->DevelopmentStage));
+    FractionShoots     = 1 - FractionRoots;
+    InitialShootWeight = Crop->prm.InitialDryWeight * FractionShoots;
 
-            Crop->prm.LAIEmergence  = Crop->st.leaves * Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage)); 
+    Crop->st.roots     = Crop->prm.InitialDryWeight * FractionRoots;
+    Crop->RootDepth    = Crop->prm.InitRootingDepth;
+    Crop->st.stems     = InitialShootWeight * Afgen(Crop->prm.Stems, &(Crop->DevelopmentStage));                   
+    Crop->st.leaves    = InitialShootWeight * Afgen(Crop->prm.Leaves, &(Crop->DevelopmentStage));
+    Crop->st.storage   = InitialShootWeight * Afgen(Crop->prm.Storage, &(Crop->DevelopmentStage));
 
-            Crop->st.LAIExp = Crop->prm.LAIEmergence;
+    Crop->prm.MaxRootingDepth = max(Crop->prm.InitRootingDepth, min(Crop->prm.MaxRootingDepth,
+         Site->SoilLimRootDepth));
 
-            Crop->st.LAI = Crop->prm.LAIEmergence + Crop->st.stems * 
-                   Afgen(Crop->prm.SpecificStemArea, &(Crop->DevelopmentStage)) +
-                   Crop->st.storage*Crop->prm.SpecificPodArea;
+    Crop->prm.LAIEmergence  = Crop->st.leaves * Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage)); 
+
+    Crop->st.LAIExp = Crop->prm.LAIEmergence;
+
+    Crop->st.LAI = Crop->prm.LAIEmergence + Crop->st.stems * 
+           Afgen(Crop->prm.SpecificStemArea, &(Crop->DevelopmentStage)) +
+           Crop->st.storage*Crop->prm.SpecificPodArea;
+    
+    /* Initialize the leaves */
+    Crop->LeaveProperties         = malloc(sizeof (Green));
+    Crop->LeaveProperties->age    = 0.;
+    Crop->LeaveProperties->weight = Crop->st.leaves;
+    Crop->LeaveProperties->area   = Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage));
+    Crop->LeaveProperties->next   = NULL;
+    
+    /* Crop death rates set to zero */
+    Crop->drt.leaves = 0.;
+    Crop->drt.roots  = 0.;
+    Crop-> drt.stems = 0.;
+    
+    /* Emergence true */
+    Crop->Emergence = 1;
+    Crop->GrowthDay = 1;
+    
+    /* No initial nutrient stress */
+    Crop->NutrientStress = 1;
+    Crop->NPK_Indx =1;
+    
+    /* No previous rooting depth */
+    Crop->RootDepth_prev = 0.;
+    
+    /* No oxygen stress */
+    Crop->DaysOxygenStress = 0; 
             
-            /* Initialize the leaves */
-            Crop->LeaveProperties         = malloc(sizeof (Green));
-            Crop->LeaveProperties->age    = 0.;
-            Crop->LeaveProperties->weight = Crop->st.leaves;
-            Crop->LeaveProperties->area   = Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage));
-            Crop->LeaveProperties->next   = NULL;
-            
-            /* Crop death rates set to zero */
-            Crop->drt.leaves = 0.;
-            Crop->drt.roots  = 0.;
-            Crop-> drt.stems = 0.;
-            
-            /* Emergence true */
-            Crop->Emergence = 1;
-            Crop->GrowthDay = 1;
-            
-            /* No initial nutrient stress */
-            Crop->NutrientStress = 1;
-            
-            /* No previous rooting depth */
-            Crop->RootDepth_prev = 0.;
-            
-            /* Initialize the water balance */
-            InitializeWatBal();
-            
-            /* Initialize the crop nutrients */
-            InitializeNutrients();
-        }
 }  

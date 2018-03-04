@@ -100,6 +100,88 @@ void GetCropData(Plant *CROP, char *cropfile)
   
   CROP->Emergence = 0;
   CROP->TSumEmergence = 0.;
+  
+  /* STATES */  
+  /* Set the initial growth states to zero */
+  CROP->st.roots   = 0.;
+  CROP->st.stems   = 0.;
+  CROP->st.leaves  = 0.;
+  CROP->st.storage = 0.;
+  CROP->st.LAIExp  = 0.;
+  
+  /* Set the initial nutrient states to zero*/
+  CROP->N_st.leaves = 0.;
+  CROP->N_st.stems  = 0.;
+  CROP->N_st.roots  = 0.;
+  CROP->N_st.storage= 0.;
+  
+  CROP->P_st.leaves = 0.;
+  CROP->P_st.stems  = 0.;
+  CROP->P_st.roots  = 0.;
+  CROP->P_st.storage= 0.;
+        
+  CROP->K_st.leaves = 0.;
+  CROP->K_st.stems  = 0.;
+  CROP->K_st.roots  = 0.;
+  CROP->K_st.storage= 0.;
+  
+  /* Set the maximum nutrient concentration to zero at initialization */
+  CROP->N_st.Max_lv = 0.;
+  CROP->N_st.Max_st = 0.;
+  CROP->N_st.Max_ro = 0.;
+  
+  CROP->P_st.Max_lv = 0.;
+  CROP->P_st.Max_st = 0.;
+  CROP->P_st.Max_ro = 0.;
+  
+  CROP->K_st.Max_lv = 0.;
+  CROP->K_st.Max_st = 0.;
+  CROP->K_st.Max_ro = 0.;
+  
+  /* Set the initial optimal leave concentrations to zero */
+  CROP->N_st.Optimum_lv = 0;
+  CROP->N_st.Optimum_st = 0;
+  
+  CROP->P_st.Optimum_lv = 0;
+  CROP->K_st.Optimum_st = 0;
+  
+  CROP->K_st.Optimum_lv = 0;
+  CROP->K_st.Optimum_st = 0;
+  
+  /* No nutrient stress at initialization */
+  CROP->NPK_Indx  = 1.;
+  CROP->N_st.Indx = 1.;
+  CROP->P_st.Indx = 1.;
+  CROP->K_st.Indx = 1.;
+  
+   /* Set the initial uptake states to zero*/
+  CROP->N_st.Uptake    = 0.;
+  CROP->N_st.Uptake_lv = 0.;
+  CROP->N_st.Uptake_st = 0.;
+  CROP->N_st.Uptake_ro = 0.;
+  
+  CROP->P_st.Uptake    = 0.;
+  CROP->P_st.Uptake_lv = 0.;
+  CROP->P_st.Uptake_st = 0.;
+  CROP->P_st.Uptake_ro = 0.;
+  
+  CROP->K_st.Uptake    = 0.;
+  CROP->K_st.Uptake_lv = 0.;
+  CROP->K_st.Uptake_st = 0.;
+  CROP->K_st.Uptake_ro = 0.;
+  
+  /* No nutrient losses at initialization */
+  CROP->N_st.death_lv = 0.;
+  CROP->N_st.death_st = 0.;
+  CROP->N_st.death_ro = 0.;
+  
+  CROP->P_st.death_lv = 0.;
+  CROP->P_st.death_st = 0.;
+  CROP->P_st.death_ro = 0.;
+  
+  CROP->K_st.death_lv = 0.;
+  CROP->K_st.death_st = 0.;
+  CROP->K_st.death_ro = 0.;
           
 }
 

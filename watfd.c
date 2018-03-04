@@ -81,6 +81,11 @@ void InitializeWatBal()
    
 }
 
+/*---------------------------------------------------*/
+/* function RateCalulationWatBalWatBal               */
+/* Purpose: Calculate the rate of the WatBal struct  */
+/*---------------------------------------------------*/
+
 void RateCalulationWatBal() {
    
     float Available;
@@ -168,6 +173,13 @@ void RateCalulationWatBal() {
     WatBal->rt.MoistureLOW = WatBal->rt.Percolation - WatBal->rt.Loss;
                   
 }
+
+
+/*-----------------------------------------------------*/
+/* function IntegrationWatBal                          */
+/* Purpose: integrate the waterbalance rates over time */
+/* and calculate the water content in the rooted zone  */
+/*-----------------------------------------------------*/
 
 void IntegrationWatBal() 
 {
