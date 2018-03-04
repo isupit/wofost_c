@@ -6,6 +6,10 @@
 #include "wofost.h"
 
 
+/*------------------------------------------------*/
+/* function InitializeWatBal                      */
+/* Purpose: Initialize the water balance (WatBal) */
+/*------------------------------------------------*/
 
 void InitializeWatBal()
 {
@@ -82,7 +86,7 @@ void InitializeWatBal()
 }
 
 /*---------------------------------------------------*/
-/* function RateCalulationWatBalWatBal               */
+/* function RateCalulationWatBal                     */
 /* Purpose: Calculate the rate of the WatBal struct  */
 /*---------------------------------------------------*/
 

@@ -154,14 +154,14 @@ int main() {
                     RateCalulationWatBal();
                     RateCalcultionNutrients();
 
-                    /* State calculations */
+                    /* Calculate LAI and DVS */
                     Crop->st.LAI = LeaveAreaIndex();
                     Crop->DevelopmentStage = GetDevelopmentStage();
-                    
+                   
+                    /* State calculations */
                     IntegrationCrop();
                     IntegrationWatBal();
                     IntegrationNutrients();
-                    
                     
                     fprintf(output[Grid->file],"%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f\n",
                         simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
