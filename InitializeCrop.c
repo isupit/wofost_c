@@ -12,7 +12,6 @@
 
 int EmergenceCrop(int Emergence)
 {
-
     float DeltaTempSum;
      
     /*  Emergence has not taken place yet*/
@@ -80,15 +79,5 @@ void InitializeCrop()
     /* Emergence true */
     Crop->Emergence = 1;
     Crop->GrowthDay = 1;
-    
-    /* No initial nutrient stress */
-    Crop->NutrientStress = 1;
-    Crop->NPK_Indx =1;
-    
-    /* No previous rooting depth */
-    Crop->RootDepth_prev = 0.;
-    
-    /* No oxygen stress */
-    Crop->DaysOxygenStress = 0; 
             
 }  

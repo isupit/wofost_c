@@ -331,7 +331,6 @@ Soil *WatBal; /* Place holder for the current water balance simulations */
 
 typedef struct FIELD {
         /* Water related parameters */
-        float SoilName;
         float FlagGroundWater;
         float InfRainDependent;
         float FlagDrains;

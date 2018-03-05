@@ -19,6 +19,12 @@ void InitializeWatBal()
     /* Set the initial soil moisture content to zero */
     WatBal->SoilMoisture = 0.;
     
+    /* Has not rained yet */
+    WatBal->DaysSinceLastRain = 0.;
+
+    /* Crop Growth has not started yet */
+    WatBal->SoilMaxRootingDepth = 0.;
+    
     /* Set the initial rates to zero */
     WatBal->rt.EvapWater         = 0.;
     WatBal->rt.EvapSoil          = 0.;   
@@ -33,6 +39,7 @@ void InitializeWatBal()
     WatBal->rt.SurfaceStorage    = 0.;
     WatBal->rt.Transpiration     = 0.;
     WatBal->rt.WaterRootExt      = 0.;
+    WatBal->rt.RootZoneMoisture  = 0.;
     
     /* Set state variables of the water balance are set to zero. */   
     WatBal->st.EvapWater         = 0.;

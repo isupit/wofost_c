@@ -12,6 +12,10 @@
 
 void CropNutrientRates()
 {   
+    Crop->N_rt.storage = 0;
+    Crop->P_rt.storage = 0;
+    Crop->K_rt.storage = 0;     
+ 
    Crop->N_rt.leaves  = Crop->N_rt.Uptake_lv - Crop->N_rt.Transloc_lv - Crop->N_rt.death_lv;
    Crop->N_rt.stems   = Crop->N_rt.Uptake_st - Crop->N_rt.Transloc_st - Crop->N_rt.death_st;
    Crop->N_rt.roots   = Crop->N_rt.Uptake_ro - Crop->N_rt.Transloc_ro - Crop->N_rt.death_ro;
@@ -31,11 +35,5 @@ void CropNutrientRates()
         Crop->N_rt.storage = min(Crop->N_rt.Demand_so, Crop->N_rt.Transloc/Crop->prm.TCNT);
         Crop->P_rt.storage = min(Crop->P_rt.Demand_so, Crop->P_rt.Transloc/Crop->prm.TCPT);
         Crop->K_rt.storage = min(Crop->K_rt.Demand_so, Crop->K_rt.Transloc/Crop->prm.TCKT); 
-    }
-    else
-    {
-        Crop->N_rt.storage = 0;
-        Crop->P_rt.storage = 0;
-        Crop->K_rt.storage = 0;  
     }
 }

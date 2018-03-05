@@ -27,7 +27,7 @@ extern void RateCalculationCrop();
 extern void Growth(float NewPlantMaterial);
 extern void IntegrationCrop();
 extern void InitializeCrop();
-extern int EmergenceCrop();
+extern int EmergenceCrop(int Emergence);
 
 extern float GetDevelopmentStage();
 extern float DailyTotalAssimilation();

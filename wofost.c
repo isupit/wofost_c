@@ -101,7 +101,7 @@ int main() {
     /* Allocate memory for the file pointers */
     output = malloc(sizeof(**output) * --count);
     
-    /* open the output files */
+    /* Open the output files */
     while (Grid)
     {   /* Make valgrind happy  */
         memset(name,0,100);

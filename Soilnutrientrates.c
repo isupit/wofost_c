@@ -16,18 +16,16 @@ void SoilNutrientRates()
     
     float day_fl;
     
+    Site->rt_N_mins = 0.;
+    Site->rt_P_mins = 0.;
+    Site->rt_K_mins = 0.;
+    
     if (Crop->DevelopmentStage > 0. && Crop->DevelopmentStage <= Crop->prm.DevelopmentStageNLimit)
     {   /* NPK rates that come available through mineralization, cannot exceed */
         /* the available NPK in the soil                                       */
         Site->rt_N_mins = min(Mng->N_Mins * Mng->NRecoveryFrac, Site->st_N_tot); 
         Site->rt_P_mins = min(Mng->P_Mins * Mng->PRecoveryFrac, Site->st_P_tot); 
         Site->rt_K_mins = min(Mng->K_Mins * Mng->KRecoveryFrac, Site->st_K_tot); 
-    }
-    else
-    {
-        Site->rt_N_mins = 0.;
-        Site->rt_P_mins = 0.;
-        Site->rt_K_mins = 0.;
     }
     
     day_fl = (float)Day;
