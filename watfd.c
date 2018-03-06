@@ -19,52 +19,20 @@ void InitializeWatBal()
     /* Set the initial soil moisture content to zero */
     WatBal->SoilMoisture = 0.;
     
-    /* Has not rained yet */
-    WatBal->DaysSinceLastRain = 0.;
-
     /* Crop Growth has not started yet */
     WatBal->SoilMaxRootingDepth = 0.;
     
-    /* Set the initial rates to zero */
-    WatBal->rt.EvapWater         = 0.;
-    WatBal->rt.EvapSoil          = 0.;   
-    WatBal->rt.Infiltration      = 0.;
-    WatBal->rt.Irrigation        = 0.;
-    WatBal->rt.Loss              = 0.;
-    WatBal->rt.Moisture          = 0.;
-    WatBal->rt.MoistureLOW       = 0.;
-    WatBal->rt.Percolation       = 0.;
-    WatBal->rt.RootZoneMoisture  = 0.;
-    WatBal->rt.Runoff            = 0.;
-    WatBal->rt.SurfaceStorage    = 0.;
-    WatBal->rt.Transpiration     = 0.;
-    WatBal->rt.WaterRootExt      = 0.;
-    WatBal->rt.RootZoneMoisture  = 0.;
-    
-    /* Set state variables of the water balance are set to zero. */   
-    WatBal->st.EvapWater         = 0.;
-    WatBal->st.EvapSoil          = 0.;
-    WatBal->st.Infiltration      = 0.;
-    WatBal->st.Irrigation        = 0.;
-    WatBal->st.Loss              = 0.;
-    WatBal->st.Moisture          = 0.;
-    WatBal->st.MoistureLOW       = 0.;
-    WatBal->st.Percolation       = 0.;
-    WatBal->st.Rain              = 0.;
-    WatBal->st.RootZoneMoisture  = 0.;
-    WatBal->st.Runoff            = 0.;
-    WatBal->st.SurfaceStorage    = 0.;
-    WatBal->st.Transpiration     = 0.;
-    WatBal->st.WaterRootExt      = 0.;
+    //WatBal->rt.Transpiration     = 0.;
+
     
     /* Assume no water stress at initialization */
     WatBal->WaterStress = 1.;
     
     /* Check initial soil moisture. It cannot be larger than the              */
     /* saturated soil moisture SoilMoistureSAT or smaller than SoilMoistureWP */
-    if (Site->MaxInitSoilM<= WatBal->ct.MoistureWP)  
+    if (Site->MaxInitSoilM < WatBal->ct.MoistureWP)  
             Site->MaxInitSoilM = WatBal->ct.MoistureWP;
-    if (Site->MaxInitSoilM >= WatBal->ct.MoistureSAT) 
+    if (Site->MaxInitSoilM > WatBal->ct.MoistureSAT) 
             Site->MaxInitSoilM = WatBal->ct.MoistureSAT;
     
     /* Set initial surface storage */
@@ -104,6 +72,21 @@ void RateCalulationWatBal() {
     float Perc1, Perc2;
     float WaterEq;
     float WELOW;
+    
+    /* Set the initial rates to zero */
+    WatBal->rt.EvapWater         = 0.;
+    WatBal->rt.EvapSoil          = 0.;   
+    WatBal->rt.Infiltration      = 0.;
+    WatBal->rt.Irrigation        = 0.;
+    WatBal->rt.Loss              = 0.;
+    WatBal->rt.Moisture          = 0.;
+    WatBal->rt.MoistureLOW       = 0.;
+    WatBal->rt.Percolation       = 0.;
+    WatBal->rt.RootZoneMoisture  = 0.;
+    WatBal->rt.Runoff            = 0.;
+    WatBal->rt.SurfaceStorage    = 0.;
+    WatBal->rt.WaterRootExt      = 0.;
+    WatBal->rt.RootZoneMoisture  = 0.;
     
     /* If surface storage > 10 mm */
     if (WatBal->st.SurfaceStorage > 10.) 

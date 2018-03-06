@@ -76,8 +76,24 @@ void GetSoilData(Soil *SOIL, char *soilfile)
     exit(0);
  }
  
-  SOIL->VolumetricSoilMoisture = Table[0];
-  SOIL->HydraulicConductivity  = Table[1];
+    SOIL->VolumetricSoilMoisture = Table[0];
+    SOIL->HydraulicConductivity  = Table[1];
+  
+    /* Set state variables of the water balance are set to zero. */   
+    SOIL->st.EvapWater         = 0.;
+    SOIL->st.EvapSoil          = 0.;
+    SOIL->st.Infiltration      = 0.;
+    SOIL->st.Irrigation        = 0.;
+    SOIL->st.Loss              = 0.;
+    SOIL->st.Moisture          = 0.;
+    SOIL->st.MoistureLOW       = 0.;
+    SOIL->st.Percolation       = 0.;
+    SOIL->st.Rain              = 0.;
+    SOIL->st.RootZoneMoisture  = 0.;
+    SOIL->st.Runoff            = 0.;
+    SOIL->st.SurfaceStorage    = 0.;
+    SOIL->st.Transpiration     = 0.;
+    SOIL->st.WaterRootExt      = 0.;
   
 }
 
