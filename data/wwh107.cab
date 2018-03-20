@@ -24,11 +24,19 @@ TSUMEM   =   60.    ! temperature sum from sowing to emergence [cel d]
 
 ** phenology
 IDSL     =   0      ! indicates whether pre-anthesis development depends
-                    ! on temp. (=0), daylength (=1) , or both (=2)
-DLO      = -99.0    ! optimum daylength for development [hr]
-DLC      = -99.0    ! critical daylength (lower threshold) [hr]
-TSUM1    =1350.     ! temperature sum from emergence to anthesis [cel d]
-TSUM2    =1000.     ! temperature sum from anthesis to maturity [cel d]
+                    ! on temp. (=0), temp. + daylength (=1) , or temp. + daylength + vernalisation (=2)
+DLO      = 8.0    ! optimum daylength for development [hr]
+DLC      = 0.0    ! critical daylength (lower threshold) [hr]
+VERSAT   = 70.      ! satured vernalisation requirement [d]
+VBASE    = 14.      ! base vernalisation requirement [d]
+VERNRT   = -10., 0.,
+           -4., 0.,
+            3., 1.,
+           10., 1., 
+           17., 0.,
+           30., 0. 
+TSUM1    = 1350.     ! temperature sum from emergence to anthesis [cel d]
+TSUM2    = 1000.     ! temperature sum from anthesis to maturity [cel d]
 DTSMTB   =   0.00,    0.00,     ! daily increase in temp. sum 
             30.00,   30.00,     ! as function of av. temp. [cel; cel d]
             45.00,   30.00

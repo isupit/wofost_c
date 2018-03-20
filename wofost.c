@@ -15,7 +15,7 @@ int main() {
        
     int Emergence;
     int Start;
-    int CycleLength   = 240;
+    int CycleLength   = 300;
     int count;
 
     char path[100];
@@ -112,7 +112,7 @@ int main() {
     }
     
     
-    for (Day = 1; Day <365; Day++)
+    for (Day = 1; Day < 762; Day++)
     {        
         /* Go back to the beginning of the list */
         Grid = initial;
@@ -131,8 +131,8 @@ int main() {
             WatBal    = Grid->soil;
             Mng       = Grid->mng;
             Site      = Grid->ste;
-            Start      = Grid->start;
-            Emergence  = Grid->emergence;
+            Start     = Grid->start;
+            Emergence = Grid->emergence;
             
             if (Day >= Start && Crop->Emergence == 0)
             {

@@ -22,8 +22,6 @@ void InitializeWatBal()
     /* Crop Growth has not started yet */
     WatBal->SoilMaxRootingDepth = 0.;
     
-    //WatBal->rt.Transpiration     = 0.;
-
     
     /* Assume no water stress at initialization */
     WatBal->WaterStress = 1.;
@@ -40,7 +38,8 @@ void InitializeWatBal()
     
     /* Initial soil moisture for a rice crop */
     if (Crop->prm.Airducts) Site->MaxInitSoilM = WatBal->ct.MoistureSAT; 
-        WatBal->st.Moisture = limit(WatBal->ct.MoistureWP, Site->MaxInitSoilM, 
+    
+    WatBal->st.Moisture = limit(WatBal->ct.MoistureWP, Site->MaxInitSoilM, 
             WatBal->ct.MoistureWP + Site->InitSoilMoisture/Crop->RootDepth);
     
     /* Initial moisture amount in rooted zone */

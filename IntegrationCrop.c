@@ -20,6 +20,12 @@ void IntegrationCrop()
     Crop->st.leaves   += Crop->rt.leaves;
     Crop->st.storage  += Crop->rt.storage;
     Crop->st.LAIExp   += Crop->rt.LAIExp;
+    
+    /* Calculate vernalization state in case the switch is set */
+    if (Crop->prm.IdentifyAnthesis == 2)
+    {
+        Crop->st.vernalization += Crop->rt.vernalization;       
+    }
 
     /* Establish the age increase */
     PhysAgeing = max(0., (Temp - Crop->prm.TempBaseLeaves)/(35.- Crop->prm.TempBaseLeaves));

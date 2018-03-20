@@ -25,14 +25,14 @@ int Astro()
     
     if (Latitude > 67. || Latitude < 0.) return 0;  
 
-    /* Remember this crap is written in C: Day start at 0 not at 1!!!! */
-    Declination    = -asin(sin(23.45*RAD)*cos(2.*PI*(Day+11.)/365.));
-    SolarConstant  = 1370.*(1.+0.033*cos(2.*PI*(float)(Day+1)/365.));
+    /* We start at Day= 1, we do not use Day = 0 */
+    Declination    = -asin(sin(23.45*RAD)*cos(2.*PI*(float)(Day+10.)/365.));
+    SolarConstant  = 1370.*(1.+0.033*cos(2.*PI*(float)(Day)/365.));
   
     SinLD = sin(RAD*Latitude)*sin(Declination);
     CosLD = cos(RAD*Latitude)*cos(Declination);
     AOB   = SinLD/CosLD;
-
+    
     Daylength    = 12.0*(1.+2.*asin(AOB)/PI);
     PARDaylength = 12.0*(1.+2.*asin((-sin(ANGLE*RAD)+SinLD)/CosLD)/PI);
     

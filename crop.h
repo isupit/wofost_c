@@ -4,6 +4,8 @@ char *CropParam[]={"TBASEM",
 		   "IDSL",
 		   "DLO",
 		   "DLC",
+                   "VERSAT",
+                   "VBASE",
 		   "TSUM1",
 		   "TSUM2",
                    "DVSI",
@@ -67,6 +69,7 @@ char *CropParam[]={"TBASEM",
 		   };
 		   
 char *CropParam2[]={
+                    "VERNRT",
                     "DTSMTB",
                     "SLATB",
                     "SSATB",

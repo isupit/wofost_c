@@ -3,8 +3,8 @@
 #ifndef WOFOST_H
 #define WOFOST_H
 
-#define NR_VARIABLES_CRP	65
-#define NR_TABLES_CRP   	21
+#define NR_VARIABLES_CRP	67
+#define NR_TABLES_CRP   	22
 #define NR_VARIABLES_SITE       12
 #define NR_TABLES_SITE          1
 #define NR_VARIABLES_SOIL       12
@@ -59,6 +59,7 @@ typedef struct PARAMETERS {
         AFGEN *Leaves;
         AFGEN *Storage;
 
+        AFGEN *VernalizationRate;
         AFGEN *DeltaTempSum;
         AFGEN *SpecificLeaveArea;
         AFGEN *SpecificStemArea;
@@ -91,6 +92,8 @@ typedef struct PARAMETERS {
         int   IdentifyAnthesis; 
         float OptimumDaylength;	            
         float CriticalDaylength;
+        float SatVernRequirement;
+        float BaseVernRequirement;
         float TempSum1;       
         float TempSum2; 
         float InitialDVS;
@@ -255,6 +258,7 @@ typedef struct GROWTH_RATES {
         float leaves;
         float LAIExp;
         float storage;
+        float vernalization;
 } growth_rates;
 
 typedef struct GROWTH_STATES {
@@ -264,6 +268,7 @@ typedef struct GROWTH_STATES {
         float LAI;
         float LAIExp;
         float storage;
+        float vernalization;
         } growth_states;
 
         
@@ -390,8 +395,8 @@ int Station, Year;
 float AngstA;
 float AngstB;
 float Longitude, Latitude, Altitude;
-float Tmin[367], Tmax[367], Radiation[367], Rain[367];
-float Windspeed[367], Vapour[367];
+float Tmin[732], Tmax[732], Radiation[732], Rain[732];
+float Windspeed[732], Vapour[732];
 
 /* Time step */
 float Step;

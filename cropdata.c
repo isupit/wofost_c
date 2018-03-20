@@ -12,91 +12,124 @@
 
 void GetCropData(Plant *CROP, char *cropfile)
 {
-  AFGEN *Table[NR_TABLES_CRP], *start;
-  
-  int i, c;
-  float Variable[NR_VARIABLES_CRP], XValue, YValue;
-  char x[2], xx[2],  word[NR_VARIABLES_CRP];
-  FILE *fq;
-  
-  
- if ((fq = fopen(cropfile, "rt")) == NULL)
-    {fprintf(stderr, "Cannot open input file.\n"); exit(0);}
+    AFGEN *Table[NR_TABLES_CRP], *start;
 
- i=0;
-  while ((c=fscanf(fq,"%s",word)) != EOF) 
-  {
-    if (!strcmp(word, CropParam[i])) {
-        while ((c=fgetc(fq)) !='=');
-	fscanf(fq,"%f",  &Variable[i]);
-	i++; 
-       }  
-  }
+    int i, c, count;
+    float Variable[NR_VARIABLES_CRP], XValue, YValue;
+    char x[2], xx[2],  word[NR_VARIABLES_CRP];
+    FILE *fq;
 
-  if (i!= NR_VARIABLES_CRP)
-  {
+
+    if ((fq = fopen(cropfile, "rt")) == NULL)
+    {
+        fprintf(stderr, "Cannot open input file.\n"); 
+        exit(0);
+    }
+
+    i=0;
+    count = 0;
+    while (strcmp(CropParam[i],"NULL")) 
+    {
+        while ((c=fscanf(fq,"%s",word)) != EOF )
+        {
+            if (!strcmp(word, CropParam[i])) 
+            {
+                while ((c=fgetc(fq)) !='=');
+                fscanf(fq,"%f",  &Variable[i]);
+                i++;
+                count++;
+            }
+        }  
+        rewind(fq);
+        if(strcmp(CropParam[i],"NULL")) 
+            i++;
+    }
+
+
+ if  (count == NR_VARIABLES_CRP  || count == NR_VARIABLES_CRP - 2)
+     ;
+ else
+ {
     fprintf(stderr, "Something wrong with the Crop variables.\n"); 
     exit(0);
   }
  
   rewind(fq);  
   
-  //CROP = malloc(sizeof(Plant));
   FillCropVariables(CROP, Variable);
 
-  i=0;
-  while ((c=fscanf(fq,"%s",word)) != EOF) 
+  i = 0;
+  count = 0;
+  while (strcmp(CropParam2[i],"NULL")) 
   {
-    if (!strcmp(word, CropParam2[i])) {
-        Table[i] = start= malloc(sizeof(AFGEN));
-	fscanf(fq,"%s %f %s  %f", x, &Table[i]->x, xx, &Table[i]->y);
-        Table[i]->next = NULL;				     
-			       
-	while ((c=fgetc(fq)) !='\n');
-	while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  {
-	    Table[i]->next = malloc(sizeof(AFGEN));
-            Table[i] = Table[i]->next; 
-            Table[i]->next = NULL;
-	    Table[i]->x = XValue;
-	    Table[i]->y = YValue;
-	    
-	    while ((c=fgetc(fq)) !='\n');
-	    }
-        /* Go back to beginning of the table */
-        Table[i] = start;
-	i++; 
-       }      
+    while ((c=fscanf(fq,"%s",word)) != EOF) 
+    {
+      if (!strcmp(word, CropParam2[i])) {
+          Table[i] = start= malloc(sizeof(AFGEN));
+          fscanf(fq,"%s %f %s  %f", x, &Table[i]->x, xx, &Table[i]->y);
+          Table[i]->next = NULL;				     
+
+          while ((c=fgetc(fq)) !='\n');
+          while (fscanf(fq," %f %s  %f",  &XValue, xx, &YValue) > 0)  {
+              Table[i]->next = malloc(sizeof(AFGEN));
+              Table[i] = Table[i]->next; 
+              Table[i]->next = NULL;
+              Table[i]->x = XValue;
+              Table[i]->y = YValue;
+
+              while ((c=fgetc(fq)) !='\n');
+              }
+          /* Go back to beginning of the table */
+          Table[i] = start;
+          i++;
+          count++;
+         }      
+    }
+    rewind(fq);
+    if(strcmp(CropParam2[i],"NULL"))
+        i++;
   }
 
   fclose(fq);
   
-  if (i!= NR_TABLES_CRP) 
+  if (count == NR_TABLES_CRP || count == NR_TABLES_CRP - 1)
+      ;
+  else
   {
     fprintf(stderr, "Something wrong with the Crop tables.\n"); 
     exit(0);
   } 
   
-  CROP->prm.DeltaTempSum         = Table[0];
-  CROP->prm.SpecificLeaveArea    = Table[1];
-  CROP->prm.SpecificStemArea     = Table[2];
-  CROP->prm.KDiffuseTb           = Table[3];
-  CROP->prm.EFFTb                = Table[4];
-  CROP->prm.MaxAssimRate         = Table[5];
-  CROP->prm.FactorAssimRateTemp  = Table[6];
-  CROP->prm.FactorGrossAssimTemp = Table[7];
-  CROP->prm.CO2AMAXTB            = Table[8];
-  CROP->prm.CO2EFFTB             = Table[9];
-  CROP->prm.CO2TRATB             = Table[10];
-  CROP->prm.FactorSenescence     = Table[11];
-  CROP->prm.Roots                = Table[12];
-  CROP->prm.Leaves               = Table[13];
-  CROP->prm.Stems                = Table[14];
-  CROP->prm.Storage              = Table[15];
-  CROP->prm.DeathRateStems       = Table[16];
-  CROP->prm.DeathRateRoots       = Table[17]; 
-  CROP->prm.N_MaxLeaves          = Table[18];
-  CROP->prm.P_MaxLeaves          = Table[19];
-  CROP->prm.K_MaxLeaves          = Table[20];
+  if (CROP->prm.IdentifyAnthesis < 2)
+  {
+     CROP->prm.VernalizationRate    = NULL;
+  }
+  else
+  {
+      CROP->prm.VernalizationRate    = Table[0];
+  } 
+  
+  CROP->prm.DeltaTempSum         = Table[1];
+  CROP->prm.SpecificLeaveArea    = Table[2];
+  CROP->prm.SpecificStemArea     = Table[3];
+  CROP->prm.KDiffuseTb           = Table[4];
+  CROP->prm.EFFTb                = Table[5];
+  CROP->prm.MaxAssimRate         = Table[6];
+  CROP->prm.FactorAssimRateTemp  = Table[7];
+  CROP->prm.FactorGrossAssimTemp = Table[8];
+  CROP->prm.CO2AMAXTB            = Table[9];
+  CROP->prm.CO2EFFTB             = Table[10];
+  CROP->prm.CO2TRATB             = Table[11];
+  CROP->prm.FactorSenescence     = Table[12];
+  CROP->prm.Roots                = Table[13];
+  CROP->prm.Leaves               = Table[14];
+  CROP->prm.Stems                = Table[15];
+  CROP->prm.Storage              = Table[16];
+  CROP->prm.DeathRateStems       = Table[17];
+  CROP->prm.DeathRateRoots       = Table[18]; 
+  CROP->prm.N_MaxLeaves          = Table[19];
+  CROP->prm.P_MaxLeaves          = Table[20];
+  CROP->prm.K_MaxLeaves          = Table[21];
   
   CROP->Emergence = 0;
   CROP->TSumEmergence = 0.;
@@ -119,6 +152,7 @@ void GetCropData(Plant *CROP, char *cropfile)
   CROP->st.leaves  = 0.;
   CROP->st.storage = 0.;
   CROP->st.LAIExp  = 0.;
+  CROP->st.vernalization = 0.;
   
   /* Set the initial nutrient states to zero*/
   CROP->N_st.leaves = 0.;
