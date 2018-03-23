@@ -10,6 +10,19 @@
 /* ---------------------------------------------------------------*/
 /*  function sweaf()                                              */
 /*  Purpose: Calculates the Soil Water Easily Available Fraction  */
+/*                                                                */
+/* Chapter 20 in documentation WOFOST Version 4.1 (1988)          */
+/*                                                                */
+/*    The fraction of easily available soil water between         */
+/*    field capacity and wilting point is a function of the       */
+/*    potential evapotranspiration rate (for a closed canopy)     */
+/*    in cm/day, ET0, and the crop group number, CGNR (from       */
+/*    1 (=drought-sensitive) to 5 (=drought-resistent)). The      */
+/*    function SWEAF describes this relationship given in tabular */
+/*    form by Doorenbos & Kassam (1979) and by Van Keulen & Wolf  */
+/*    (1986; p.108, table 20).                                    */
+/*    Original fortran version: D.M. Jansen and C.A. van Diepen,  */
+/*    October 1986.                                               */
 /* ---------------------------------------------------------------*/ 
 float sweaf(){
     float sweaf; 
@@ -35,6 +48,9 @@ void EvapTra() {
     float SoilMoistureAeration;
     float SoilWatDepletion;
     
+    /* crop specific correction on potential evapotranspiration rate */
+    Penman.ET0 = Penman.ET0 * Crop->prm.CorrectionTransp;
+    
     KDiffuse = Afgen(Crop->prm.KDiffuseTb, &(Crop->DevelopmentStage));      
     Evtra.MaxEvapWater = Penman.E0 * exp(-0.75 * KDiffuse * Crop->st.LAI);
     Evtra.MaxEvapSoil  = max(0., Penman.ES0 * exp(-0.75 * KDiffuse * Crop->st.LAI));
@@ -44,7 +60,7 @@ void EvapTra() {
        
     SoilWatDepletion = sweaf();
     CriticalSoilMoisture = (1. - SoilWatDepletion)*
-            (WatBal->ct.MoistureFC-WatBal->ct.MoistureWP) + WatBal->ct.MoistureWP;
+            (WatBal->ct.MoistureFC - WatBal->ct.MoistureWP) + WatBal->ct.MoistureWP;
     
     /* Transpiration reduction in case of water shortage */
     MoistureStress = limit(0.,1.,(WatBal->st.Moisture - WatBal->ct.MoistureWP)/
@@ -56,7 +72,7 @@ void EvapTra() {
         SoilMoistureAeration = WatBal->ct.MoistureSAT - WatBal->ct.CriticalSoilAirC;
         
         /* Count days since start oxygen shortage (up to 4 days) */
-        if (WatBal->SoilMoisture >= SoilMoistureAeration) {
+        if (WatBal->st.Moisture >= SoilMoistureAeration) {
             Crop->DaysOxygenStress = min(Crop->DaysOxygenStress++, 4.);
         }
         else 
@@ -65,7 +81,7 @@ void EvapTra() {
         }
         
         /* Maximum reduction reached after 4 days */
-        MaxReductionOxygenStress = limit (0.,1.,(WatBal->ct.MoistureSAT - WatBal->SoilMoisture)/
+        MaxReductionOxygenStress = limit (0.,1.,(WatBal->ct.MoistureSAT - WatBal->st.Moisture)/
                 (WatBal->ct.MoistureSAT - SoilMoistureAeration));
         
         OxygenStress   = MaxReductionOxygenStress + 

@@ -20,6 +20,8 @@ void Growth(float NewPlantMaterial)
     float Fraction_lv;
     float Fraction_st;
     float Fraction_so;
+    
+    float RootGrowth;
         
     /* Water stress is more severe as compared to Nitrogen stress and */
     /* partitioning will follow the original assumptions of LINTUL2   */     
@@ -59,6 +61,14 @@ void Growth(float NewPlantMaterial)
     Crop->rt.leaves  = Crop->rt.leaves -  Crop->drt.leaves;
 	
     Crop->RootDepth_prev = Crop->RootDepth;
-    Crop->RootDepth = min(Crop->prm.MaxRootingDepth - Crop->RootDepth,
+    
+    /* No Root growth if no assimilates are partitioned to the roots or if */
+    /* the crop has no airducts and the roots are close to the groundwater */
+    if (Fraction_ro <= 0.0 || (!Crop->prm.Airducts && Site->GroundwaterDepth - Crop->RootDepth < 10.))
+        RootGrowth = 0.;
+    else
+        RootGrowth = min(Crop->prm.MaxRootingDepth - Crop->RootDepth,
                 Crop->prm.MaxIncreaseRoot*Step);
+    
+     Crop->RootDepth += RootGrowth;
 }	

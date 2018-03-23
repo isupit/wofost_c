@@ -68,9 +68,9 @@ void FillCropVariables(Plant *CROP, float *Variable)
     
     /** Rooting **/
     /** Convert cm to mm */
-    CROP->prm.InitRootingDepth         = 10. * Variable[31];
-    CROP->prm.MaxIncreaseRoot          = 10. * Variable[32];
-    CROP->prm.MaxRootingDepth          = 10. * Variable[33];
+    CROP->prm.InitRootingDepth         = Variable[31];
+    CROP->prm.MaxIncreaseRoot          = Variable[32];
+    CROP->prm.MaxRootingDepth          = Variable[33];
 
     /** Nutrients  **/
     CROP->prm.DyingLeaves_NPK_Stress   = Variable[34];

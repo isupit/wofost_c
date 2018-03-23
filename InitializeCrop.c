@@ -53,6 +53,7 @@ void InitializeCrop()
     Crop->st.leaves    = InitialShootWeight * Afgen(Crop->prm.Leaves, &(Crop->DevelopmentStage));
     Crop->st.storage   = InitialShootWeight * Afgen(Crop->prm.Storage, &(Crop->DevelopmentStage));
 
+    /* Adapt the maximum rooting depth */
     Crop->prm.MaxRootingDepth = max(Crop->prm.InitRootingDepth, min(Crop->prm.MaxRootingDepth,
          Site->SoilLimRootDepth));
 
@@ -74,7 +75,7 @@ void InitializeCrop()
     /* Crop death rates set to zero */
     Crop->drt.leaves = 0.;
     Crop->drt.roots  = 0.;
-    Crop-> drt.stems = 0.;
+    Crop->drt.stems  = 0.;
     
     /* Emergence true */
     Crop->Emergence = 1;

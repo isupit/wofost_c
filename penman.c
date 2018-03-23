@@ -88,9 +88,10 @@ void CalcPenman()
    
     /* Penman formula (1948)                */
     /* Ensure reference evaporation >= 0.   */
-    Penman.E0  = max(0., (delta*Rnw + Gamma*Ea)/(delta + Gamma));
-    Penman.ES0 = max(0., (delta*Rns + Gamma*Ea)/(delta + Gamma));
-    Penman.ET0 = max(0., (delta*Rnc + Gamma*Eac)/(delta + Gamma));
+    /* Convert to cm/day                    */
+    Penman.E0  = max(0., 0.1 * (delta*Rnw + Gamma*Ea)/(delta + Gamma));
+    Penman.ES0 = max(0., 0.1 * (delta*Rns + Gamma*Ea)/(delta + Gamma));
+    Penman.ET0 = max(0., 0.1 * (delta*Rnc + Gamma*Eac)/(delta + Gamma));
     
     //printf("%4d %6.2f %6.2f %6.2f\n", Day, Penman.E0, Penman.ES0, Penman.ET0 );
     

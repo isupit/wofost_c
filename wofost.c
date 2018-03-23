@@ -17,7 +17,8 @@ int main() {
     int Start;
     int CycleLength   = 300;
     int count;
-
+    //int dummy;
+    
     char path[100];
     char cropfile[100];
     char soilfile[100];
@@ -146,27 +147,30 @@ int main() {
             }
             
             if (Day >= Start && Crop->Emergence == 1)
-            {      
+            {   
                 if (Crop->DevelopmentStage <= Crop->prm.DevelopStageHarvest && Crop->GrowthDay < CycleLength) 
                 {
                     /* Rate calculations */
-                    RateCalculationCrop();
                     RateCalulationWatBal();
                     RateCalcultionNutrients();
-
+                    RateCalculationCrop();
+                    
                     /* Calculate LAI and DVS */
                     Crop->st.LAI = LeaveAreaIndex();
                     Crop->DevelopmentStage = GetDevelopmentStage();
-                   
-                    /* State calculations */
-                    IntegrationCrop();
-                    IntegrationWatBal();
-                    IntegrationNutrients();
-                    
-                    fprintf(output[Grid->file],"%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f\n",
+                                       
+                    fprintf(output[Grid->file],"%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f,%7.2f,%7.3f,%7.2f,%7.1f\n",
                         simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
                         Day,Crop->st.stems,Crop->st.leaves,Crop->st.storage,
-                        Crop->st.LAI,Crop->DevelopmentStage);
+                        Crop->st.LAI,Crop->DevelopmentStage,WatBal->WaterStress,
+                        WatBal->st.Moisture,WatBal->rt.Infiltration,Rain[Day]);
+                    
+                    /* State calculations */
+                    IntegrationWatBal();
+                    IntegrationNutrients();
+                    IntegrationCrop();
+                    
+                    
                     
                     /* Update the number of days that the crop has grown*/
                     Crop->GrowthDay++;
