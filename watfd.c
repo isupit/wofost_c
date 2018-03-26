@@ -42,7 +42,7 @@ void InitializeWatBal()
     WatBal->st.RootZoneMoisture = WatBal->st.Moisture * Crop->RootDepth;
     
     /*  Soil evaporation, days since last rain */
-    WatBal->DaysSinceLastRain = 0.;
+    WatBal->DaysSinceLastRain = 1.;
     if (WatBal->st.Moisture <= (WatBal->ct.MoistureWP + 
             0.5*(WatBal->ct.MoistureFC - WatBal->ct.MoistureWP))) 
             WatBal->DaysSinceLastRain = 5.;

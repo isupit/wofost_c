@@ -33,9 +33,6 @@ void RateCalculationCrop()
     /* Assimilation */
     GrossAssimilation = DailyTotalAssimilation();
 
-    /* Establish WatBal.WaterStress */
-    EvapTra();
-
     /* Stress: either nutrient shortage or water shortage */
     Stress = min(Crop->NutrientStress, WatBal->WaterStress);
 

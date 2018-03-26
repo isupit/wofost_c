@@ -151,6 +151,7 @@ int main() {
                 if (Crop->DevelopmentStage <= Crop->prm.DevelopStageHarvest && Crop->GrowthDay < CycleLength) 
                 {
                     /* Rate calculations */
+                    EvapTra();
                     RateCalulationWatBal();
                     RateCalcultionNutrients();
                     RateCalculationCrop();
