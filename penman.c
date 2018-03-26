@@ -21,6 +21,11 @@
 /*  Purpose: Calculation of ETO evapotranspiration     mm d-1           */
 /*                          ESO soil evaporation       mm d-1           */
 /*                          EO  open water evaporation mm d-1           */
+/*                                                                      */
+/*     Originally written in Fortran by:                                */
+/*         I.G.A.M. Noy and C.A. van Diepen, September 1986             */
+/*         revised van Kraalingen, April, van Diepen, October 1991      */
+/*         revised van Kraalingen, and Allard de Wit, Sep 2011          */
 /* ---------------------------------------------------------------------*/
 
 void CalcPenman()

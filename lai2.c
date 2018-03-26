@@ -22,7 +22,7 @@ float LeaveAreaIndex()
         Crop->LeaveProperties = Crop->LeaveProperties->next;
     }
 
-    /* Restore the initial address */
+    /* Return to the initial address */
     Crop->LeaveProperties = LeaveProperties; 
  
     /* Return Green Area Index which will be used as LAI */     

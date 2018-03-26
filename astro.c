@@ -12,6 +12,10 @@
 /* ---------------------------------------------------------------------*/
 /*  function Astro()                                                    */
 /*  Purpose: Calculation of the astronomical parameters used in Wofost  */
+/*                                                                      */
+/*  Originally written in Fortran by:                                   */
+/*         Daniel van Kraalingen, April 1991                            */
+/*         revised Allard de Wit, January 2011                          */
 /* ---------------------------------------------------------------------*/
 
 int Astro()
@@ -23,7 +27,7 @@ int Astro()
     float FractionDiffuseRad;
     float AngotRadiation;
     
-    if (Latitude > 67. || Latitude < 0.) return 0;  
+    if (fabsf(Latitude) > 90.) return 0;  
 
     /* We start at Day= 1, we do not use Day = 0 */
     Declination    = -asin(sin(23.45*RAD)*cos(2.*PI*(float)(Day+10.)/365.));
@@ -33,31 +37,42 @@ int Astro()
     CosLD = cos(RAD*Latitude)*cos(Declination);
     AOB   = SinLD/CosLD;
     
-    Daylength    = 12.0*(1.+2.*asin(AOB)/PI);
-    PARDaylength = 12.0*(1.+2.*asin((-sin(ANGLE*RAD)+SinLD)/CosLD)/PI);
+   /* Astronomical day length */
+    Daylength = max(0,min(24.,12.0*(1.+2.*asin(AOB)/PI)));
     
-     /* integrals of sine of solar height */
-     DSinB  = 3600.*(Daylength*SinLD+(24./PI)*CosLD*sqrt(1.-AOB*AOB));
-     DSinBE = 3600.*(Daylength*(SinLD+0.4*(SinLD*SinLD + CosLD*CosLD*0.5))+
-		 12.*CosLD*(2.+3.*0.4*SinLD)*sqrt(1.-AOB*AOB)/PI);
+    /* Photoactive day length */
+    PARDaylength = max(0,min(24.,12.0*(1.+2.*asin((-sin(ANGLE*RAD)+SinLD)/CosLD)/PI)));
+    
+    /* Integrals of sine of solar height */
+    if (AOB <= 1.0)
+    {   
+        DSinB  = 3600.*(Daylength*SinLD+(24./PI)*CosLD*sqrt(1.-AOB*AOB));
+        DSinBE = 3600.*(Daylength*(SinLD+0.4*(SinLD*SinLD + CosLD*CosLD*0.5))+
+            12.*CosLD*(2.+3.*0.4*SinLD)*sqrt(1.-AOB*AOB)/PI);
+    }  
+    else
+    {
+        DSinB  = 3600.*(Daylength*SinLD);
+        DSinBE = 3600.*(Daylength*(SinLD+0.4*(SinLD*SinLD + CosLD*CosLD*0.5)));
+    }
+    
+    /*  Extraterrestrial radiation and atmospheric transmission */
+    AngotRadiation  = SolarConstant*DSinB;
+    AtmosphTransm   = Radiation[Day]/AngotRadiation;
 
-     /*  extraterrestrial radiation and atmospheric transmission */
-     AngotRadiation  = SolarConstant*DSinB;
-     AtmosphTransm   = Radiation[Day]/AngotRadiation;
+    if (AtmosphTransm > 0.75)
+       FractionDiffuseRad = 0.23;
+  
+    if (AtmosphTransm <= 0.75 && AtmosphTransm > 0.35)
+       FractionDiffuseRad = 1.33-1.46 * AtmosphTransm;
+  
+    if (AtmosphTransm <= 0.35 && AtmosphTransm > 0.07) 
+       FractionDiffuseRad = 1.-2.3*pow((AtmosphTransm-0.07), 2.);
+  
+    if (AtmosphTransm < 0.07)  
+       FractionDiffuseRad = 1.0;
+    
+    DiffRadPP = 0.5 * FractionDiffuseRad * AtmosphTransm * SolarConstant;
 
-     if (AtmosphTransm > 0.75)
-        FractionDiffuseRad = 0.23;
-  
-     if (AtmosphTransm <= 0.75 && AtmosphTransm > 0.35)
-        FractionDiffuseRad = 1.33-1.46 * AtmosphTransm;
-  
-     if (AtmosphTransm <= 0.35 && AtmosphTransm > 0.07) 
-        FractionDiffuseRad = 1.-2.3*pow((AtmosphTransm-0.07), 2.);
-  
-     if (AtmosphTransm < 0.07)  
-        FractionDiffuseRad = 1.0;
-     
-     DiffRadPP = 0.5 * FractionDiffuseRad * AtmosphTransm * SolarConstant;
-
-     return 1;
+    return 1;
 }

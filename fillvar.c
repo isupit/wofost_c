@@ -113,6 +113,11 @@ void FillCropVariables(Plant *CROP, float *Variable)
     }
 }
 
+/* ---------------------------------------------------------------------------*/
+/*  function FillSoilVariables(float *Variable)                               */
+/*  Purpose: Fill the soil parameters that are read by GetSoilData()          */
+/* ---------------------------------------------------------------------------*/
+
 void FillSoilVariables(Soil *SOIL, float *Variable) {
     int i;
     
@@ -131,6 +136,12 @@ void FillSoilVariables(Soil *SOIL, float *Variable) {
         Variable[i]= 0.;
     }
 }
+
+
+/* ---------------------------------------------------------------------------*/
+/*  function FillSiteVariables(float *Variable)                               */
+/*  Purpose: Fill the site parameters that are read by GetSiteData()          */
+/* ---------------------------------------------------------------------------*/
 
 void FillSiteVariables(Field *SITE, float *Variable) {
     int i;
@@ -153,6 +164,12 @@ void FillSiteVariables(Field *SITE, float *Variable) {
         Variable[i]= 0.;
     }
 }
+
+
+/* ---------------------------------------------------------------------------*/
+/*  function FillManageVariables(float *Variable)                             */
+/*  Purpose: Fill the management parameters that are read by GetManagement()  */
+/* ---------------------------------------------------------------------------*/
 
 void FillManageVariables(Management *MNG, float *Variable) {
     int i;

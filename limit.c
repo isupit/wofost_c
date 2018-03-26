@@ -16,10 +16,7 @@ float notnul(float x)
 
 float insw(float x1, float x2, float x3)
 {
-    if(x1 < 0.)
-        return x2;
-    else
-        return x3;
+    return ((x1 < 0) ? x2 : x3);
 }
 
 
@@ -34,13 +31,11 @@ int leap_year(int year)
 
 float min(float a, float b)
 {
-    if (a < b) return a;
-    else return b;
-   }
+    return ((a < b) ? a : b);
+}
 
 
 float max(float a, float b)
 {
-    if (a > b) return a;
-    else return b;
- }
+    return ((a > b) ? a : b);
+}

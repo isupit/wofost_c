@@ -191,7 +191,7 @@ int main() {
     mktime(&simTime);
     }
      
-    /* Go back to the beginning of the list */
+    /* Return to the beginning of the list */
     Grid = initial;
 
     /* Close the output files and free the allocated memory */
