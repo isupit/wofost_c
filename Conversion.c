@@ -19,5 +19,5 @@ float Conversion(float NetAssimilation)
     shoots += Afgen(Crop->prm.Storage, &(Crop->DevelopmentStage))/Crop->prm.ConversionStorage;
 
     /* conversion */
-return NetAssimilation/(shoots*(1-fr)+root);
+    return NetAssimilation/(shoots*(1-fr)+root);
 }

@@ -4,11 +4,11 @@
 #include "wofost.h"
 #include "penman.h"
 
-/* ----------------------------------------------------------------------*/
-/*  function DyingLeaves()                                               */
-/*  Purpose: To compute the amount of dying leaves as result of shading, */
-/*  (i.e. high LAI), stress or age                                       */
-/* ----------------------------------------------------------------------*/
+/* ------------------------------------------------------------------------*/
+/*  function DyingLeaves()                                                 */
+/*  Purpose: To compute the amount of dying leaves as a result of shading, */
+/*  (i.e. high LAI), stress or age                                         */
+/* ------------------------------------------------------------------------*/
 
 float DyingLeaves()
 {
