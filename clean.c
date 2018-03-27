@@ -97,7 +97,7 @@ void Clean(SimUnit *Grid)
         Grid->crp->prm.FactorGrossAssimTemp = NULL;
 
 
-         while(Grid->crp->prm.CO2AMAXTB)
+        while(Grid->crp->prm.CO2AMAXTB)
         {
             head = Grid->crp->prm.CO2AMAXTB;
             Grid->crp->prm.CO2AMAXTB = Grid->crp->prm.CO2AMAXTB->next;
@@ -137,7 +137,7 @@ void Clean(SimUnit *Grid)
         Grid->crp->prm.FactorSenescence = NULL;
 
 
-         while(Grid->crp->prm.Roots)
+        while(Grid->crp->prm.Roots)
         {
             head = Grid->crp->prm.Roots;
             Grid->crp->prm.Roots = Grid->crp->prm.Roots->next;
@@ -197,7 +197,7 @@ void Clean(SimUnit *Grid)
         Grid->crp->prm.DeathRateRoots = NULL;
 
 
-         while(Grid->crp->prm.N_MaxLeaves)
+        while(Grid->crp->prm.N_MaxLeaves)
         {
             head = Grid->crp->prm.N_MaxLeaves;
             Grid->crp->prm.N_MaxLeaves = Grid->crp->prm.N_MaxLeaves->next;
@@ -207,7 +207,7 @@ void Clean(SimUnit *Grid)
         Grid->crp->prm.N_MaxLeaves = NULL;
 
 
-         while(Grid->crp->prm.P_MaxLeaves)
+        while(Grid->crp->prm.P_MaxLeaves)
         {
             head = Grid->crp->prm.P_MaxLeaves;
             Grid->crp->prm.P_MaxLeaves = Grid->crp->prm.P_MaxLeaves->next;
@@ -217,7 +217,7 @@ void Clean(SimUnit *Grid)
         Grid->crp->prm.P_MaxLeaves = NULL;
 
 
-         while(Grid->crp->prm.K_MaxLeaves)
+        while(Grid->crp->prm.K_MaxLeaves)
         {
             head = Grid->crp->prm.K_MaxLeaves;
             Grid->crp->prm.K_MaxLeaves = Grid->crp->prm.K_MaxLeaves->next;
@@ -227,7 +227,7 @@ void Clean(SimUnit *Grid)
         Grid->crp->prm.K_MaxLeaves = NULL;
 
 
-          while(Grid->soil->VolumetricSoilMoisture)
+        while(Grid->soil->VolumetricSoilMoisture)
         {
             head = Grid->soil->VolumetricSoilMoisture;
             Grid->soil->VolumetricSoilMoisture = Grid->soil->VolumetricSoilMoisture->next;
@@ -237,7 +237,7 @@ void Clean(SimUnit *Grid)
         Grid->soil->VolumetricSoilMoisture = NULL;
 
 
-         while(Grid->soil->HydraulicConductivity)
+        while(Grid->soil->HydraulicConductivity)
         {
             head = Grid->soil->HydraulicConductivity;
             Grid->soil->HydraulicConductivity = Grid->soil->HydraulicConductivity->next;
@@ -306,7 +306,7 @@ void Clean(SimUnit *Grid)
         Grid->mng->K_Uptake_frac = NULL;
 
 
-         while(Grid->mng->Irrigation)        
+        while(Grid->mng->Irrigation)        
         {
             head = Grid->mng->Irrigation;
             Grid->mng->Irrigation = Grid->mng->Irrigation->next;
