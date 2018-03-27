@@ -9,12 +9,12 @@
 #include "penman.h"
 #include "wofost.h"
 
-#define PSYCON  0.67    /* psychrometric instrument constant (mbar/Celsius-1)*/
-#define REFCFW  0.05    /* albedo for a water surface                        */
-#define REFCFS  0.15    /* albedo for a soil surface                         */
-#define REFCFC  0.25    /* albedo for a  canopy                              */
-#define LHVAP   2.45e6  /* latent heat of evaporation of water (J/kg=J/mm)   */
-#define STBC    4.9e-3  /* Stefan Boltzmann constant (J/m2/d/K4) */
+#define PSYCON  0.67    // psychrometric instrument constant (mbar/Celsius-1)
+#define REFCFW  0.05    // albedo for a water surface                        
+#define REFCFS  0.15    // albedo for a soil surface                         
+#define REFCFC  0.25    // albedo for a  canopy                              
+#define LHVAP   2.45e6  // latent heat of evaporation of water (J/kg=J/mm)  
+#define STBC    4.9e-3  // Stefan Boltzmann constant (J/m2/d/K4) */
 
 /* ---------------------------------------------------------------------*/
 /*  function CalcPenman()                                               */
@@ -46,9 +46,9 @@ void CalcPenman()
     float VapourP; 
     float SaturatedVap;
             
-    /* Preparatory calculations mean daily temperature and temperature    */
-    /* difference (Celsius) coefficient Bu in wind function, dependent on */ 
-    /* temperature difference                                             */
+    /* Preparatory calculations: mean daily temperature, temperature difference */
+    /* (Celsius) and the Bu coefficient Bu of the wind function (depends  on    */ 
+    /* temperature difference)                                                  */
     
     Tmpa  = (Tmin[Day] + Tmax[Day])/2.;
     Tdif  = Tmax[Day] - Tmin[Day];
@@ -56,7 +56,7 @@ void CalcPenman()
 
     /* Barometric pressure (mbar)             */
     /* Psychrometric constant (mbar/Celsius)  */
-    Pbar  = 1013.*exp (-0.034*Altitude/(Tmpa+273.));
+    Pbar  = 1013.*exp (-0.034*Altitude/(Tmpa + 273.));
     Gamma = PSYCON * Pbar/1013.;
 
 
