@@ -17,7 +17,6 @@ int main() {
     int Start;
     int CycleLength   = 300;
     int count;
-    //int dummy;
     
     char path[100];
     char cropfile[100];
@@ -90,7 +89,7 @@ int main() {
         }
     }
     
-    /* close the input file */
+    /* Close the input file */
     fclose(ifp);
     
     /* Set Grid back to the initial address */

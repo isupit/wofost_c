@@ -45,7 +45,7 @@ void RateCalculationCrop()
     /* Conversion */
     GrossGrowth = Conversion(TotalAssimilation-Maintenance); 
 
-    /* Growth of root, stems, leaves and storage organs */
+    /* Growth of roots, stems, leaves and storage organs */
     Growth(GrossGrowth);
     
     /* Calculate vernalization rate in case the switch is set */
