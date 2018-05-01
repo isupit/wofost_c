@@ -186,10 +186,11 @@ int main() {
         /* Update time */
         simTime.tm_mday++;
         mktime(&simTime);
-        
-        /* Return to the beginning of the list */
-        Grid = initial;
-    }
+    }    
+    
+    /* Return to the beginning of the list */
+     Grid = initial;
+    
 
     /* Close the output files and free the allocated memory */
     while(Grid)
