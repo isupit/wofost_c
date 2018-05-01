@@ -170,8 +170,6 @@ int main() {
                     IntegrationNutrients();
                     IntegrationCrop();
                     
-                    
-                    
                     /* Update the number of days that the crop has grown*/
                     Crop->GrowthDay++;
                 }
@@ -185,13 +183,13 @@ int main() {
             Grid = Grid->next;
         }
     
-    /* Update time */
-    simTime.tm_mday++;
-    mktime(&simTime);
+        /* Update time */
+        simTime.tm_mday++;
+        mktime(&simTime);
+        
+        /* Return to the beginning of the list */
+        Grid = initial;
     }
-     
-    /* Return to the beginning of the list */
-    Grid = initial;
 
     /* Close the output files and free the allocated memory */
     while(Grid)
