@@ -116,12 +116,20 @@ float DailyTotalAssimilation()
 /*-----------------------------------------------------------------------------*/
 float Correct(float Assimilation)
 {
-    int PreviousDay, Counter;
+    int PreviousDay;
+    int Counter;
+    int number = 7;
     float TminLowAvg = 0.;
+    
 
+    if (Crop->GrowthDay < 6)
+    {
+        number = Crop->GrowthDay;
+    }
+    
     Counter = 0;
     PreviousDay = Day;
-    while (PreviousDay >= 0 && Counter < 7)
+    while (PreviousDay >= 0 && Counter < number)
     {
       TminLowAvg += Tmin[PreviousDay--]; 
       Counter++;
