@@ -25,7 +25,7 @@ TSUMEM   = 70.     ! temperature sum from sowing to emergence [cel d]
 
 ** phenology
 IDSL     =   0      ! indicates whether pre-anthesis development depends
-                    ! on temp. (=0), daylength (=1) , or both (=2)
+                    ! on temp. (=0), temp. + daylength (=1) , or temp. + daylength + vernalisation (=2)
 DLO      =   1.0    ! optimum daylength for development [hr]
 DLC      =   0.0    ! critical daylength (lower threshold) [hr]
 TSUM1    = 730.     ! temperature sum from emergence to anthesis [cel d]
@@ -78,7 +78,7 @@ TMNFTB   =   5.00,    0.00,     ! red. factor of gross assim. rate
             
 CO2 = 360.
              
-CO2AMAXTB       =  40., 0.00,      ! multiplication factor for AMAX 
+CO2AMAXTB  =  40., 0.00,        ! multiplication factor for AMAX 
              360.,  1.00,       ! to account for an increasing CO2 concentration
              720.,  1.07, 
             1000.,  1.10,

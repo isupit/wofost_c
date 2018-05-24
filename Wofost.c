@@ -40,7 +40,7 @@ int main() {
     }
     
     count = 0;
-    while (fscanf(ifp,"%7s %10s %7s %12s %10s %10s %2s %d %d" ,
+    while (fscanf(ifp,"%7s %11s %7s %12s %10s %10s %2s %d %d" ,
             path, cf, sf, mf, site, dateString, place, &Start, &Emergence)
             != EOF) 
     {    
