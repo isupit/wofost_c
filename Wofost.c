@@ -159,11 +159,11 @@ int main() {
                     Crop->st.LAI = LeaveAreaIndex();
                     Crop->DevelopmentStage = GetDevelopmentStage();
                                        
-                    fprintf(output[Grid->file],"%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f,%7.2f,%7.3f,%7.2f,%7.1f\n",
+                    fprintf(output[Grid->file],"%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f,%7.2f,%7.3f,%7.2f,%7.1f,,%7.2f,%7.1f\n",
                         simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
                         Day,Crop->st.stems,Crop->st.leaves,Crop->st.storage,
                         Crop->st.LAI,Crop->DevelopmentStage,WatBal->WaterStress,
-                        WatBal->st.Moisture,WatBal->rt.Infiltration,Rain[Day]);
+                        WatBal->st.Moisture,WatBal->rt.Infiltration,Rain[Day],Crop->NutrientStress, WatBal->WaterStress);
                     
                     /* State calculations */
                     IntegrationWatBal();
