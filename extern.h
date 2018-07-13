@@ -70,7 +70,6 @@ extern void FillSoilVariables();
 extern void GetManagement();
 extern void FillManageVariables();
 
-
 /* Water balance */
 extern void InitializeWatBal();
 extern void RateCalulationWatBal();

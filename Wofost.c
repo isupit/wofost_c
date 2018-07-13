@@ -61,32 +61,24 @@ int main() {
         if (initial == NULL) 
         {
             Grid = initial =  malloc(sizeof(SimUnit));
-            GetCropData(Grid->crp   = malloc(sizeof(Plant)), cropfile); 
-            GetSiteData(Grid->ste   = malloc(sizeof(Field)), sitefile);
-            GetManagement(Grid->mng = malloc(sizeof(Management)), management);
-            GetSoilData(Grid->soil  = malloc(sizeof(Soil)), soilfile);
-            
-            Grid->start = Start;
-            Grid->file = count++;
-            strcpy(Grid->name,cf);
-            Grid->emergence = Emergence;
-            Grid->next = NULL; 
         }
         else 
         {
             Grid->next = malloc(sizeof(SimUnit));
-            Grid = Grid->next;
-            GetCropData(Grid->crp   = malloc(sizeof(Plant)), cropfile); 
-            GetSiteData(Grid->ste   = malloc(sizeof(Field)), sitefile);
-            GetManagement(Grid->mng = malloc(sizeof(Management)), management);
-            GetSoilData(Grid->soil  = malloc(sizeof(Soil)), soilfile);
-            
-            Grid->start = Start;            // Start day (=day number)
-            Grid->file  = count++;          // number of elements in Grid carousel
-            strcpy(Grid->name,cf);          // Crop file name
-            Grid->emergence = Emergence;    // Start the simulations at emergence (1) or at sowing (0)
-            Grid->next = NULL;
+            Grid = Grid->next;  
         }
+        
+        GetCropData(Grid->crp   = malloc(sizeof(Plant)), cropfile); 
+        GetSiteData(Grid->ste   = malloc(sizeof(Field)), sitefile);
+        GetManagement(Grid->mng = malloc(sizeof(Management)), management);
+        GetSoilData(Grid->soil  = malloc(sizeof(Soil)), soilfile);
+
+        Grid->start = Start;            // Start day (=day number)
+        Grid->file  = count++;          // number of elements in Grid carousel
+        strcpy(Grid->name,cf);          // Crop file name
+        Grid->emergence = Emergence;    // Start the simulations at emergence (1) or at sowing (0)
+        Grid->next = NULL;
+
     }
     
     /* Close the input file */
