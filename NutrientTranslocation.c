@@ -50,7 +50,7 @@ void NutrientTranslocation()
     {
         Crop->N_rt.Transloc_lv = Crop->N_rt.storage * Avail_N_lv / Crop->N_rt.Transloc;
         Crop->N_rt.Transloc_st = Crop->N_rt.storage * Avail_N_st / Crop->N_rt.Transloc;
-        Crop->K_rt.Transloc_ro = Crop->N_rt.storage * Avail_N_rt / Crop->N_rt.Transloc;  
+        Crop->N_rt.Transloc_ro = Crop->N_rt.storage * Avail_N_rt / Crop->N_rt.Transloc;  
     }
     else
     {
