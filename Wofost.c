@@ -186,7 +186,7 @@ int main() {
     }    
     
     /* Return to the beginning of the list */
-     Grid = initial;
+    Grid = initial;
     
 
     /* Close the output files and free the allocated memory */

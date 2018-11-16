@@ -87,82 +87,13 @@ void InitializeNutrients()
     Site->st_N_mins = Mng->N_Mins;
     Site->st_P_mins = Mng->P_Mins;
     Site->st_K_mins = Mng->K_Mins;
-    
-    /* Set the crop nutrient rates to zero */
-    Crop->N_rt.Uptake = 0.;
-    Crop->P_rt.Uptake = 0.;
-    Crop->K_rt.Uptake = 0.; 
-
-    Crop->N_rt.Uptake_lv = 0.;
-    Crop->N_rt.Uptake_st = 0.;
-    Crop->N_rt.Uptake_ro = 0.;
-
-    Crop->P_rt.Uptake_lv = 0.;
-    Crop->P_rt.Uptake_st = 0.;
-    Crop->P_rt.Uptake_ro = 0.;
-
-    Crop->K_rt.Uptake_lv = 0.;
-    Crop->K_rt.Uptake_st = 0.;
-    Crop->K_rt.Uptake_ro = 0.;
-
-    Crop->N_rt.Transloc_lv = 0.;
-    Crop->N_rt.Transloc_st = 0.;
-    Crop->N_rt.Transloc_ro = 0.;
-
-    Crop->P_rt.Transloc_lv = 0.;
-    Crop->P_rt.Transloc_st = 0.;
-    Crop->P_rt.Transloc_ro = 0.;
-
-    Crop->K_rt.Transloc_lv = 0.;
-    Crop->K_rt.Transloc_st = 0.;
-    Crop->K_rt.Transloc_ro = 0.;
-     
-    Crop->N_rt.death_lv = 0.;
-    Crop->N_rt.death_st = 0.;
-    Crop->N_rt.death_ro = 0.;
-    
-    Crop->P_rt.death_lv = 0.;
-    Crop->P_rt.death_st = 0.;
-    Crop->P_rt.death_ro = 0.;
-    
-    Crop->K_rt.death_lv = 0.;
-    Crop->K_rt.death_st = 0.;
-    Crop->K_rt.death_ro = 0.;
-    
-    Crop->N_rt.leaves = 0.;
-    Crop->N_rt.stems  = 0.;
-    Crop->N_rt.roots  = 0.;
-    Crop->N_rt.storage= 0.;
-    
-    Crop->P_rt.leaves = 0.;
-    Crop->P_rt.stems  = 0.;
-    Crop->P_rt.roots  = 0.;
-    Crop->P_rt.storage= 0.;
-          
-    Crop->K_rt.leaves = 0.;
-    Crop->K_rt.stems  = 0.;
-    Crop->K_rt.roots  = 0.;
-    Crop->K_rt.storage= 0.;
-    
+       
     /* No nutrient stress at initialization */
     Crop->N_st.Indx = 1.;
     Crop->P_st.Indx = 1.;
     Crop->K_st.Indx = 1.;
     Crop->NPK_Indx  = 1.;
-    
-    /* No nutrient losses at initialization */
-    Crop->N_rt.death_lv = 0.;
-    Crop->N_rt.death_st = 0.;
-    Crop->N_rt.death_ro = 0.;
-   
-    Crop->P_rt.death_lv = 0.;
-    Crop->P_rt.death_st = 0.;
-    Crop->P_rt.death_ro = 0.;
-  
-    Crop->K_rt.death_lv = 0.;
-    Crop->K_rt.death_st = 0.;
-    Crop->K_rt.death_ro = 0.;
-    
+       
     /* Set the initial optimal leave concentrations to zero */
     Crop->N_st.Optimum_lv = 0;
     Crop->N_st.Optimum_st = 0;
