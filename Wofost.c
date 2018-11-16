@@ -141,8 +141,13 @@ int main() {
             {   
                 if (Crop->DevelopmentStage <= Crop->prm.DevelopStageHarvest && Crop->GrowthDay < CycleLength) 
                 {
-                    /* Rate calculations */
+                   /* Calculate the evapotranspiration */
                     EvapTra();
+                    
+                    /* Set all rates to zero */
+                    RatesToZero();
+                    
+                     /* Rate calculations */
                     RateCalulationWatBal();
                     RateCalcultionNutrients();
                     RateCalculationCrop();

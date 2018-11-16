@@ -54,6 +54,7 @@ extern void NutrientDemand();
 extern void SoilNutrientRates();
 extern void NutrientTranslocation();
 extern void RateCalcultionNutrients();
+extern void RatesToZero();
 
 
 /* Read data */

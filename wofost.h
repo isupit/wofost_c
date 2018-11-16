@@ -201,7 +201,6 @@ typedef struct RATES {
         float Percolation;
         float RootZoneMoisture;
         float Runoff;
-        float SurfaceStorage;
         float Transpiration;
         float WaterRootExt;
         } Rates;

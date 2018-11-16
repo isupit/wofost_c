@@ -60,42 +60,7 @@ void InitializeNutrients()
     Crop->K_st.death_lv = 0.;
     Crop->K_st.death_st = 0.;
     Crop->K_st.death_ro = 0.;
-    
-    /* No death rats at initialization */
-    Crop->N_rt.death_lv = 0.;
-    Crop->N_rt.death_st = 0.;
-    Crop->N_rt.death_ro = 0.;
-   
-    Crop->P_rt.death_lv = 0.;
-    Crop->P_rt.death_st = 0.;
-    Crop->P_rt.death_ro = 0.;
-  
-    Crop->K_rt.death_lv = 0.;
-    Crop->K_rt.death_st = 0.;
-    Crop->K_rt.death_ro = 0.;
-    
-    /* Set the initial demand rates */
-    Crop->N_rt.Demand_lv = 0.;
-    Crop->P_rt.Demand_lv = 0.;
-    Crop->K_rt.Demand_lv = 0.;
-
-    Crop->N_rt.Demand_st = 0.;
-    Crop->P_rt.Demand_st = 0.;
-    Crop->K_rt.Demand_st = 0.;
- 
-    Crop->N_rt.Demand_ro = 0.;
-    Crop->P_rt.Demand_ro = 0.;
-    Crop->K_rt.Demand_ro = 0.;
- 
-    Crop->N_rt.Demand_so = 0.;
-    Crop->P_rt.Demand_so = 0.;
-    Crop->K_rt.Demand_so = 0.;
-    
-    /* Set the initial translocation rates */
-    Crop->N_rt.Transloc = 0.;
-    Crop->P_rt.Transloc = 0.;
-    Crop->K_rt.Transloc = 0.;
-    
+       
     /* Set the initial uptake to zero*/
     Crop->N_st.Uptake    = 0.;
     Crop->N_st.Uptake_lv = 0.;
@@ -111,16 +76,6 @@ void InitializeNutrients()
     Crop->K_st.Uptake_lv = 0.;
     Crop->K_st.Uptake_st = 0.;
     Crop->K_st.Uptake_ro = 0.;
-            
-            
-    /* Set the soil nutrient rates to zero */
-    Site->rt_N_tot = 0.;
-    Site->rt_P_tot = 0.;
-    Site->rt_K_tot = 0.;
-
-    Site->rt_N_mins = 0.;
-    Site->rt_P_mins = 0.;
-    Site->rt_K_mins = 0.;
     
     day_fl = (float)Day;
     

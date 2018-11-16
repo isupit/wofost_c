@@ -38,9 +38,9 @@ void NutritionINDX()
 
         /* Residual N,P,K concentration in total vegetative living */
         /* above-ground biomass  (kg N,P,K kg-1 DM)                */
-        N_res = (Crop->st.leaves * Crop->prm.N_ResidualFrac_lv +Crop->st.stems * Crop->prm.N_ResidualFrac_st)/VegetativeMass;
-        P_res = (Crop->st.leaves * Crop->prm.P_ResidualFrac_lv +Crop->st.stems * Crop->prm.P_ResidualFrac_st)/VegetativeMass;
-        K_res = (Crop->st.leaves * Crop->prm.K_ResidualFrac_lv +Crop->st.stems * Crop->prm.K_ResidualFrac_st)/VegetativeMass;
+        N_res = (Crop->st.leaves * Crop->prm.N_ResidualFrac_lv + Crop->st.stems * Crop->prm.N_ResidualFrac_st)/VegetativeMass;
+        P_res = (Crop->st.leaves * Crop->prm.P_ResidualFrac_lv + Crop->st.stems * Crop->prm.P_ResidualFrac_st)/VegetativeMass;
+        K_res = (Crop->st.leaves * Crop->prm.K_ResidualFrac_lv + Crop->st.stems * Crop->prm.K_ResidualFrac_st)/VegetativeMass;
 
         N_opt_veg = (Crop->N_st.Optimum_lv + Crop->N_st.Optimum_st)/VegetativeMass;
         P_opt_veg = (Crop->P_st.Optimum_lv + Crop->P_st.Optimum_st)/VegetativeMass;

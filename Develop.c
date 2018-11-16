@@ -34,7 +34,7 @@ float GetDevelopmentStage(void)
         if (DevelopmentRate + Crop->DevelopmentStage >= 1. ) return 1.;
     }
     else 
-         DevelopmentRate = Afgen(Crop->prm.DeltaTempSum, &Temp)/Crop->prm.TempSum2;  
+        DevelopmentRate = Afgen(Crop->prm.DeltaTempSum, &Temp)/Crop->prm.TempSum2;  
 
     return (Crop->DevelopmentStage + DevelopmentRate);
 }
