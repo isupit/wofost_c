@@ -201,7 +201,7 @@ int main() {
     Grid = initial;
     Clean(Grid);
 
-    return 0;
+    return 1;
 }
 
 

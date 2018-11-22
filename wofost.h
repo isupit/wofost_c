@@ -13,7 +13,6 @@
 #define NR_VARIABLES_MANAGEMENT 6
 #define NR_TABLES_MANAGEMENT    7
 #define NUMBER_OF_TABLES        31
-#define NR_SIMUNITS             4
 
 typedef struct TABLE {
 	float x;

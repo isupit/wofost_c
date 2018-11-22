@@ -44,7 +44,7 @@ void InitializeWatBal()
     /*  Soil evaporation, days since last rain */
     WatBal->DaysSinceLastRain = 1.;
     if (WatBal->st.Moisture <= (WatBal->ct.MoistureWP + 
-            0.5*(WatBal->ct.MoistureFC - WatBal->ct.MoistureWP))) 
+            0.5 * (WatBal->ct.MoistureFC - WatBal->ct.MoistureWP))) 
             WatBal->DaysSinceLastRain = 5.;
     
     /* Moisture amount between rooted zone and max.rooting depth */
@@ -98,10 +98,10 @@ void RateCalulationWatBal() {
     {
         /* Without surface storage */
         if (Site->InfRainDependent) WatBal->rt.Infiltration = 
-               (1.-Site->NotInfiltrating * Afgen(Site->NotInfTB,Rain[Day])) * 
-               Rain[Day] + WatBal->rt.Irrigation + WatBal->st.SurfaceStorage/Step;
+               (1. - Site->NotInfiltrating * Afgen(Site->NotInfTB, &Rain[Day])) * 
+               Rain[Day] + WatBal->rt.Irrigation + WatBal->st.SurfaceStorage / Step;
         else
-            WatBal->rt.Infiltration = (1.-Site->NotInfiltrating) * Rain[Day] + 
+            WatBal->rt.Infiltration = (1. - Site->NotInfiltrating) * Rain[Day] + 
                 WatBal->rt.Irrigation + WatBal->st.SurfaceStorage / Step;
     }
     else 
