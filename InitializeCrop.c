@@ -39,6 +39,7 @@ void InitializeCrop()
     float FractionRoots;
     float FractionShoots; 
     float InitialShootWeight;
+    float LAIEmergence;
    
     /* Initialize the crop states */
     Crop->DevelopmentStage = Crop->prm.InitialDVS;
@@ -56,12 +57,13 @@ void InitializeCrop()
     /* Adapt the maximum rooting depth */
     Crop->prm.MaxRootingDepth = max(Crop->prm.InitRootingDepth, min(Crop->prm.MaxRootingDepth,
          Site->SoilLimRootDepth));
+    
+    /* Calculate the LAI at emergence */
+    LAIEmergence  = Crop->st.leaves * Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage)); 
 
-    Crop->prm.LAIEmergence  = Crop->st.leaves * Afgen(Crop->prm.SpecificLeaveArea, &(Crop->DevelopmentStage)); 
+    Crop->st.LAIExp = LAIEmergence;
 
-    Crop->st.LAIExp = Crop->prm.LAIEmergence;
-
-    Crop->st.LAI = Crop->prm.LAIEmergence + Crop->st.stems * 
+    Crop->st.LAI = LAIEmergence + Crop->st.stems * 
            Afgen(Crop->prm.SpecificStemArea, &(Crop->DevelopmentStage)) +
            Crop->st.storage*Crop->prm.SpecificPodArea;
     
