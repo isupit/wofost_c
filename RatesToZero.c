@@ -36,37 +36,35 @@ void RatesToZero()
     Crop->K_rt.death_ro = 0.;
     
     /* Set nutrient rates to various crop organs */
-    Crop->N_rt.storage = 0;
-    Crop->P_rt.storage = 0;
-    Crop->K_rt.storage = 0;
-
     Crop->N_rt.leaves  = 0.;
     Crop->N_rt.stems   = 0.;
+    Crop->N_rt.storage = 0.;
     Crop->N_rt.roots   = 0.;
-
+    
     Crop->P_rt.leaves  = 0.;
     Crop->P_rt.stems   = 0.;
     Crop->P_rt.roots   = 0.;
-
+    Crop->P_rt.storage = 0.;
+    
     Crop->K_rt.leaves  = 0.;
     Crop->K_rt.stems   = 0.;
     Crop->K_rt.roots   = 0.; 
+    Crop->K_rt.storage = 0.;
     
     /* Set the nutrient demand rates */
     Crop->N_rt.Demand_lv = 0.;
-    Crop->P_rt.Demand_lv = 0.;
-    Crop->K_rt.Demand_lv = 0.;
-
     Crop->N_rt.Demand_st = 0.;
-    Crop->P_rt.Demand_st = 0.;
-    Crop->K_rt.Demand_st = 0.;
- 
     Crop->N_rt.Demand_ro = 0.;
-    Crop->P_rt.Demand_ro = 0.;
-    Crop->K_rt.Demand_ro = 0.;
- 
     Crop->N_rt.Demand_so = 0.;
+    
+    Crop->P_rt.Demand_lv = 0.;
+    Crop->P_rt.Demand_st = 0.;
+    Crop->P_rt.Demand_ro = 0.;
     Crop->P_rt.Demand_so = 0.;
+    
+    Crop->K_rt.Demand_lv = 0.;
+    Crop->K_rt.Demand_st = 0.;
+    Crop->K_rt.Demand_ro = 0.;
     Crop->K_rt.Demand_so = 0.;
     
     /* Set the nutrient translocation rates */

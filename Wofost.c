@@ -26,7 +26,7 @@ int main() {
     char dateString [100];
     char place[15];
     char name[100];
-    
+      
     char cf[100], sf[100], mf[100], site[100];
   
     Step = 1.;    
@@ -99,7 +99,9 @@ int main() {
         memset(name,0,100);
         
         memcpy(name, Grid->name, strlen(Grid->name)-4);
+        snprintf(name, sizeof name, "%s%s%d%s", Grid->name, "-", Grid->file,".txt");
         output[Grid->file] = fopen(name, "w");
+        header(output[Grid->file]);
         Grid = Grid->next;
     }
     
@@ -156,12 +158,9 @@ int main() {
                     Crop->st.LAI = LeaveAreaIndex();
                     Crop->DevelopmentStage = GetDevelopmentStage();
                                        
-                    fprintf(output[Grid->file],"%4d-%02d-%02d,%4d,%7.0f,%7.0f,%7.0f,%7.2f,%7.2f,%7.2f,%7.3f,%7.2f,%7.1f,,%7.2f,%7.1f\n",
-                        simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
-                        Day,Crop->st.stems,Crop->st.leaves,Crop->st.storage,
-                        Crop->st.LAI,Crop->DevelopmentStage,WatBal->WaterStress,
-                        WatBal->st.Moisture,WatBal->rt.Infiltration,Rain[Day],Crop->NutrientStress, WatBal->WaterStress);
-                    
+                    /* Write to the output files */
+                    Output(output[Grid->file]);                
+                                        
                     /* State calculations */
                     IntegrationWatBal();
                     IntegrationNutrients();
