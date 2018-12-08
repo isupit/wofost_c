@@ -100,6 +100,7 @@ int main() {
         
         memcpy(name, Grid->name, strlen(Grid->name)-4);
         snprintf(name, sizeof name, "%s%s%d%s", Grid->name, "-", Grid->file,".txt");
+        
         output[Grid->file] = fopen(name, "w");
         header(output[Grid->file]);
         Grid = Grid->next;
