@@ -11,7 +11,7 @@ void GetSiteData(Field *SITE, char *sitefile)
   
   int i, c;
   float Variable[NR_VARIABLES_SITE], XValue, YValue;
-  char x[2], xx[2],  word[NR_VARIABLES_SITE];
+  char x[2], xx[2],  word[100];
   FILE *fq;
 
  if ((fq = fopen(sitefile, "rt")) == NULL) {
@@ -54,7 +54,7 @@ void GetSiteData(Field *SITE, char *sitefile)
 	    Table[i]->x = XValue;
 	    Table[i]->y = YValue;
 	    
-	    while ((c=fgetc(fq)) !='\n' || (c=fgetc(fq)) != EOF );
+	    while ((c=fgetc(fq)) !='\n');
 	    }
         /* Go back to beginning of the table */
         Table[i] = start;        
@@ -69,7 +69,7 @@ void GetSiteData(Field *SITE, char *sitefile)
     fprintf(stderr, "Something wrong with the Site tables.\n"); 
     exit(0);
   } 
-   
+ 
   SITE->NotInfTB = Table[0];
  
 }
