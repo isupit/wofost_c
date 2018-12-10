@@ -20,7 +20,13 @@ void GetSiteData(Field *SITE, char *sitefile)
  }
 
  i=0;
- while ((c=fscanf(fq,"%s",word)) != EOF) {
+ while ((c=fscanf(fq,"%s",word)) != EOF) 
+ {
+    if (strlen(word)> 98) 
+    {
+        fprintf(stderr, "Check the crop input file: very long strings.\n"); 
+        exit(0);
+    }
     if (!strcmp(word, SiteParam[i])) {
         while ((c=fgetc(fq)) !='=');
         
@@ -38,7 +44,6 @@ void GetSiteData(Field *SITE, char *sitefile)
 
   FillSiteVariables(SITE, Variable);
  
-
   i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF) {
     if (!strcmp(word, SiteParam2[i])) {
@@ -56,6 +61,7 @@ void GetSiteData(Field *SITE, char *sitefile)
 	    
 	    while ((c=fgetc(fq)) !='\n');
 	    }
+        
         /* Go back to beginning of the table */
         Table[i] = start;        
 	i++; 

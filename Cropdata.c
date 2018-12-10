@@ -32,6 +32,11 @@ void GetCropData(Plant *CROP, char *cropfile)
     {
         while ((c=fscanf(fq,"%s",word)) != EOF )
         {
+            if (strlen(word)> 98) 
+            {
+                fprintf(stderr, "Check the site input file: very long strings.\n"); 
+                exit(0);
+            }
             if (!strcmp(word, CropParam[i])) 
             {
                 while ((c=fgetc(fq)) !='=');

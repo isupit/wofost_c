@@ -133,7 +133,7 @@ int main() {
             {
                 if (EmergenceCrop(Emergence))
                 {                 
-                    /* Initialize */
+                    /* Initialize: set state variables */
                     InitializeCrop();
                     InitializeWatBal();
                     InitializeNutrients(); 
@@ -147,7 +147,7 @@ int main() {
                    /* Calculate the evapotranspiration */
                     EvapTra();
                     
-                    /* Set all rates to zero */
+                    /* Set the rate variables to zero */
                     RatesToZero();
                     
                      /* Rate calculations */
