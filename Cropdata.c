@@ -158,6 +158,11 @@ void GetCropData(Plant *CROP, char *cropfile)
     CROP->st.storage = 0.;
     CROP->st.LAIExp  = 0.;
     CROP->st.vernalization = 0.;
+    
+    /*Set the initial dying state to zero */
+    CROP->dst.leaves = 0.;
+    CROP->dst.stems  = 0.;
+    CROP->dst.roots  = 0.;
 
     /* Set the initial nutrient states to zero*/
     CROP->N_st.leaves = 0.;
