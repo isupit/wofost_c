@@ -32,6 +32,11 @@ void GetCropData(Plant *CROP, char *cropfile)
     {
         while ((c=fscanf(fq,"%s",word)) != EOF )
         {
+            if (strlen(word)> 98) 
+            {
+                fprintf(stderr, "Check the site input file: very long strings.\n"); 
+                exit(0);
+            }
             if (!strcmp(word, CropParam[i])) 
             {
                 while ((c=fgetc(fq)) !='=');
@@ -153,6 +158,11 @@ void GetCropData(Plant *CROP, char *cropfile)
     CROP->st.storage = 0.;
     CROP->st.LAIExp  = 0.;
     CROP->st.vernalization = 0.;
+    
+    /*Set the initial dying state to zero */
+    CROP->dst.leaves = 0.;
+    CROP->dst.stems  = 0.;
+    CROP->dst.roots  = 0.;
 
     /* Set the initial nutrient states to zero*/
     CROP->N_st.leaves = 0.;

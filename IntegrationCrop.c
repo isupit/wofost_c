@@ -21,6 +21,11 @@ void IntegrationCrop()
     Crop->st.storage  += Crop->rt.storage;
     Crop->st.LAIExp   += Crop->rt.LAIExp;
     
+    /* Calculate the amount of death material kg ha-1 */
+    Crop->dst.roots    += Crop->drt.roots;
+    Crop->dst.stems    += Crop->drt.stems;
+    Crop->dst.leaves   += Crop->drt.leaves;
+    
     /* Calculate vernalization state in case the switch is set */
     if (Crop->prm.IdentifyAnthesis == 2)
     {
@@ -41,6 +46,6 @@ void IntegrationCrop()
     }
   
     /* Return to beginning of the linked list */
-    Crop->LeaveProperties = LeaveProperties;	 
+    Crop->LeaveProperties = LeaveProperties;
    
 }       	     

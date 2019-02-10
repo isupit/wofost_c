@@ -268,6 +268,11 @@ typedef struct GROWTH_STATES {
         float vernalization;
         } growth_states;
 
+typedef struct DYING_STATES {
+        float roots;
+        float stems;
+        float leaves;
+        } dying_states; 
         
 typedef struct DYING_RATES {
         float roots;
@@ -300,6 +305,7 @@ typedef struct PLANT {
         growth_rates  rt;
         growth_states st;
         dying_rates   drt;
+        dying_states  dst;
         
         nutrient_states N_st;
 	nutrient_states P_st;

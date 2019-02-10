@@ -19,7 +19,13 @@ void GetManagement(Management *MNG, char *management)
  }
 
  i=0;
-  while ((c=fscanf(fq,"%s",word)) != EOF && i < 12 ) {
+  while ((c=fscanf(fq,"%s",word)) != EOF) 
+  {
+    if (strlen(word)> 98) 
+    {
+        fprintf(stderr, "Check the management input file: very long strings.\n"); 
+        exit(0);
+    }
     if (!strcmp(word, ManageParam[i])) {
         while ((c=fgetc(fq)) !='=');
 	fscanf(fq,"%f",  &Variable[i]);

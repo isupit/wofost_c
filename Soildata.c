@@ -45,6 +45,11 @@ void GetSoilData(Soil *SOIL, char *soilfile)
   i=0;
   while ((c=fscanf(fq,"%s",word)) != EOF) 
   {
+    if (strlen(word)> 98) 
+    {
+        fprintf(stderr, "Check the soil input file: very long strings.\n"); 
+        exit(0);
+    }
     if (!strcmp(word, SoilParam2[i])) 
     {
         Table[i] = start= malloc(sizeof(AFGEN));
