@@ -23,6 +23,7 @@ float GetDevelopmentStage(void)
         /* Vernalization takes place */
         if (Crop->prm.IdentifyAnthesis == 2)
         {
+            Crop->rt.vernalization = insw(Crop->DevelopmentStage - 0.3, Afgen(Crop->prm.VernalizationRate,&Temp), 0.);
             VernalizationFactor = limit(0., 1., 
                     (Crop->st.vernalization - Crop->prm.BaseVernRequirement)/
                     (Crop->prm.SatVernRequirement - Crop->prm.BaseVernRequirement));
