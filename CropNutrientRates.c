@@ -26,7 +26,7 @@ void CropNutrientRates()
    
    
     /* Rate of N,P,K uptake in storage organs (kg N,P,K ha-1 d-1) */
-    if (Crop->DevelopmentStage <  Crop->prm.DevelopmentStageNT)
+    if (Crop->st.Development <  Crop->prm.DevelopmentStageNT)
     {
         Crop->N_rt.storage = min(Crop->N_rt.Demand_so, Crop->N_rt.Transloc/Crop->prm.TCNT);
         Crop->P_rt.storage = min(Crop->P_rt.Demand_so, Crop->P_rt.Transloc/Crop->prm.TCPT);

@@ -20,7 +20,6 @@ void RateCalculationCrop()
     float GrossAssimilation;
     float GrossGrowth;
     float Stress;
-    float Vernalization;
 
     /* Set rates to 0 */
     Crop->rt.roots   = 0.;
@@ -48,12 +47,9 @@ void RateCalculationCrop()
     /* Growth of roots, stems, leaves and storage organs */
     Growth(GrossGrowth);
     
-    /* Calculate vernalization rate in case the switch is set */
-    if (Crop->prm.IdentifyAnthesis == 2)
-    {
-        Vernalization = Afgen(Crop->prm.VernalizationRate, &Temp);
-        Crop->rt.vernalization = insw(Crop->DevelopmentStage - 0.3, Vernalization, 0);       
-    }
+    /* Development rate calculation */
+    DevelopmentRate();
+    
            
     //printf("  Dmi: %5.1f MRes: %5.1f Gass: %5.1f RtSt: %5.1f", GrossGrowth, Maintenance, TotalAssimilation, Crop->rt.stems );
 }

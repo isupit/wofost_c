@@ -12,11 +12,11 @@ float Conversion(float NetAssimilation)
 {
     float fr, root, shoots;
 
-    fr    = Afgen(Crop->prm.Roots, &(Crop->DevelopmentStage));
+    fr    = Afgen(Crop->prm.Roots, &(Crop->st.Development));
     root  = fr/Crop->prm.ConversionRoots;
-    shoots =  Afgen(Crop->prm.Stems, &(Crop->DevelopmentStage))/Crop->prm.ConversionStems;
-    shoots += Afgen(Crop->prm.Leaves, &(Crop->DevelopmentStage))/Crop->prm.ConversionLeaves;	
-    shoots += Afgen(Crop->prm.Storage, &(Crop->DevelopmentStage))/Crop->prm.ConversionStorage;
+    shoots =  Afgen(Crop->prm.Stems, &(Crop->st.Development))/Crop->prm.ConversionStems;
+    shoots += Afgen(Crop->prm.Leaves, &(Crop->st.Development))/Crop->prm.ConversionLeaves;	
+    shoots += Afgen(Crop->prm.Storage, &(Crop->st.Development))/Crop->prm.ConversionStorage;
 
     /* conversion */
     return NetAssimilation/(shoots*(1-fr)+root);

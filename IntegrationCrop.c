@@ -21,6 +21,16 @@ void IntegrationCrop()
     Crop->st.storage  += Crop->rt.storage;
     Crop->st.LAIExp   += Crop->rt.LAIExp;
     
+    /* Calculate the developmentstage */
+    if (Crop->st.Development < 1.)
+    {
+        Crop->st.Development += Crop->rt.Development;
+        if (Crop->st.Development >1. )
+            Crop->st.Development = 1.;
+    }
+    else
+        Crop->st.Development += Crop->rt.Development;
+    
     /* Calculate the amount of death material kg ha-1 */
     Crop->dst.roots    += Crop->drt.roots;
     Crop->dst.stems    += Crop->drt.stems;

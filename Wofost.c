@@ -142,7 +142,7 @@ int main() {
             
             if (Day >= Start && Crop->Emergence == 1)
             {   
-                if (Crop->DevelopmentStage <= Crop->prm.DevelopStageHarvest && Crop->GrowthDay < CycleLength) 
+                if (Crop->st.Development <= Crop->prm.DevelopStageHarvest && Crop->GrowthDay < CycleLength) 
                 {
                    /* Calculate the evapotranspiration */
                     EvapTra();
@@ -155,9 +155,8 @@ int main() {
                     RateCalcultionNutrients();
                     RateCalculationCrop();
                     
-                    /* Calculate LAI and DVS */
+                    /* Calculate LAI */
                     Crop->st.LAI = LeaveAreaIndex();
-                    Crop->DevelopmentStage = GetDevelopmentStage();
                                        
                     /* Write to the output files */
                     Output(output[Grid->file]);                

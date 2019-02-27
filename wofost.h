@@ -255,6 +255,7 @@ typedef struct GROWTH_RATES {
         float leaves;
         float LAIExp;
         float storage;
+        float Development;
         float vernalization;
 } growth_rates;
 
@@ -265,6 +266,7 @@ typedef struct GROWTH_STATES {
         float LAI;
         float LAIExp;
         float storage;
+        float Development;
         float vernalization;
         } growth_states;
 
@@ -292,7 +294,6 @@ typedef struct GREEN {
 typedef struct PLANT {
         int Emergence;
         int GrowthDay;
-        float DevelopmentStage;
         float RootDepth;
         float RootDepth_prev;
         float NPK_Indx;

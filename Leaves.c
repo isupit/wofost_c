@@ -18,7 +18,7 @@ float DyingLeaves()
     Green *wipe;
 
     /* Dying rate of leaves due to water stress or high LAI */
-    CriticalLAI = 3.2/Afgen(Crop->prm.KDiffuseTb, &(Crop->DevelopmentStage));
+    CriticalLAI = 3.2/Afgen(Crop->prm.KDiffuseTb, &(Crop->st.Development));
     Death1      = Crop->st.leaves *(1. - WatBal->rt.Transpiration / 
                   Evtra.MaxTranspiration) * Crop->prm.MaxRelDeathRate ;
     Death2      = Crop->st.leaves * limit(0.,0.03, 0.03*(Crop->st.LAI-CriticalLAI)/CriticalLAI);

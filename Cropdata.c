@@ -142,7 +142,7 @@ void GetCropData(Plant *CROP, char *cropfile)
     /* Crop development has not started yet*/
     CROP->RootDepth = 0.;
     CROP->RootDepth_prev = 0.;
-    CROP->DevelopmentStage = 0.;
+    CROP->st.Development = 0.;
     CROP->DaysOxygenStress = 0; // No crop development therefore no oxygen stress
 
     /* No initial nutrient stress */

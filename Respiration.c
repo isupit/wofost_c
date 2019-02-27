@@ -21,7 +21,7 @@ float RespirationRef(float TotalAssimilation)
     respiration  += Crop->prm.RelRespiStorage * Crop->st.storage;
     respiration  += Crop->prm.RelRespiRoots * Crop->st.roots;	
     respiration  += Crop->prm.RelRespiStems * Crop->st.stems;
-    respiration  *= Afgen(Crop->prm.FactorSenescence, &(Crop->DevelopmentStage));
+    respiration  *= Afgen(Crop->prm.FactorSenescence, &(Crop->st.Development));
     respiration  *= pow(Crop->prm.Q10, 0.1 * (Temp-TempRef));
     
     /* respiration can not exceed the assimilation */

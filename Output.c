@@ -19,7 +19,7 @@ void Output(FILE *fp)
         Crop->dst.leaves,
         Crop->dst.stems,
         Crop->st.LAI,
-        Crop->DevelopmentStage,
+        Crop->st.Development,
         WatBal->WaterStress,
         WatBal->st.Moisture,
         WatBal->rt.Infiltration,
