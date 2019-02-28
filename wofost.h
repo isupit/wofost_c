@@ -1,7 +1,7 @@
-#include <time.h>
-
 #ifndef WOFOST_H
 #define WOFOST_H
+
+#include <time.h>
 
 #define NR_VARIABLES_CRP	66
 #define NR_TABLES_CRP   	22
@@ -256,6 +256,7 @@ typedef struct GROWTH_RATES {
         float LAIExp;
         float storage;
         float Development;
+        float RootDepth;
         float vernalization;
 } growth_rates;
 
@@ -267,6 +268,8 @@ typedef struct GROWTH_STATES {
         float LAIExp;
         float storage;
         float Development;
+        float RootDepth;
+        float RootDepth_prev;
         float vernalization;
         } growth_states;
 
@@ -293,9 +296,7 @@ typedef struct GREEN {
 
 typedef struct PLANT {
         int Emergence;
-        int GrowthDay;
-        float RootDepth;
-        float RootDepth_prev;
+        int GrowthDay;       
         float NPK_Indx;
         float NutrientStress;
         float DaysOxygenStress;
