@@ -13,11 +13,11 @@ void RatesToZero()
     Crop->drt.stems = 0.;
   
     /* Set the development rate */
-    Crop->rt.Development;
+    Crop->rt.Development = 0.;
     Crop->rt.vernalization = 0.;
     
     /* Set the rooting depth */
-    Crop->rt.RootDepth;	
+    Crop->rt.RootDepth = 0.;	
     
     /* Set the crop growth rates */
     Crop->rt.roots   = 0.;
