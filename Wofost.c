@@ -156,15 +156,15 @@ int main() {
                     RateCalculationCrop();
                     
                     /* Calculate LAI */
-                    Crop->st.LAI = LeaveAreaIndex();
-                                       
-                    /* Write to the output files */
-                    Output(output[Grid->file]);                
+                    Crop->st.LAI = LeaveAreaIndex();             
                                         
                     /* State calculations */
                     IntegrationWatBal();
                     IntegrationNutrients();
                     IntegrationCrop();
+                    
+                    /* Write to the output files */
+                    Output(output[Grid->file]);   
                     
                     /* Update the number of days that the crop has grown*/
                     Crop->GrowthDay++;

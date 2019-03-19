@@ -29,8 +29,8 @@ void NutrientPartioning()
     
     /* Nutrient uptake cannot be larger than the availability and is larger or equal to zero */
     Crop->N_rt.Uptake = min((1.-Crop->prm.N_fixation)*Total_N_demand, Site->st_N_tot)* NutrientLimit/Step;
-    Crop->P_rt.Uptake = min(Total_P_demand, Site->st_P_mins) * NutrientLimit/Step;
-    Crop->K_rt.Uptake = min(Total_K_demand, Site->st_K_mins) * NutrientLimit/Step;
+    Crop->P_rt.Uptake = min(Total_P_demand, Site->st_P_tot) * NutrientLimit/Step;
+    Crop->K_rt.Uptake = min(Total_K_demand, Site->st_K_tot) * NutrientLimit/Step;
     
     N_Fix_rt= max(0.,Crop->N_rt.Uptake * Crop->prm.N_fixation / max(0.02, 1.-Crop->prm.N_fixation));
    

@@ -20,12 +20,13 @@ extern void RatesToZero();
 extern void Output();
 extern void header();
 
-
-/* Crop growth */
+/* Additional functions */
 extern int Astro();
 extern void CalcPenman();
-
 extern void Clean();
+
+/* Crop growth */
+extern void HeatStress();
 extern void RateCalculationCrop();
 extern void Growth(float NewPlantMaterial);
 extern void IntegrationCrop();

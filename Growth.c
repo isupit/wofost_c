@@ -22,6 +22,9 @@ void Growth(float NewPlantMaterial)
     float Fraction_lv;
     float Fraction_st;
     float Fraction_so;
+    float x;
+    if (Crop->GrowthDay >=42)
+        x =0;
         
     /* Water stress is more severe as compared to Nitrogen stress and */
     /* partitioning will follow the original assumptions of LINTUL2   */     

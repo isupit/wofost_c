@@ -20,7 +20,7 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
     Green *New = NULL;
     Green *LeaveProperties = NULL;
 
-
+   
     /* Specific Leaf area(m2/g), as dependent on NPK stress */
     SpecLeafArea = Afgen(Crop->prm.SpecificLeaveArea, &(Crop->st.Development)) * 
         exp(-Crop->prm.NutrientStessSLA * (1.-Crop->NPK_Indx));

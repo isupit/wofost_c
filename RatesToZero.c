@@ -73,14 +73,18 @@ void RatesToZero()
     Crop->K_rt.Transloc = 0.;
     
     /* Set the nutrient uptake rates */
+    
+    Crop->N_rt.Uptake    = 0.;
     Crop->N_rt.Uptake_lv = 0.;
     Crop->N_rt.Uptake_st = 0.;
     Crop->N_rt.Uptake_ro = 0.;
     
+    Crop->P_rt.Uptake    = 0.;
     Crop->P_rt.Uptake_lv = 0.;      
     Crop->P_rt.Uptake_st = 0.;      
     Crop->P_rt.Uptake_ro = 0.;  
     
+    Crop->K_rt.Uptake    = 0.;
     Crop->K_rt.Uptake_lv = 0.;
     Crop->K_rt.Uptake_st = 0.;
     Crop->K_rt.Uptake_ro = 0.; 

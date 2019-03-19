@@ -35,8 +35,8 @@ VERNRT   = -10., 0.,
            10., 1., 
            17., 0.,
            30., 0. 
-TSUM1    = 1350.     ! temperature sum from emergence to anthesis [cel d]
-TSUM2    = 1000.     ! temperature sum from anthesis to maturity [cel d]
+TSUM1    = 850.     ! temperature sum from emergence to anthesis [cel d]
+TSUM2    = 850.     ! temperature sum from anthesis to maturity [cel d]
 DTSMTB   =   0.00,    0.00,     ! daily increase in temp. sum 
             30.00,   30.00,     ! as function of av. temp. [cel; cel d]
             45.00,   30.00

@@ -32,4 +32,6 @@ void CropNutrientRates()
         Crop->P_rt.storage = min(Crop->P_rt.Demand_so, Crop->P_rt.Transloc/Crop->prm.TCPT);
         Crop->K_rt.storage = min(Crop->K_rt.Demand_so, Crop->K_rt.Transloc/Crop->prm.TCKT); 
     }
+    //printf("  Crop->N_rt.leaves: %5.1f Crop->P_rt.leaves: %5.1f Crop->K_rt.leaves: %5.1f\n", Crop->N_rt.leaves, Crop->P_rt.leaves, Crop->K_rt.leaves);
+    //printf("  Crop->N_st.leaves: %5.1f Crop->P_st.leaves: %5.1f Crop->K_st.leaves: %5.1f\n", Crop->N_st.leaves, Crop->P_st.leaves, Crop->K_st.leaves);
 }
