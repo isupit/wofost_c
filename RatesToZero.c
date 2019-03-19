@@ -11,9 +11,13 @@ void RatesToZero()
     Crop->drt.roots = 0.;
     Crop->drt.leaves = 0.;
     Crop->drt.stems = 0.;
-    
+  
+    /* Set the development rate */
+    Crop->rt.Development = 0.;
     Crop->rt.vernalization = 0.;
-    Crop->rt.LAIExp  = 0.;	
+    
+    /* Set the rooting depth */
+    Crop->rt.RootDepth = 0.;	
     
     /* Set the crop growth rates */
     Crop->rt.roots   = 0.;
@@ -111,6 +115,5 @@ void RatesToZero()
     WatBal->rt.Runoff            = 0.;
     WatBal->rt.WaterRootExt      = 0.;
     WatBal->rt.RootZoneMoisture  = 0.;
-    
 }
 
