@@ -16,11 +16,11 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
     float GrowthSourceLimited;
     float SpecLeafArea; 
     float Stress;
+    float DTeff;
 
     Green *New = NULL;
     Green *LeaveProperties = NULL;
 
-   
     /* Specific Leaf area(m2/g), as dependent on NPK stress */
     SpecLeafArea = Afgen(Crop->prm.SpecificLeaveArea, &(Crop->st.Development)) * 
         exp(-Crop->prm.NutrientStessSLA * (1.-Crop->NPK_Indx));
@@ -29,21 +29,23 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
     if (LAIExp < 6 && NewLeaves > 0.) 
     {
         /* Growth during juvenile stage */
-        GrowthExpLAI = LAIExp * Crop->prm.RelIncreaseLAI * max(0.,Temp - Crop->prm.TempBaseLeaves);
         if (Crop->st.Development < 0.2 && Crop->st.LAI < 0.75)
         {
-          Stress = WatBal->WaterStress * exp(-Crop->prm.NitrogenStressLAI * (1. - Crop->N_st.Indx));
+            Stress = WatBal->WaterStress * exp(-Crop->prm.NitrogenStressLAI * (1. - Crop->NPK_Indx));
         }
         else
         {
             Stress = 1.;
         }
-
+        
+        /* Effective temperature for leave growth */
+        DTeff = max(0.,Temp - Crop->prm.TempBaseLeaves);
+        
         /* Correction for nutrient stress */
-        GrowthExpLAI = GrowthExpLAI * Stress;
+        GrowthExpLAI = LAIExp * Crop->prm.RelIncreaseLAI * DTeff;
 
         /* Source limited leaf area increase */
-        GrowthSourceLimited = NewLeaves* Afgen(Crop->prm.SpecificLeaveArea, &(Crop->st.Development));
+        GrowthSourceLimited = NewLeaves* SpecLeafArea;
 
         /* Sink-limited leaf area increase */
         SpecLeafArea = min(GrowthExpLAI, GrowthSourceLimited)/NewLeaves;

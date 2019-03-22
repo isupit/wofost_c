@@ -152,16 +152,17 @@ int main() {
                     
                      /* Rate calculations */
                     RateCalulationWatBal();
-                    RateCalcultionNutrients();
                     RateCalculationCrop();
+                    RateCalcultionNutrients();
                     
                     /* Calculate LAI */
                     Crop->st.LAI = LeaveAreaIndex();             
                                         
                     /* State calculations */
                     IntegrationWatBal();
-                    IntegrationNutrients();
                     IntegrationCrop();
+                    IntegrationNutrients();
+                    
                     
                     /* Write to the output files */
                     Output(output[Grid->file]);   

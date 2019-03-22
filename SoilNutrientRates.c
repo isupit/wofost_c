@@ -23,6 +23,13 @@ void SoilNutrientRates()
         Site->rt_P_mins = min(Mng->P_Mins * Mng->PRecoveryFrac, Site->st_P_mins); 
         Site->rt_K_mins = min(Mng->K_Mins * Mng->KRecoveryFrac, Site->st_K_mins); 
     }
+    else
+    {
+        Site->rt_N_mins = 0.; 
+        Site->rt_P_mins = 0.; 
+        Site->rt_K_mins = 0.;         
+    }
+    
     
     day_fl = (float)Day;
     
@@ -33,8 +40,8 @@ void SoilNutrientRates()
     
     /* Change in total inorganic NPK in soil as function of fertilizer input, */
     /* soil NPK mineralization and crop uptake                                */
-    Site->rt_N_tot = (N_fert / Step) - Crop->N_rt.Uptake  + Site->rt_N_mins;
-    Site->rt_P_tot = (P_fert / Step) - Crop->P_rt.Uptake  + Site->rt_P_mins;
-    Site->rt_K_tot = (K_fert / Step) - Crop->K_rt.Uptake  + Site->rt_K_mins;
-    //printf("  Site->rt_N_mins: %5.1f Site->rt_P_mins: %5.1f Site->rt_K_mins: %5.1f\n", Site->rt_N_mins, Site->rt_P_mins, Site->rt_K_mins);
+    Site->rt_N_tot = max(0., (N_fert / Step) - Crop->N_rt.Uptake  + Site->rt_N_mins);
+    Site->rt_P_tot = max(0., (P_fert / Step) - Crop->P_rt.Uptake  + Site->rt_P_mins);
+    Site->rt_K_tot = max(0., (K_fert / Step) - Crop->K_rt.Uptake  + Site->rt_K_mins);
+    printf("  Crop->N_rt.Uptake: %5.1f Crop->P_rt.Uptake: %5.1f Crop->K_rt.Uptake: %5.1f\n", Crop->N_rt.Uptake, Crop->P_rt.Uptake, Crop->K_rt.Uptake);
 }
