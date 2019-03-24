@@ -21,9 +21,9 @@ void IntegrationNutrients()
     Site->st_K_mins  = max(0., Site->st_K_mins - Site->rt_K_mins);
         
     /* Uptake */
-    Crop->N_rt.Uptake += Crop->N_rt.Uptake;
-    Crop->P_rt.Uptake += Crop->P_rt.Uptake;
-    Crop->K_rt.Uptake += Crop->K_rt.Uptake;
+    Crop->N_st.Uptake += Crop->N_rt.Uptake;
+    Crop->P_st.Uptake += Crop->P_rt.Uptake;
+    Crop->K_st.Uptake += Crop->K_rt.Uptake;
             
     /* Crops nutrients */
     Crop->N_st.leaves  += Crop->N_rt.leaves ;
