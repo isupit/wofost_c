@@ -22,14 +22,17 @@ void NutrientMax()
     /* Maximum N concentrations in stems and roots (kg N kg-1) */
     Crop->N_st.Max_st = Crop->prm.N_MaxStems * Crop->N_st.Max_lv;
     Crop->N_st.Max_ro = Crop->prm.N_MaxRoots * Crop->N_st.Max_lv;
+    Crop->N_st.Max_so = Crop->prm.Max_N_storage;
     
     /* Maximum P concentrations in stems and roots (kg P kg-1) */
     Crop->P_st.Max_st = Crop->prm.P_MaxStems * Crop->P_st.Max_lv;
     Crop->P_st.Max_ro = Crop->prm.P_MaxRoots * Crop->P_st.Max_lv;
+    Crop->P_st.Max_so = Crop->prm.Max_P_storage;
     
     /* Maximum K concentrations in stems and roots (kg K kg-1) */
     Crop->K_st.Max_st = Crop->prm.K_MaxStems * Crop->K_st.Max_lv;
     Crop->K_st.Max_ro = Crop->prm.K_MaxRoots * Crop->K_st.Max_lv;
+    Crop->K_st.Max_so = Crop->prm.Max_K_storage;
 }
 
 
@@ -72,7 +75,7 @@ void NutrientDemand()
     Crop->K_rt.Demand_st =  max (Crop->K_st.Max_st *Crop->st.stems  - Crop->K_st.stems, 0.);
     Crop->K_rt.Demand_ro =  max (Crop->K_st.Max_ro *Crop->st.roots  - Crop->K_st.roots, 0.);
     Crop->K_rt.Demand_so =  max (Crop->K_st.Max_so *Crop->st.storage- Crop->K_st.storage, 0.)/Crop->prm.TCKT;
-    //printf("Crop->Growthday: %5d  Crop->N_rt.Demand_lv: %5.1f Crop->P_rt.Demand_lv: %5.1f Crop->K_rt.Demand_lv: %5.1f\n", Crop->GrowthDay,Crop->N_rt.Demand_lv, Crop->P_rt.Demand_lv, Crop->K_rt.Demand_lv);
+    //printf("Crop->Growthday: %5d  Crop->N_rt.Demand_so: %5.1f Crop->P_rt.Demand_so: %5.1f Crop->K_rt.Demand_so: %5.1f\n", Crop->GrowthDay,Crop->N_rt.Demand_so, Crop->P_rt.Demand_so, Crop->K_rt.Demand_so);
     //printf(" Crop->N_st.leaves: %5.1f Crop->P_st.leaves: %5.1f Crop->K_st.leaves: %5.1f\n", Crop->N_st.leaves, Crop->P_st.leaves, Crop->K_st.leaves);
 }
  

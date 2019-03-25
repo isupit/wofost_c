@@ -31,7 +31,7 @@ void NutrientTranslocation()
     Avail_N_st = max(0.,Crop->N_st.stems  - Crop->st.stems  * Crop->prm.N_ResidualFrac_st);
     Avail_N_rt = max((Avail_N_lv + Avail_N_st) * Crop->prm.FracTranslocRoots, 
             Crop->N_st.roots - Crop->st.roots * Crop->prm.N_ResidualFrac_ro);
-    //printf("%4d  %7.4f  %7.4f  %7.4f\n", Crop->GrowthDay, Avail_N_lv, Avail_N_st, Avail_N_rt);
+    printf("%4d  %7.4f  %7.4f  %7.4f\n", Crop->GrowthDay, Avail_N_lv, Avail_N_st, Avail_N_rt);
    
     /* P amount available for translocation */ 
     Avail_P_lv = max (0.,Crop->P_st.leaves - Crop->st.leaves * Crop->prm.P_ResidualFrac_lv);
@@ -98,5 +98,5 @@ void NutrientTranslocation()
     Crop->P_rt.Transloc = Crop->P_rt.Transloc_lv + Crop->P_rt.Transloc_st + Crop->P_rt.Transloc_ro;
     Crop->K_rt.Transloc = Crop->K_rt.Transloc_lv + Crop->K_rt.Transloc_st + Crop->K_rt.Transloc_ro;      
             
-    printf("%4d  %7.4f  %7.4f  %7.4f\n", Crop->GrowthDay, Crop->N_rt.Transloc, Crop->P_rt.Transloc, Crop->K_rt.Transloc);
+    //printf("%4d  %7.4f  %7.4f  %7.4f\n", Crop->GrowthDay, Crop->N_rt.Transloc, Crop->P_rt.Transloc, Crop->K_rt.Transloc);
 }   
