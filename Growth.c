@@ -23,13 +23,13 @@ void Growth(float NewPlantMaterial)
     float Fraction_st;
     float Fraction_so;
     float x;
-    if (Crop->GrowthDay >=40)
+    if (Crop->GrowthDay >=141)
         x =0;
         
     /* Water stress is more severe as compared to Nitrogen stress and */
     /* partitioning will follow the original assumptions of LINTUL2   */     
         
-    if (WatBal->WaterStress < Crop->NutrientStress)
+    if (WatBal->WaterStress < Crop->N_st.Indx)
     {
         factor = max(1., 1./(WatBal->WaterStress + 0.5));
         Fraction_ro = min(0.6, Afgen(Crop->prm.Roots, &(Crop->st.Development)) * factor);

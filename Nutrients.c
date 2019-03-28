@@ -76,7 +76,9 @@ void NutrientDemand()
     Crop->K_rt.Demand_ro =  max (Crop->K_st.Max_ro *Crop->st.roots  - Crop->K_st.roots, 0.);
     Crop->K_rt.Demand_so =  max (Crop->K_st.Max_so *Crop->st.storage- Crop->K_st.storage, 0.)/Crop->prm.TCKT;
     //printf("Crop->Growthday: %5d  Crop->N_rt.Demand_so: %5.1f Crop->P_rt.Demand_so: %5.1f Crop->K_rt.Demand_so: %5.1f\n", Crop->GrowthDay,Crop->N_rt.Demand_so, Crop->P_rt.Demand_so, Crop->K_rt.Demand_so);
-    //printf(" Crop->N_st.leaves: %5.1f Crop->P_st.leaves: %5.1f Crop->K_st.leaves: %5.1f\n", Crop->N_st.leaves, Crop->P_st.leaves, Crop->K_st.leaves);
+    //printf("Crop->Growthday: %5d  Crop->N_rt.Demand_lv: %5.1f Crop->P_rt.Demand_lv: %5.1f Crop->K_rt.Demand_lv: %5.1f\n", Crop->GrowthDay,Crop->N_rt.Demand_lv, Crop->P_rt.Demand_lv, Crop->K_rt.Demand_lv);
+    //printf("Crop->Growthday: %5d  Crop->N_rt.Demand_st: %5.1f Crop->P_rt.Demand_st: %5.1f Crop->K_rt.Demand_st: %5.1f\n", Crop->GrowthDay,Crop->N_rt.Demand_st, Crop->P_rt.Demand_st, Crop->K_rt.Demand_st);
+    //printf(" Crop->N_st.Max_lv: %7.5f Crop->st.leaves: %5.1f Crop->N_st.leaves: %5.1f\n", Crop->N_st.Max_lv, Crop->st.leaves, Crop->N_st.leaves);
 }
  
                
@@ -85,6 +87,9 @@ void RateCalcultionNutrients()
     NutrientMax();
     
     NutrientDemand();
+    
+    /* Establish the optimum nutrient concentrations in the crop organs */
+    NutrientOptimum();
     
     NutrientLoss();
     
@@ -95,9 +100,7 @@ void RateCalcultionNutrients()
     CropNutrientRates();
     
     SoilNutrientRates();
-    
-    /* Establish the optimum nutrient concentrations in the crop organs */
-    NutrientOptimum();
+
     
     /* Calculate the nutrition index */
     NutritionINDX();    

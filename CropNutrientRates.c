@@ -30,7 +30,7 @@ void CropNutrientRates()
    
    
     /* Rate of N,P,K uptake in storage organs (kg N,P,K ha-1 d-1) */
-    if (Crop->st.Development <  Crop->prm.DevelopmentStageNT)
+    if (Crop->st.Development >  Crop->prm.DevelopmentStageNT)
     {
         Crop->N_rt.storage = min(Crop->N_rt.Demand_so, Crop->N_rt.Supply);
         Crop->P_rt.storage = min(Crop->P_rt.Demand_so, Crop->P_rt.Supply);
@@ -85,7 +85,7 @@ void CropNutrientRates()
         Crop->K_rt.Transloc_ro = 0.;
     }
     
-    //printf("  Crop->N_rt.storage: %5.1f Crop->P_rt.storage: %5.1f Crop->K_rt.storage: %5.1f\n", Crop->N_st.storage, Crop->P_st.storage, Crop->K_st.storage);
+    //printf("  Crop->N_rt.storage: %10.4f Crop->P_rt.storage: %10.4f Crop->K_rt.storage: %10.4f\n", Crop->N_st.storage, Crop->P_st.storage, Crop->K_st.storage);
     //printf("  Crop->N_st.leaves: %5.1f Crop->P_st.leaves: %5.1f Crop->K_st.leaves: %5.1f\n", Crop->N_st.leaves, Crop->P_st.leaves, Crop->K_st.leaves);
     //printf("%7.4f %7.4f\n",Crop->N_rt.Demand_so, Crop->N_rt.Transloc);
 }

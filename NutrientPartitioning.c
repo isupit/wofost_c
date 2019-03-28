@@ -25,7 +25,7 @@ void NutrientPartioning()
     Total_K_demand = Crop->K_rt.Demand_lv + Crop->K_rt.Demand_st + Crop->K_rt.Demand_ro;
    
     
-    /* No nutrients are absorbed after development stage DevelopmentStageNLimit or */
+    /* No nutrients are absorbed from the soil after development stage DevelopmentStageNLimit or */
     /* when severe water shortage occurs                                           */
     NutrientLimit = 0.;
     if (Crop->st.Development < Crop->prm.DevelopmentStageNLimit && WatBal->rt.Transpiration/Evtra.MaxTranspiration > 0.01)
@@ -81,4 +81,6 @@ void NutrientPartioning()
         Crop->K_rt.Uptake_st = 0.;
         Crop->K_rt.Uptake_ro = 0.;          
     }
+    
+    //printf("  Crop->N_rt.Uptake_lv: %10.4f Crop->N_rt.Uptake_lv: %10.4f Crop->N_rt.Uptake_lv: %10.4f\n", Crop->P_rt.Uptake_lv, Crop->P_rt.Uptake_lv, Crop->P_rt.Uptake_lv);
 }    
