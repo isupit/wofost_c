@@ -10,7 +10,7 @@
 /*           stored in the Crop->properties linked list                       */
 /* ---------------------------------------------------------------------------*/
 
-float LeaveGrowth(float LAIExp, float NewLeaves)
+float LeaveGrowth()
 {
     float GrowthExpLAI;
     float GrowthSourceLimited;
@@ -26,7 +26,7 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
         exp(-Crop->prm.NutrientStessSLA * (1.-Crop->NPK_Indx));
 
     /* Leave area not to exceed exponential growth */
-    if (LAIExp < 6 && NewLeaves > 0.) 
+    if (Crop->st.LAIExp < 6 && Crop->rt.leaves > 0.) 
     {
         /* Growth during juvenile stage */
         if (Crop->st.Development < 0.2 && Crop->st.LAI < 0.75)
@@ -42,13 +42,13 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
         DTeff = max(0.,Temp - Crop->prm.TempBaseLeaves);
         
         /* Correction for nutrient stress */
-        GrowthExpLAI = LAIExp * Crop->prm.RelIncreaseLAI * DTeff;
+        GrowthExpLAI = Crop->st.LAIExp * Crop->prm.RelIncreaseLAI * DTeff * Stress;
 
         /* Source limited leaf area increase */
-        GrowthSourceLimited = NewLeaves* SpecLeafArea;
+        GrowthSourceLimited = Crop->rt.leaves * SpecLeafArea;
 
         /* Sink-limited leaf area increase */
-        SpecLeafArea = min(GrowthExpLAI, GrowthSourceLimited)/NewLeaves;
+        SpecLeafArea = min(GrowthExpLAI, GrowthSourceLimited)/Crop->rt.leaves;
     }
     else
     {
@@ -57,7 +57,7 @@ float LeaveGrowth(float LAIExp, float NewLeaves)
     
         
     New         = malloc(sizeof(Green));
-    New->weight = NewLeaves;
+    New->weight = Crop->rt.leaves;
     New->age    = 0.;
     New->area   = SpecLeafArea;
     New->next   = NULL;

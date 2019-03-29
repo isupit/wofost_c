@@ -5,29 +5,27 @@
 
 void header(FILE *fp)
 {
-    fprintf(fp,"Date         Date   WST     WLV	    dWLV    WSO    dWST    LAI      DVS  WSTRESS  SOILM    INF      Rain NSTRESS  \n");
+    fprintf(fp,"Date         Date   DVS     WLV        WST          WSO         WRT         LAI     WSTRESS  SOILM    INF      Rain   NNI        PNI        KNI        NPKI  \n");
 }
 
 void Output(FILE *fp)
 {
-    fprintf(fp,"%4d-%02d-%02d,%4d,%11.5f,%11.5f,%11.5f,%11.5f,%11.5f,%9.4f,%9.4f,%7.2f,%7.3f,%7.2f,%7.1f,%7.2f,%10.5f,%10.5f,%10.5f,%10.5f\n",
+    fprintf(fp,"%4d-%02d-%02d,%4d,%7.5f,%11.5f,%11.5f,%11.5f,%11.4f,%10.4f,%7.2f,%7.3f,%7.2f,%7.1f,%10.5f,%10.5f,%10.5f,%10.5f\n",
         simTime.tm_year + 1900, simTime.tm_mon +1, simTime.tm_mday,
         Day,
-        Crop->st.stems,
-        Crop->st.leaves,
-        Crop->dst.leaves,
-        Crop->st.storage,
-        Crop->dst.stems,
-        Crop->st.LAI,
         Crop->st.Development,
+        Crop->st.leaves,
+        Crop->st.stems,
+        Crop->st.storage,
+        Crop->st.roots,
+        Crop->st.LAI,
         WatBal->WaterStress,
         WatBal->st.Moisture,
         WatBal->rt.Infiltration,
         Rain[Day],
-        Crop->NutrientStress,
-        Crop->NPK_Indx,
-        Crop->N_rt.Uptake,
-        Crop->P_rt.Uptake,
-        Crop->K_rt.Uptake);
-   }
+        Crop->N_st.Indx,
+        Crop->P_st.Indx,
+        Crop->K_st.Indx,
+        Crop->NPK_Indx);
+}
 

@@ -53,5 +53,5 @@ void IntegrationNutrients()
     Crop->K_st.death_lv += Crop->K_rt.death_lv;
     Crop->K_st.death_st += Crop->K_rt.death_st;
     Crop->K_st.death_ro += Crop->K_rt.death_ro;
-   
+    
 }

@@ -46,13 +46,13 @@ KRFTAB  =     0.,  0.70,  !  kg K uptake by the crop per kg fertiliser-K applied
 
 * Soil N, P and K mineralization
 NMINS    =     80.  !  total mineral soil N available at start of growth period [kg N/ha]
-RTNMINS  =   0.025  ! fraction of soil mineral N coming available per day [day-1]
+RTNMINS  =   0.0  ! fraction of soil mineral N coming available per day [day-1]
 
 PMINS   =       80.  !  total mineral soil P available at start of growth period [kg P/ha]
-RTPMINS  =   0.025  ! fraction of soil mineral P coming available per day [day-1]
+RTPMINS  =   0.0  ! fraction of soil mineral P coming available per day [day-1]
 
 KMINS   =      80.  !  total mineral soil K available at start of growth period [kg N/ha]
-RTKMINS  =   0.025  ! fraction of soil mineral K coming available per day [day-1]
+RTKMINS  =   0.0  ! fraction of soil mineral K coming available per day [day-1]
 
 
 * irrigation water applied 

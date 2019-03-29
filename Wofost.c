@@ -17,6 +17,7 @@ int main() {
     int Start;
     int CycleLength   = 300;
     int count;
+    int x;
     
     char path[100];
     char cropfile[100];
@@ -162,8 +163,7 @@ int main() {
                     IntegrationWatBal();
                     IntegrationCrop();
                     IntegrationNutrients();
-                    
-                    
+                                        
                     /* Write to the output files */
                     Output(output[Grid->file]);   
                     
@@ -203,5 +203,3 @@ int main() {
 
     return 1;
 }
-
-
