@@ -66,9 +66,13 @@ void Growth(float NewPlantMaterial)
 	
     Crop->rt.storage = shoots * Fraction_so + Translocation;
 	
+    /* Dying leave biomass is subtracted from the oldest classes */
     Crop->drt.leaves = DyingLeaves(); 
     Crop->rt.leaves  = shoots * Fraction_lv;
-    Crop->rt.LAIExp  = LeaveGrowth();	
+    
+    /* Note that the new leave biomass is stored in the youngest leave class */
+    LeaveGrowth();
+    
     Crop->rt.leaves  = Crop->rt.leaves -  Crop->drt.leaves;
 	
     

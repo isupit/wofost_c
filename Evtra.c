@@ -66,7 +66,7 @@ void EvapTra() {
     MoistureStress = limit(0.,1.,(WatBal->st.Moisture - WatBal->ct.MoistureWP)/
             (CriticalSoilMoisture - WatBal->ct.MoistureWP));
     
-    if (!Crop->prm.Airducts) 
+    if (Crop->prm.Airducts) 
     {
         /* Critical soil moisture content for aeration */
         SoilMoistureAeration = WatBal->ct.MoistureSAT - WatBal->ct.CriticalSoilAirC;

@@ -5,6 +5,8 @@
 #include "extern.h"
 
 
+
+
 /*---------------------------------------------------*/
 /* function EmergenceCrop                            */
 /* Purpose: determine if crop emergence has occurred */
@@ -13,17 +15,27 @@
 int EmergenceCrop(int Emergence)
 {
     float DeltaTempSum;
+    float EndSowing;
      
     /*  Emergence has not taken place yet*/
     if (!Emergence)
 	{
-            DeltaTempSum = limit(0, Crop->prm.TempEffMax - Crop->prm.TempBaseEmergence, 
-                Temp - Crop->prm.TempBaseEmergence);
-	    Crop->TSumEmergence += DeltaTempSum;
-	    if (Crop->TSumEmergence >= Crop->prm.TSumEmergence)
+            /* Start counting TSumEmergence one day after sowing */
+            if (!Crop->Sowing)
             {
-                Emergence = 1;
-	    }
+                Crop->Sowing = 1;
+            }
+            else
+            {
+                DeltaTempSum = limit(0, Crop->prm.TempEffMax - Crop->prm.TempBaseEmergence, 
+                Temp - Crop->prm.TempBaseEmergence);
+                Crop->TSumEmergence += DeltaTempSum;
+                if (Crop->TSumEmergence >= Crop->prm.TSumEmergence)
+                {
+                    Emergence = 1;
+                } 
+            }
+
 	}
     return Emergence;
 }

@@ -138,11 +138,12 @@ void RateCalulationWatBal() {
     Perc2 = ((Crop->prm.MaxRootingDepth - Crop->st.RootDepth) * WatBal->ct.MoistureSAT - 
             WatBal->st.MoistureLOW) / Step + WatBal->rt.Loss;
     WatBal->rt.Percolation = min(Perc1, Perc2);
+   
     
     /* Adjustment of the infiltration rate */
-    WatBal->rt.Infiltration = min(WatBal->rt.Infiltration,
+    WatBal->rt.Infiltration = max(0, min(WatBal->rt.Infiltration,
           (WatBal->ct.MoistureSAT - WatBal->st.Moisture) * Crop->st.RootDepth/Step + 
-          WatBal->rt.Transpiration + WatBal->rt.EvapSoil + WatBal->rt.Percolation);
+          WatBal->rt.Transpiration + WatBal->rt.EvapSoil + WatBal->rt.Percolation));
             
     /* Rates of change in amounts of moisture W and WLOW */
     WatBal->rt.RootZoneMoisture = -WatBal->rt.Transpiration - WatBal->rt.EvapSoil -  

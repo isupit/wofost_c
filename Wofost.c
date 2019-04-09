@@ -78,6 +78,10 @@ int main() {
         Grid->file  = count++;          // number of elements in Grid carousel
         strcpy(Grid->name,cf);          // Crop file name
         Grid->emergence = Emergence;    // Start the simulations at emergence (1) or at sowing (0)
+        
+        Grid->crp->Sowing = 0;
+        Grid->crp->Emergence = 0;
+        
         Grid->next = NULL;
 
     }
@@ -143,7 +147,7 @@ int main() {
             
             if (Day >= Start && Crop->Emergence == 1)
             {   
-                if (Crop->st.Development <= Crop->prm.DevelopStageHarvest && Crop->GrowthDay < CycleLength) 
+                if (Crop->st.Development <= (Crop->prm.DevelopStageHarvest+0.05) && Crop->GrowthDay < CycleLength) 
                 {
                    /* Calculate the evapotranspiration */
                     EvapTra();
@@ -156,6 +160,9 @@ int main() {
                     RateCalculationCrop();
                     RateCalcultionNutrients();
                     
+                    /* Write to the output files */
+                    Output(output[Grid->file]);   
+                    
                     /* Calculate LAI */
                     Crop->st.LAI = LeaveAreaIndex();             
                                         
@@ -164,8 +171,7 @@ int main() {
                     IntegrationCrop();
                     IntegrationNutrients();
                                         
-                    /* Write to the output files */
-                    Output(output[Grid->file]);   
+
                     
                     /* Update the number of days that the crop has grown*/
                     Crop->GrowthDay++;
@@ -181,6 +187,7 @@ int main() {
         }
     
         /* Update time */
+        simTime.tm_hour = 18;
         simTime.tm_mday++;
         mktime(&simTime);
     }    
