@@ -122,6 +122,7 @@ int main() {
         
         Astro();
         CalcPenman();
+        PenmanMonteith();
         
         while (Grid)
         {
@@ -167,11 +168,9 @@ int main() {
                     Crop->st.LAI = LeaveAreaIndex();             
                                         
                     /* State calculations */
-                    IntegrationWatBal();
                     IntegrationCrop();
+                    IntegrationWatBal();
                     IntegrationNutrients();
-                                        
-
                     
                     /* Update the number of days that the crop has grown*/
                     Crop->GrowthDay++;

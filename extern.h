@@ -23,6 +23,7 @@ extern void header();
 /* Additional functions */
 extern int Astro();
 extern void CalcPenman();
+extern void PenmanMonteith();
 extern void Clean();
 
 /* Crop growth */

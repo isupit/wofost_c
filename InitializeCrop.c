@@ -15,7 +15,6 @@
 int EmergenceCrop(int Emergence)
 {
     float DeltaTempSum;
-    float EndSowing;
      
     /*  Emergence has not taken place yet*/
     if (!Emergence)

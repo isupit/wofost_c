@@ -137,6 +137,7 @@ void RateCalulationWatBal() {
     /* Percolation not to exceed uptake capacity of subsoil */
     Perc2 = ((Crop->prm.MaxRootingDepth - Crop->st.RootDepth) * WatBal->ct.MoistureSAT - 
             WatBal->st.MoistureLOW) / Step + WatBal->rt.Loss;
+    
     WatBal->rt.Percolation = min(Perc1, Perc2);
    
     
@@ -149,7 +150,7 @@ void RateCalulationWatBal() {
     WatBal->rt.RootZoneMoisture = -WatBal->rt.Transpiration - WatBal->rt.EvapSoil -  
             WatBal->rt.Percolation + WatBal->rt.Infiltration;
     WatBal->rt.MoistureLOW = WatBal->rt.Percolation - WatBal->rt.Loss;
-                  
+             
 }
 
 
@@ -203,6 +204,9 @@ void IntegrationWatBal()
         WaterRootExt = WatBal->st.MoistureLOW *
                 (Crop->st.RootDepth - Crop->st.RootDepth_prev) / 
                 (Crop->prm.MaxRootingDepth - Crop->st.RootDepth_prev);
+        
+        WaterRootExt = min( WaterRootExt,WatBal->st.MoistureLOW);
+                
         WatBal->st.MoistureLOW -= WaterRootExt;
 
         /* Total water addition to root zone by root growth  */
