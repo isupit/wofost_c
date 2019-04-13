@@ -122,7 +122,7 @@ int main() {
         
         Astro();
         CalcPenman();
-        PenmanMonteith();
+        CalcPenmanMonteith();
         
         while (Grid)
         {

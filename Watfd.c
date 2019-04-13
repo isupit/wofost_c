@@ -150,6 +150,8 @@ void RateCalulationWatBal() {
     WatBal->rt.RootZoneMoisture = -WatBal->rt.Transpiration - WatBal->rt.EvapSoil -  
             WatBal->rt.Percolation + WatBal->rt.Infiltration;
     WatBal->rt.MoistureLOW = WatBal->rt.Percolation - WatBal->rt.Loss;
+    
+    printf("%7.5f %7.5f %7.5f %7.5f %7.5f %7.5f\n",WatBal->rt.Percolation, WatBal->rt.Infiltration, WatBal->rt.RootZoneMoisture, WatBal->rt.MoistureLOW, WatBal->rt.Loss, WatBal->rt.Transpiration );
              
 }
 

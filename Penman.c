@@ -9,13 +9,6 @@
 #include "penman.h"
 #include "wofost.h"
 
-#define PSYCON  0.67    // psychrometric instrument constant (mbar/Celsius-1)
-#define REFCFW  0.05    // albedo for a water surface                        
-#define REFCFS  0.15    // albedo for a soil surface                         
-#define REFCFC  0.25    // albedo for a  canopy                              
-#define LHVAP   2.45e6  // latent heat of evaporation of water (J/kg=J/mm)  
-#define STBC    4.9e-3  // Stefan Boltzmann constant (J/m2/d/K4) */
-
 /* ---------------------------------------------------------------------*/
 /*  function CalcPenman()                                               */
 /*  Purpose: Calculation of ETO evapotranspiration     mm d-1           */
@@ -45,6 +38,13 @@ void CalcPenman()
     float Rns; 
     float VapourP; 
     float SaturatedVap;
+    
+    float Psycon = 0.67;    // psychrometric instrument constant (mbar/Celsius-1)
+    float Refcfw = 0.05;    // albedo for a water surface                        
+    float Refcfs = 0.15;    // albedo for a soil surface                         
+    float Refcfc = 0.25;    // albedo for a  canopy                              
+    float Lhvap  = 2.45e6;  // latent heat of evaporation of water (J/kg=J/mm)  
+    float Stbc   = 4.9e-3;  // Stefan Boltzmann constant (J/m2/d/K4) */
             
     /* Preparatory calculations: mean daily temperature, temperature difference */
     /* (Celsius) and the Bu coefficient Bu of the wind function (depends  on    */ 
@@ -57,7 +57,7 @@ void CalcPenman()
     /* Barometric pressure (mbar)             */
     /* Psychrometric constant (mbar/Celsius)  */
     Pbar  = 1013.*exp (-0.034*Altitude/(Tmpa + 273.));
-    Gamma = PSYCON * Pbar/1013.;
+    Gamma = Psycon * Pbar/1013.;
 
 
     /* Saturated vapour pressure according to equation of Goudriaan     */
@@ -79,13 +79,13 @@ void CalcPenman()
 
     /* Terms in Penman formula, for water, soil and canopy            */
     /* Net outgoing long-wave radiation (J/m2/d) acc. to Brunt (1932) */
-    RB  = STBC * pow((Tmpa+273.),4) * (0.56-0.079 * sqrt(VapourP)) *
+    RB  = Stbc * pow((Tmpa+273.),4) * (0.56-0.079 * sqrt(VapourP)) *
               (0.1 + 0.9 * RelSunShineDuration);
 
     /* Net absorbed radiation, expressed in mm/d */
-    Rnw = (Radiation[Day] * (1.-REFCFW)-RB)/LHVAP;
-    Rns = (Radiation[Day] * (1.-REFCFS)-RB)/LHVAP;
-    Rnc = (Radiation[Day] * (1.-REFCFC)-RB)/LHVAP;
+    Rnw = (Radiation[Day] * (1.-Refcfw)-RB)/Lhvap;
+    Rns = (Radiation[Day] * (1.-Refcfs)-RB)/Lhvap;
+    Rnc = (Radiation[Day] * (1.-Refcfc)-RB)/Lhvap;
 
     /* Evaporative demand of the atmosphere (mm/d)  */
     Ea  = 0.26 * max (0.,(SaturatedVap-VapourP)) * (0.5+BU * Windspeed[Day]);
@@ -102,7 +102,7 @@ void CalcPenman()
     
 }
 
-void PenmanMonteith()
+void CalcPenmanMonteith()
 {
     float Tmpa;
     float Vap;
@@ -119,17 +119,12 @@ void PenmanMonteith()
     float EA;
     float ET0;
     
-    //psychrometric instrument constant (kPa/Celsius)
-    float Psycon = 0.665;
-    // albedo and surface resistance [sec/m] for the reference crop canopy
-    float Refcfc = 0.23; 
     
-    float Cres = 70.;
-    // latent heat of evaporation of water [J/kg == J/mm] and
-    float Lhvap = 2.45e6;
-   // Stefan Boltzmann constant (J/m2/d/K4, e.g multiplied by 24*60*60)
-    float Stbc= 4.903e-3;
-    // Soil heat flux [J/m2/day] explicitly set to zero
+    float Psycon = 0.665; // psychrometric instrument constant (kPa/Celsius)
+    float Refcfc = 0.23;  // albedo and surface resistance [sec/m] for the reference crop canopy
+    float Cres = 70.;     // latent heat of evaporation of water [J/kg == J/mm] and
+    float Lhvap = 2.45e6; // Stefan Boltzmann constant (J/m2/d/K4, e.g multiplied by 24*60*60)
+    float Stbc= 4.903e-3; // Soil heat flux [J/m2/day] explicitly set to zero
     float G = 0.;
 
     // mean daily temperature (Celsius)

@@ -96,7 +96,7 @@ void EvapTra() {
     //WatBal->WaterStress = 1.;
      
     WatBal->rt.Transpiration = WatBal->WaterStress * Evtra.MaxTranspiration;
-    //printf("%8.6f\n",WatBal->st.Moisture);
+    //printf("%8.6f\n",WatBal->rt.Transpiration);
     }
 
 
