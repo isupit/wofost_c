@@ -333,6 +333,7 @@ typedef struct SOIL {
         float DaysSinceLastRain;
         float SoilMaxRootingDepth;
         float WaterStress;
+        float InfPreviousDay;
         
         /* Tables for Soil */
         AFGEN *VolumetricSoilMoisture;
