@@ -23,6 +23,7 @@ void NutrientPartioning()
     Total_N_demand = Crop->N_rt.Demand_lv + Crop->N_rt.Demand_st + Crop->N_rt.Demand_ro;
     Total_P_demand = Crop->P_rt.Demand_lv + Crop->P_rt.Demand_st + Crop->P_rt.Demand_ro;
     Total_K_demand = Crop->K_rt.Demand_lv + Crop->K_rt.Demand_st + Crop->K_rt.Demand_ro;
+    //printf("%7.5f %7.5f %7.5f\n",Crop->N_rt.Demand_lv, Crop->N_rt.Demand_st, Crop->N_rt.Demand_ro);
    
     
     /* No nutrients are absorbed from the soil after development stage DevelopmentStageNLimit or */
@@ -82,5 +83,5 @@ void NutrientPartioning()
         Crop->K_rt.Uptake_ro = 0.;          
     }
     
-    //printf("  Crop->N_rt.Uptake_lv: %10.4f Crop->N_rt.Uptake_lv: %10.4f Crop->N_rt.Uptake_lv: %10.4f\n", Crop->P_rt.Uptake_lv, Crop->P_rt.Uptake_lv, Crop->P_rt.Uptake_lv);
+    //printf("%10.4f %10.4f %10.4f\n", Crop->P_rt.Uptake_lv, Crop->P_rt.Uptake_lv, Crop->P_rt.Uptake_lv);
 }    

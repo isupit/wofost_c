@@ -24,6 +24,8 @@ void CropNutrientRates()
     Crop->P_rt.stems   = Crop->P_rt.Uptake_st - Crop->P_rt.Transloc_st - Crop->P_rt.death_st;
     Crop->P_rt.roots   = Crop->P_rt.Uptake_ro - Crop->P_rt.Transloc_ro - Crop->P_rt.death_ro;
 
+    //printf("%4d %8.6f %8.6f\n",Crop->GrowthDay,Crop->P_rt.Uptake_lv,Crop->P_rt.death_lv);
+    
     Crop->K_rt.leaves  = Crop->K_rt.Uptake_lv - Crop->K_rt.Transloc_lv - Crop->K_rt.death_lv;
     Crop->K_rt.stems   = Crop->K_rt.Uptake_st - Crop->K_rt.Transloc_st - Crop->K_rt.death_st;
     Crop->K_rt.roots   = Crop->K_rt.Uptake_ro - Crop->K_rt.Transloc_ro - Crop->K_rt.death_ro;

@@ -76,7 +76,7 @@ void NutritionINDX()
         Crop->K_st.Indx = tiny;
     }
 
-    Crop->N_st.Indx = 1.0;
+    Crop->N_st.Indx = 1.0;Crop->N_st.Indx = 1.0;
     Crop->P_st.Indx = 1.0;
     Crop->K_st.Indx = 1.0;
     

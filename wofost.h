@@ -308,6 +308,10 @@ typedef struct PLANT {
         float NutrientStress;
         float DaysOxygenStress;
         float TSumEmergence;
+        float fac_ro;
+        float fac_lv;
+        float fac_st;
+        float fac_so;
         
         Parameters prm;
         

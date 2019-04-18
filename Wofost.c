@@ -158,8 +158,10 @@ int main() {
                     
                      /* Rate calculations */
                     RateCalulationWatBal();
-                    RateCalculationCrop();
+                    Partioning();
                     RateCalcultionNutrients();
+                    RateCalculationCrop();
+                    
                     
                     /* Write to the output files */
                     Output(output[Grid->file]);   

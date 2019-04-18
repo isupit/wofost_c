@@ -27,6 +27,7 @@ extern void CalcPenmanMonteith();
 extern void Clean();
 
 /* Crop growth */
+extern void Partioning();
 extern void HeatStress();
 extern void RateCalculationCrop();
 extern void Growth(float NewPlantMaterial);

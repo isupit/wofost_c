@@ -29,15 +29,19 @@ void RateCalculationCrop()
 
     /* Correction for low minimum temperatures and stress factors */
     TotalAssimilation = Stress * Correct(GrossAssimilation);       
-
+    
     /* Respiration */
     Maintenance = RespirationRef(TotalAssimilation);
 
     /* Conversion */
     GrossGrowth = Conversion(TotalAssimilation-Maintenance); 
-
+    //printf("%4d %8.6f %8.6f\n", Crop->GrowthDay,Stress,TotalAssimilation);
     /* Growth of roots, stems, leaves and storage organs */
     Growth(GrossGrowth);
+    
+    NutrientLoss();
+    
+    CropNutrientRates();
     
     /* Development rate calculation */
     DevelopmentRate();
