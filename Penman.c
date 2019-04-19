@@ -98,8 +98,6 @@ void CalcPenman()
     Penman.ES0 = max(0., 0.1 * (delta*Rns + Gamma*Ea)/(delta + Gamma));
     //Penman.ET0 = max(0., 0.1 * (delta*Rnc + Gamma*Eac)/(delta + Gamma));
     
-    //printf("%4d %6.2f %6.2f %6.2f\n", Day, Penman.E0, Penman.ES0, Penman.ET0 );
-    
 }
 
 void CalcPenmanMonteith()
@@ -180,18 +178,12 @@ void CalcPenmanMonteith()
 
         // Reference ET0 in mm/day
         ET0 = (Delta * (Rn - G))/(Delta + MGamma) + (Gamma * EA)/(Delta + MGamma);
+        
         // Convert to cm/day;
         Penman.ET0 = max(0., 0.1 * ET0);
     }
     else
     {
         Penman.ET0 = 0.;      
-    }
-        
-    
-    
-    
-    
-    
-    
+    }    
 }

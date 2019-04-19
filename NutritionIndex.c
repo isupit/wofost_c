@@ -47,7 +47,6 @@ void NutritionINDX()
         K_opt_veg = (Crop->K_st.Optimum_lv + Crop->K_st.Optimum_st)/VegetativeMass;
     }
     
-    
     float tiny=0.001;
     if ((N_opt_veg - N_res) > tiny)
     {
@@ -76,16 +75,15 @@ void NutritionINDX()
         Crop->K_st.Indx = tiny;
     }
 
-    Crop->N_st.Indx = 1.0;Crop->N_st.Indx = 1.0;
-    Crop->P_st.Indx = 1.0;
-    Crop->K_st.Indx = 1.0;
-    
+   //Crop->N_st.Indx = 1.0;
+   //Crop->P_st.Indx = 1.0;
+   //Crop->K_st.Indx = 1.0;
+   
    
     Crop->NPK_Indx = (Crop->N_st.Indx < Crop->P_st.Indx) ? Crop->N_st.Indx : Crop->P_st.Indx;
     Crop->NPK_Indx = (Crop->NPK_Indx < Crop->K_st.Indx) ? Crop->NPK_Indx : Crop->K_st.Indx;
     
     /* Nutrient reduction factor */
     Crop->NutrientStress = limit(0., 1.0, 1.-Crop->prm.NLUE*pow((1.0001-Crop->NPK_Indx),2));
-    //printf("%4d %10.5f\n", Crop->GrowthDay, Crop->NutrientStress );
     
 }

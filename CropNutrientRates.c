@@ -23,8 +23,6 @@ void CropNutrientRates()
     Crop->P_rt.leaves  = Crop->P_rt.Uptake_lv - Crop->P_rt.Transloc_lv - Crop->P_rt.death_lv;
     Crop->P_rt.stems   = Crop->P_rt.Uptake_st - Crop->P_rt.Transloc_st - Crop->P_rt.death_st;
     Crop->P_rt.roots   = Crop->P_rt.Uptake_ro - Crop->P_rt.Transloc_ro - Crop->P_rt.death_ro;
-
-    //printf("%4d %8.6f %8.6f\n",Crop->GrowthDay,Crop->P_rt.Uptake_lv,Crop->P_rt.death_lv);
     
     Crop->K_rt.leaves  = Crop->K_rt.Uptake_lv - Crop->K_rt.Transloc_lv - Crop->K_rt.death_lv;
     Crop->K_rt.stems   = Crop->K_rt.Uptake_st - Crop->K_rt.Transloc_st - Crop->K_rt.death_st;
@@ -86,8 +84,4 @@ void CropNutrientRates()
         Crop->K_rt.Transloc_st = 0.;
         Crop->K_rt.Transloc_ro = 0.;
     }
-    
-    //printf("  Crop->N_rt.storage: %10.4f Crop->P_rt.storage: %10.4f Crop->K_rt.storage: %10.4f\n", Crop->N_st.storage, Crop->P_st.storage, Crop->K_st.storage);
-    //printf("  Crop->N_st.leaves: %5.1f Crop->P_st.leaves: %5.1f Crop->K_st.leaves: %5.1f\n", Crop->N_st.leaves, Crop->P_st.leaves, Crop->K_st.leaves);
-    //printf("%7.4f %7.4f\n",Crop->N_rt.Demand_so, Crop->N_rt.Transloc);
 }

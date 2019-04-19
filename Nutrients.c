@@ -65,13 +65,12 @@ void NutrientDemand()
     Crop->N_rt.Demand_st =  max (Crop->N_st.Max_st *Crop->st.stems  - Crop->N_st.stems, 0.);
     Crop->N_rt.Demand_ro =  max (Crop->N_st.Max_ro *Crop->st.roots  - Crop->N_st.roots, 0.);
     Crop->N_rt.Demand_so =  max (Crop->N_st.Max_so *Crop->st.storage- Crop->N_st.storage, 0.)/Crop->prm.TCNT;
-    //printf("%7.5f %7.5f %7.5f\n",Crop->N_st.Max_lv, Crop->st.leaves, Crop->N_st.leaves);
-
+ 
     Crop->P_rt.Demand_lv =  max (Crop->P_st.Max_lv *Crop->st.leaves - Crop->P_st.leaves, 0.);
     Crop->P_rt.Demand_st =  max (Crop->P_st.Max_st *Crop->st.stems  - Crop->P_st.stems, 0.);
     Crop->P_rt.Demand_ro =  max (Crop->P_st.Max_ro *Crop->st.roots  - Crop->P_st.roots, 0.);
     Crop->P_rt.Demand_so =  max (Crop->P_st.Max_so *Crop->st.storage- Crop->P_st.storage, 0.)/Crop->prm.TCPT;
-    //printf("%4d %8.6f %8.6f %8.6f\n",Crop->GrowthDay, Crop->P_st.Max_lv ,  Crop->st.leaves,  Crop->P_st.leaves);
+    
     Crop->K_rt.Demand_lv =  max (Crop->K_st.Max_lv *Crop->st.leaves - Crop->K_st.leaves, 0.);
     Crop->K_rt.Demand_st =  max (Crop->K_st.Max_st *Crop->st.stems  - Crop->K_st.stems, 0.);
     Crop->K_rt.Demand_ro =  max (Crop->K_st.Max_ro *Crop->st.roots  - Crop->K_st.roots, 0.);

@@ -40,9 +40,6 @@ void Growth(float NewPlantMaterial)
     Crop->drt.leaves = DyingLeaves(); 
     Crop->rt.leaves  = shoots * Crop->fac_lv;
     
-     
-    //printf("%4d %8.6f %8.5f %8.6f %8.6f\n",Crop->GrowthDay,shoots,Crop->rt.leaves, Crop->drt.leaves, Crop->fac_lv);
-    
     /* Note that the new leave biomass is stored in the youngest leave class */
     LeaveGrowth();
     

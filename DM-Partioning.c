@@ -31,5 +31,4 @@ void Partioning()
         Crop->fac_st = Afgen(Crop->prm.Stems, &(Crop->st.Development)) + flv - Crop->fac_lv;
         Crop->fac_so = Afgen(Crop->prm.Storage, &(Crop->st.Development));
     }
-    
 }	

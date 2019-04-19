@@ -37,7 +37,7 @@ void LeaveGrowth()
         {
             Stress = 1.;
         }
-        //printf("%4d %8.6f\n", Crop->GrowthDay,Crop->NPK_Indx);
+       
         /* Effective temperature for leave growth */
         DTeff = max(0.,Temp - Crop->prm.TempBaseLeaves);
         
