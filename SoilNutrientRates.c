@@ -14,8 +14,6 @@ void SoilNutrientRates()
     float P_fert;
     float K_fert;
     
-    float day_fl;
-    
     if (Crop->st.Development > 0. && Crop->st.Development <= Crop->prm.DevelopmentStageNLimit)
     {   /* NPK rates that come available through mineralization, cannot exceed */
         /* the available NPK for mineralization                                */
@@ -30,19 +28,15 @@ void SoilNutrientRates()
         Site->rt_K_mins = 0.;         
     }
     
-    
-    day_fl = (float)Day;
-    
     /* NPK amount that comes available for the crop at day_fl through fertilizer applications */
-    N_fert = Afgen(Mng->N_Fert_table, &day_fl) * Afgen(Mng->N_Uptake_frac, &day_fl);
-    P_fert = Afgen(Mng->P_Fert_table, &day_fl) * Afgen(Mng->P_Uptake_frac, &day_fl);
-    K_fert = Afgen(Mng->K_Fert_table, &day_fl) * Afgen(Mng->K_Uptake_frac, &day_fl);
+    N_fert = List(Mng->N_Fert_table) * Mng->N_Uptake_frac;
+    P_fert = List(Mng->P_Fert_table) * Mng->P_Uptake_frac;
+    K_fert = List(Mng->K_Fert_table) * Mng->K_Uptake_frac;
     
     /* Change in total inorganic NPK in soil as function of fertilizer input, */
     /* soil NPK mineralization and crop uptake                                */
     Site->rt_N_tot = (N_fert / Step) - Crop->N_rt.Uptake  + Site->rt_N_mins;
     Site->rt_P_tot = (P_fert / Step) - Crop->P_rt.Uptake  + Site->rt_P_mins;
     Site->rt_K_tot = (K_fert / Step) - Crop->K_rt.Uptake  + Site->rt_K_mins;
-    //printf("  Crop->N_rt.Uptake: %5.1f Crop->P_rt.Uptake: %5.1f Crop->K_rt.Uptake: %5.1f\n", Crop->N_rt.Uptake, Crop->P_rt.Uptake, Crop->K_rt.Uptake);
-    //printf("  Site->rt_N_tot: %7.4f Crop->N_rt.Uptake: %7.4f  Site->rt_N_mins: %7.4f\n", Site->rt_N_tot, Crop->N_rt.Uptake, Site->rt_N_mins);
+
 }

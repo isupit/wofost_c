@@ -10,25 +10,33 @@
 #define NR_VARIABLES_SOIL       12
 #define NR_VARIABLES_SOIL_USED  6
 #define NR_TABLES_SOIL          2
-#define NR_VARIABLES_MANAGEMENT 6
-#define NR_TABLES_MANAGEMENT    7
+#define NR_VARIABLES_MANAGEMENT 9
+#define NR_TABLES_MANAGEMENT    4
 #define NUMBER_OF_TABLES        31
+#define MAX_STRING             2048
+#define METEO_LENGTH           36600 //max 100 years 
 
-typedef struct TABLE {
+struct tm current_date;
+
+typedef struct TBL {
 	float x;
 	float y;
-	struct TABLE *next;
-	} AFGEN;
+	struct TBL *next;
+	} TABLE;
+        
+typedef struct TBLD {
+	int month;
+	int day;
+        float amount;
+	struct TBLD *next;
+	} TABLE_D;
 
 typedef struct MANAGEMENT {
         /** Tables for fertilizer application and recovery fraction **/
-        AFGEN *N_Fert_table;
-        AFGEN *P_Fert_table;
-        AFGEN *K_Fert_table;
-        AFGEN *N_Uptake_frac;
-        AFGEN *P_Uptake_frac;
-        AFGEN *K_Uptake_frac;
-        AFGEN *Irrigation;
+        TABLE_D *N_Fert_table;
+        TABLE_D *P_Fert_table;
+        TABLE_D *K_Fert_table;
+        TABLE_D *Irrigation;
         
         float N_Mins;
         float NRecoveryFrac;
@@ -36,6 +44,9 @@ typedef struct MANAGEMENT {
         float PRecoveryFrac;
         float K_Mins; 
         float KRecoveryFrac;
+        float N_Uptake_frac;
+        float P_Uptake_frac;
+        float K_Uptake_frac;
         } Management;
 Management *Mng;
 
@@ -53,33 +64,33 @@ typedef struct CONSTANTS {
 
 typedef struct PARAMETERS {
           /** Tables for the Crop simulations **/
-        AFGEN *Roots;
-        AFGEN *Stems;
-        AFGEN *Leaves;
-        AFGEN *Storage;
+        TABLE *Roots;
+        TABLE *Stems;
+        TABLE *Leaves;
+        TABLE *Storage;
 
-        AFGEN *VernalizationRate;
-        AFGEN *DeltaTempSum;
-        AFGEN *SpecificLeaveArea;
-        AFGEN *SpecificStemArea;
-        AFGEN *KDiffuseTb;
-        AFGEN *EFFTb;
-        AFGEN *MaxAssimRate; 
-        AFGEN *FactorAssimRateTemp;
-        AFGEN *FactorGrossAssimTemp;
-        AFGEN *FactorSenescence;
-        AFGEN *DeathRateStems;
-        AFGEN *DeathRateRoots; 
+        TABLE *VernalizationRate;
+        TABLE *DeltaTempSum;
+        TABLE *SpecificLeaveArea;
+        TABLE *SpecificStemArea;
+        TABLE *KDiffuseTb;
+        TABLE *EFFTb;
+        TABLE *MaxAssimRate; 
+        TABLE *FactorAssimRateTemp;
+        TABLE *FactorGrossAssimTemp;
+        TABLE *FactorSenescence;
+        TABLE *DeathRateStems;
+        TABLE *DeathRateRoots; 
         
         /** Tables to account for the atmospheric CO2 concentration **/
-        AFGEN *CO2AMAXTB;
-        AFGEN *CO2EFFTB;
-        AFGEN *CO2TRATB;
+        TABLE *CO2AMAXTB;
+        TABLE *CO2EFFTB;
+        TABLE *CO2TRATB;
 
         /** Tables for the maximum nutrient content in leaves as a function of DVS **/
-        AFGEN *N_MaxLeaves;
-        AFGEN *P_MaxLeaves;
-        AFGEN *K_MaxLeaves;
+        TABLE *N_MaxLeaves;
+        TABLE *P_MaxLeaves;
+        TABLE *K_MaxLeaves;
 
         /** Static Variables  **/
         /**  Emergence  **/
@@ -340,8 +351,8 @@ typedef struct SOIL {
         float InfPreviousDay;
         
         /* Tables for Soil */
-        AFGEN *VolumetricSoilMoisture;
-        AFGEN *HydraulicConductivity; /* currently not used */
+        TABLE *VolumetricSoilMoisture;
+        TABLE *HydraulicConductivity; /* currently not used */
         
         Constants ct;
         States st;
@@ -382,14 +393,9 @@ typedef struct FIELD {
         float rt_K_mins;
         
         /** Table for the fraction of precipitation that does not infiltrate **/
-        AFGEN *NotInfTB;
+        TABLE *NotInfTB;
         } Field;
 Field *Site; /* Place holder for the current site simulations */
-
-
-/* Simulation time */
-struct tm simTime;
-
 
 /* Place holder for a simulation unit */
 typedef struct SIMUNIT {
@@ -397,22 +403,40 @@ typedef struct SIMUNIT {
         Field *ste;
         Management *mng;
         Soil  *soil;
-        int start;
         int emergence;
         int file;
-        char name[100]; 
+        char start[MAX_STRING];
+        char name[MAX_STRING];
+        char output[MAX_STRING];
         struct SIMUNIT *next;
-        } SimUnit;
-        
-float CO2;
+        } SimUnit; 
+SimUnit *Grid;
+
+typedef struct WEATHER {
+        char file[MAX_STRING];
+        int StartYear;
+        int EndYear;
+        float lat;
+        float lon;
+        struct WEATHER *next;
+        } Weather;
+Weather *Meteo; /* Place holder for the meteo filenames and lat/lon */
 
 /** Meteorological Variables  **/
 int Station, Year;
+int MeteoYear[METEO_LENGTH];
+int MeteoDay[METEO_LENGTH];
+float CO2;
 float AngstA;
 float AngstB;
 float Longitude, Latitude, Altitude;
-float Tmin[732], Tmax[732], Radiation[732], Rain[732];
-float Windspeed[732], Vapour[732];
+float Tmin[METEO_LENGTH];
+float Tmax[METEO_LENGTH];
+float Radiation[METEO_LENGTH];
+float Rain[METEO_LENGTH];
+float Windspeed[METEO_LENGTH];
+float Vapour[METEO_LENGTH];
+
 
 /* Time step */
 float Step;

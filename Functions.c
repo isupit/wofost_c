@@ -1,4 +1,5 @@
-#include <stdio.h>
+#include "wofost.h"
+#include "extern.h"
 
 float limit(float a, float b, float c)
 {
@@ -39,3 +40,4 @@ float max(float a, float b)
 {
     return ((a > b) ? a : b);
 }
+

@@ -11,7 +11,8 @@ void Clean(SimUnit *Grid)
 {
     SimUnit *initial, *GridHead;
     Green *LeaveProperties;
-    AFGEN *head;
+    TABLE *head;
+    TABLE_D *head_D;
     
     /* Store pointer of the beginning of the list */
     initial = Grid;
@@ -249,9 +250,9 @@ void Clean(SimUnit *Grid)
 
         while(Grid->mng->N_Fert_table)
         {
-            head = Grid->mng->N_Fert_table;
+            head_D = Grid->mng->N_Fert_table;
             Grid->mng->N_Fert_table = Grid->mng->N_Fert_table->next;
-            free(head);
+            free(head_D);
         }
         free(Grid->mng->N_Fert_table);
         Grid->mng->N_Fert_table = NULL;
@@ -259,58 +260,28 @@ void Clean(SimUnit *Grid)
 
         while(Grid->mng->P_Fert_table)
         {
-            head = Grid->mng->P_Fert_table;
+            head_D = Grid->mng->P_Fert_table;
             Grid->mng->P_Fert_table = Grid->mng->P_Fert_table->next;
-            free(head);
+            free(head_D);
         }
         free(Grid->mng->P_Fert_table);
         Grid->mng->P_Fert_table = NULL;
 
         while(Grid->mng->K_Fert_table)
         {
-            head = Grid->mng->K_Fert_table;
+            head_D = Grid->mng->K_Fert_table;
             Grid->mng->K_Fert_table = Grid->mng->K_Fert_table->next;
-            free(head);
+            free(head_D);
         }
         free(Grid->mng->K_Fert_table);
         Grid->mng->K_Fert_table = NULL;
 
 
-        while(Grid->mng->N_Uptake_frac)
-        {
-            head = Grid->mng->N_Uptake_frac;
-            Grid->mng->N_Uptake_frac = Grid->mng->N_Uptake_frac->next;
-            free(head);
-        }
-        free(Grid->mng->N_Uptake_frac);
-        Grid->mng->N_Uptake_frac = NULL;
-
-
-        while(Grid->mng->P_Uptake_frac)
-        {
-            head = Grid->mng->P_Uptake_frac;
-            Grid->mng->P_Uptake_frac = Grid->mng->P_Uptake_frac->next;
-            free(head);
-        }
-        free(Grid->mng->P_Uptake_frac);
-        Grid->mng->P_Uptake_frac = NULL;
-
-
-        while(Grid->mng->K_Uptake_frac)        
-        {
-            head = Grid->mng->K_Uptake_frac;
-            Grid->mng->K_Uptake_frac = Grid->mng->K_Uptake_frac->next;
-            free(head);
-        }
-        free(Grid->mng->K_Uptake_frac);
-        Grid->mng->K_Uptake_frac = NULL;
-
-
         while(Grid->mng->Irrigation)        
         {
-            head = Grid->mng->Irrigation;
+            head_D = Grid->mng->Irrigation;
             Grid->mng->Irrigation = Grid->mng->Irrigation->next;
-            free(head);
+            free(head_D);
         }
         free(Grid->mng->Irrigation);
         Grid->mng->Irrigation = NULL;

@@ -12,6 +12,7 @@ float DayTemp;
 extern float max(float a, float b);
 extern float min(float a, float b);
 extern float Afgen();
+extern float List();
 extern float limit(float a, float b, float c);
 extern float notnul(float x);
 extern float insw(float x1, float x2, float x3);
@@ -19,6 +20,9 @@ extern int leap_year(int year);
 extern void RatesToZero();
 extern void Output();
 extern void header();
+extern void GetSimInput();
+extern void GetMeteoInput();
+extern void IfSowing();
 
 /* Additional functions */
 extern int Astro();
