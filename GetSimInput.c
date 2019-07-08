@@ -45,6 +45,7 @@ void GetSimInput(char *list)
             != EOF) 
     {    
         memset(cropfile,'\0',MAX_STRING);
+        memset(sitefile,'\0',MAX_STRING);
         memset(soilfile,'\0',MAX_STRING);
         memset(management,'\0',MAX_STRING);
                 
@@ -81,12 +82,10 @@ void GetSimInput(char *list)
         if (strlen(output) >= MAX_STRING) exit(0);    
         if (strlen(start) >= MAX_STRING) exit(0);  
         
-        memset(Grid->name,'\0',MAX_STRING);
         memset(Grid->output,'\0',MAX_STRING);
         memset(Grid->start,'\0',MAX_STRING);
         
-        strncpy(Grid->name,sf,strlen(sf));  // Set the soil filename as ouput file name
-        strncpy(Grid->output,output,strlen(output));
+        strncpy(Grid->output,output,strlen(output)); // Name og output file
         strncpy(Grid->start,start,strlen(start)); // Starting string month day of the simulations 
         
         Grid->file  = count++;            // number of elements in Grid carousel
