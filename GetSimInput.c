@@ -11,14 +11,13 @@
 /*           starts at emergence (1) or sowing (0)                             */
 /*-----------------------------------------------------------------------------*/
 
-void GetSimInput(char *list)
+int GetSimInput(char *list)
 {
     FILE *ifp;
      
     SimUnit *initial = NULL;
        
     int Emergence;
-    //int Start;
     int count;
   
     char path[MAX_STRING];
@@ -99,4 +98,7 @@ void GetSimInput(char *list)
     
     /* Set Grid back to initial address */
     Grid = initial;
+    
+    /* Return the number of meteo files */
+    return --count;
 }   
