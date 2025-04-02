@@ -68,7 +68,7 @@ void CalcPenman()
 
     SaturatedVap  = 6.10588 * exp(17.32491 * Temp/(Temp+238.102));
     delta         = 238.102 * 17.32491 * SaturatedVap/pow((Temp +238.102),2);
-    VapourP       = min(Vapour[Day],SaturatedVap);
+    VapourP       = fmin(Vapour[Day],SaturatedVap);
 
     /* The expression n/N (RelLSSD) from the Penman formula is estimated   */
     /* from the Angstrom formula: RI=RA(A+B.n/N) -> n/N=(RI/RA-A)/B,       */
@@ -88,14 +88,14 @@ void CalcPenman()
     //Rnc = (Radiation[Day] * (1.-Refcfc)-RB)/Lhvap;
 
     /* Evaporative demand of the atmosphere (mm/d)  */
-    Ea  = 0.26 * max (0.,(SaturatedVap-VapourP)) * (0.5+BU * Windspeed[Day]);
+    Ea  = 0.26 * fmax (0.,(SaturatedVap-VapourP)) * (0.5+BU * Windspeed[Day]);
     //Eac = 0.26 * max (0.,(SaturatedVap-VapourP)) * (1.0+BU * Windspeed[Day]);
    
     /* Penman formula (1948)                */
     /* Ensure reference evaporation >= 0.   */
     /* Convert to cm/day                    */
-    Penman.E0  = max(0., 0.1 * (delta*Rnw + Gamma*Ea)/(delta + Gamma));
-    Penman.ES0 = max(0., 0.1 * (delta*Rns + Gamma*Ea)/(delta + Gamma));
+    Penman.E0  = fmax(0., 0.1 * (delta*Rnw + Gamma*Ea)/(delta + Gamma));
+    Penman.ES0 = fmax(0., 0.1 * (delta*Rns + Gamma*Ea)/(delta + Gamma));
     //Penman.ET0 = max(0., 0.1 * (delta*Rnc + Gamma*Eac)/(delta + Gamma));
     
 }
@@ -148,7 +148,7 @@ void CalcPenmanMonteith()
     Svap = (Svap_Tmax + Svap_Tmin) / 2.;
 
     //measured vapour pressure not to exceed saturated vapour pressure
-    Vap = min(Vap, Svap);
+    Vap = fmin(Vap, Svap);
 
     // Longwave radiation according at Tmax, Tmin (J/m2/d)
     // and preliminary net outgoing long-wave radiation (J/m2/d)
@@ -180,7 +180,7 @@ void CalcPenmanMonteith()
         ET0 = (Delta * (Rn - G))/(Delta + MGamma) + (Gamma * EA)/(Delta + MGamma);
         
         // Convert to cm/day;
-        Penman.ET0 = max(0., 0.1 * ET0);
+        Penman.ET0 = fmax(0., 0.1 * ET0);
     }
     else
     {

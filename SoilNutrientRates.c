@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "wofost.h"
 #include "extern.h"
 
@@ -17,9 +18,9 @@ void SoilNutrientRates()
     if (Crop->st.Development > 0. && Crop->st.Development <= Crop->prm.DevelopmentStageNLimit)
     {   /* NPK rates that come available through mineralization, cannot exceed */
         /* the available NPK for mineralization                                */
-        Site->rt_N_mins = min(Mng->N_Mins * Mng->NRecoveryFrac, Site->st_N_mins); 
-        Site->rt_P_mins = min(Mng->P_Mins * Mng->PRecoveryFrac, Site->st_P_mins); 
-        Site->rt_K_mins = min(Mng->K_Mins * Mng->KRecoveryFrac, Site->st_K_mins); 
+        Site->rt_N_mins = fmin(Mng->N_Mins * Mng->NRecoveryFrac, Site->st_N_mins); 
+        Site->rt_P_mins = fmin(Mng->P_Mins * Mng->PRecoveryFrac, Site->st_P_mins); 
+        Site->rt_K_mins = fmin(Mng->K_Mins * Mng->KRecoveryFrac, Site->st_K_mins); 
     }
     else
     {
@@ -35,8 +36,8 @@ void SoilNutrientRates()
     
     /* Change in total inorganic NPK in soil as function of fertilizer input, */
     /* soil NPK mineralization and crop uptake                                */
-    Site->rt_N_tot = (N_fert / Step) - Crop->N_rt.Uptake  + Site->rt_N_mins;
-    Site->rt_P_tot = (P_fert / Step) - Crop->P_rt.Uptake  + Site->rt_P_mins;
-    Site->rt_K_tot = (K_fert / Step) - Crop->K_rt.Uptake  + Site->rt_K_mins;
+    Site->rt_N_tot = N_fert  - Crop->N_rt.Uptake  + Site->rt_N_mins;
+    Site->rt_P_tot = P_fert  - Crop->P_rt.Uptake  + Site->rt_P_mins;
+    Site->rt_K_tot = K_fert  - Crop->K_rt.Uptake  + Site->rt_K_mins;
 
 }
